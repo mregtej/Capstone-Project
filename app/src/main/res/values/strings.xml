@@ -9,4 +9,11 @@
     <string name="nav_title_recipe_list">Recipes</string>
     <string name="nav_title_user_profile">User</string>
 
+    <!-- Meal Plans Screen Strings -->
+    <string name="meal_plans_screen_title">Meal Plans</string>
+    <string name="meal_plans_favourites_title">Favourites</string>
+    <string name="meal_plans_diet_title">Losing Weight</string>
+    <string name="meal_plans_veggies_title">Veggies</string>
+    <string name="meal_plans_show_more_button">Show More</string>
+
 </resources>

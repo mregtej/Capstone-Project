@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MealPlansFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_favourite_meals_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/meal_plans_favourites_title"
+            app:layout_constraintBottom_toBottomOf="@+id/bt_show_more_favourite_meals"
+            app:layout_constraintEnd_toStartOf="@+id/bt_show_more_favourite_meals"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/bt_show_more_favourite_meals"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            style="@style/MyMealPlannerTextButtons"
+            android:elevation="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/meal_plans_show_more_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <!-- TODO: Implement RecyclerView + CardView -->
+        <View
+            android:id="@+id/rv_favourite_meal_cards"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_show_more_favourite_meals" />
+
+        <TextView
+            android:id="@+id/tv_diet_meals_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/meal_plans_diet_title"
+            app:layout_constraintBottom_toBottomOf="@+id/bt_show_more_diet_meals"
+            app:layout_constraintEnd_toStartOf="@+id/bt_show_more_diet_meals"
+            app:layout_constraintStart_toStartOf="@+id/tv_favourite_meals_title" />
+
+        <Button
+            android:id="@+id/bt_show_more_diet_meals"
+            style="@style/MyMealPlannerTextButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:elevation="6dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/meal_plans_show_more_button"
+            app:layout_constraintEnd_toEndOf="@+id/bt_show_more_favourite_meals"
+            app:layout_constraintStart_toStartOf="@+id/bt_show_more_favourite_meals"
+            app:layout_constraintTop_toBottomOf="@+id/rv_favourite_meal_cards" />
+
+        <!-- TODO: Implement RecyclerView + CardView -->
+        <View
+            android:id="@+id/rv_diet_meal_cards"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_show_more_diet_meals" />
+
+        <TextView
+            android:id="@+id/tv_veggie_meals_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/meal_plans_veggies_title"
+            app:layout_constraintBottom_toBottomOf="@+id/bt_show_more_veggie_meals"
+            app:layout_constraintEnd_toStartOf="@+id/bt_show_more_veggie_meals"
+            app:layout_constraintStart_toStartOf="@+id/tv_diet_meals_title" />
+
+        <Button
+            android:id="@+id/bt_show_more_veggie_meals"
+            style="@style/MyMealPlannerTextButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:elevation="6dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/meal_plans_show_more_button"
+            app:layout_constraintEnd_toEndOf="@+id/bt_show_more_diet_meals"
+            app:layout_constraintStart_toStartOf="@+id/bt_show_more_diet_meals"
+            app:layout_constraintTop_toBottomOf="@+id/rv_diet_meal_cards" />
+
+        <!-- TODO: Implement RecyclerView + CardView -->
+        <View
+            android:id="@+id/rv_veggie_meal_cards"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginBottom="68dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_show_more_veggie_meals" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

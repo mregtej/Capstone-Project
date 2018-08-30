@@ -5,14 +5,23 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.ui.utils.BottomNavigationViewHelper;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private static final String FRAGMENT_NAME_SAVE_INSTANCE_KEY = "fragment-name";
+
+    @BindView(R.id.fl_meal_screen_fragment_container)
+    FrameLayout flMealScreenFragmentContainer;
+    @BindView(R.id.bnv_app_navigation)
+    BottomNavigationView bnvAppNavigation;
+    private String sFragmentName;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -20,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.nav_meal_plans:
+                    sFragmentName = getString(R.string.meal_plans_screen_title);
+                    getSupportFragmentManager().
+                            beginTransaction()
+                            .replace(R.id.fl_meal_screen_fragment_container, new MealPlansFragment(),
+                                    getString(R.string.meal_plans_screen_title))
+                            .commit();
                     return true;
                 case R.id.nav_meal_planner:
                     return true;
@@ -38,10 +53,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bnv_app_navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.removeShiftMode(navigation);
+        // Build Bottom App Navigation Bar
+        bnvAppNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.removeShiftMode(bnvAppNavigation);
+
+        if (savedInstanceState == null) {
+            // Load MealPlansFragment by default
+            sFragmentName = getString(R.string.meal_plans_screen_title);
+            getSupportFragmentManager().
+                    beginTransaction()
+                    .replace(R.id.fl_meal_screen_fragment_container, new MealPlansFragment(),
+                            getString(R.string.meal_plans_screen_title))
+                    .commit();
+        } else {
+            sFragmentName = savedInstanceState.getString(FRAGMENT_NAME_SAVE_INSTANCE_KEY);
+            getSupportFragmentManager().findFragmentByTag(sFragmentName);
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(FRAGMENT_NAME_SAVE_INSTANCE_KEY, sFragmentName);
+        super.onSaveInstanceState(outState);
     }
 
 }
