@@ -11,4 +11,8 @@
     <color name="colorAccentLight">#6D78FF</color>
     <color name="windowBackground">#F3F3F3</color>
 
+    <!-- App Bottom Navigation Bar Colors -->
+    <color name="colorNavBarIconChecked">#666666</color>
+    <color name="colorNavBarIconNotChecked">#AAAAAA</color>
+
 </resources>

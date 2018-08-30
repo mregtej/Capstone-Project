@@ -1,6 +1,12 @@
 <resources>
+
     <string name="app_name">MyMealPlanner</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+    <!-- App Bottom Navigation Bar Strings -->
+    <string name="nav_title_meal_plans">Meals</string>
+    <string name="nav_title_meal_planner">Calendar</string>
+    <string name="nav_title_shopping_list">Cart</string>
+    <string name="nav_title_recipe_list">Recipes</string>
+    <string name="nav_title_user_profile">User</string>
+
 </resources>

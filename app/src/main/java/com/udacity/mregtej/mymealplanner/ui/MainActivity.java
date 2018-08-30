@@ -1,4 +1,4 @@
-package com.udacity.mregtej.mymealplanner;
+package com.udacity.mregtej.mymealplanner.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,6 +6,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.udacity.mregtej.mymealplanner.R;
+import com.udacity.mregtej.mymealplanner.ui.utils.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,14 +19,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.nav_meal_plans:
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.nav_meal_planner:
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.nav_shopping_list:
+                    return true;
+                case R.id.nav_recipe_list:
+                    return true;
+                case R.id.nav_user_profile:
                     return true;
             }
             return false;
@@ -35,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bnv_app_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.removeShiftMode(navigation);
     }
 
 }
