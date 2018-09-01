@@ -55,6 +55,9 @@ public class MealPlansFragment extends Fragment {
         actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if(actionBar != null) {
             actionBar.setTitle(title);
+            if(!actionBar.isShowing()) {
+                actionBar.show();
+            }
         }
     }
 }

@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_recipe_list:
                     return true;
                 case R.id.nav_user_profile:
+                    sFragmentName = getString(R.string.my_account_screen_title);
+                    getSupportFragmentManager().
+                            beginTransaction()
+                            .replace(R.id.fl_meal_screen_fragment_container, new MyAccountFragment(),
+                                    sFragmentName)
+                            .commit();
                     return true;
             }
             return false;

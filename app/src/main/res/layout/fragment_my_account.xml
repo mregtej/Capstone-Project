@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="60dp"
+    tools:context=".ui.MyAccountFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fl_my_account_header"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_my_account_user_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/ic_user_account" />
+
+                <TextView
+                    android:id="@+id/iv_my_account_user_name"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="@string/my_account_default_name"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <View
+            android:id="@+id/v_separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/fl_my_account_header"
+            android:background="@android:color/black" />
+
+        <FrameLayout
+            android:id="@+id/fl_my_account_detailed_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/v_separator"
+            android:background="@color/windowBackground"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_my_account_statistics"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/im_statistics"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/iv_my_account_statistics_description"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="32dp"
+                    android:maxLines="6"
+                    android:text="@string/my_account_statistics_default_explanation"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_my_account_statistics"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_my_account_statistics"
+                    app:layout_constraintTop_toTopOf="@+id/iv_my_account_statistics" />
+
+                <Button
+                    android:id="@+id/bt_my_account_send_feedback"
+                    style="@style/MyMealPlannerIconButtons"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@mipmap/ic_feedback"
+                    android:elevation="6dp"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_my_account_statistics"
+                    app:layout_constraintStart_toStartOf="@+id/iv_my_account_statistics"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_my_account_statistics" />
+
+                <TextView
+                    android:id="@+id/tv_my_account_send_feedback_title"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/my_account_send_feedback_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/bt_my_account_send_feedback"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/bt_my_account_send_feedback"
+                    app:layout_constraintTop_toTopOf="@+id/bt_my_account_send_feedback" />
+
+                <Button
+                    android:id="@+id/bt_my_account_about_me"
+                    style="@style/MyMealPlannerIconButtons"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@mipmap/ic_about_me"
+                    android:elevation="6dp"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_my_account_statistics"
+                    app:layout_constraintStart_toStartOf="@+id/iv_my_account_statistics"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_my_account_send_feedback" />
+
+                <TextView
+                    android:id="@+id/tv_my_account_about_me_title"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/my_account_about_me_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/bt_my_account_about_me"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/bt_my_account_about_me"
+                    app:layout_constraintTop_toTopOf="@+id/bt_my_account_about_me" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_my_account_resume_data"
+            android:layout_width="260dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="180dp"
+            android:background="@drawable/shape_rectangle">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/tv_my_account_favourite_recipes_title"
+                    style="@style/MyMealPlannerSmallTitlesInBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/my_account_favourite_recipes_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_my_account_my_meals_title"
+                    style="@style/MyMealPlannerSmallTitlesInBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/my_account_my_meals_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_my_account_favourite_recipes_title"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_my_account_planned_meals_title"
+                    app:layout_constraintStart_toEndOf="@+id/tv_my_account_favourite_recipes_title"
+                    app:layout_constraintTop_toTopOf="@+id/tv_my_account_favourite_recipes_title" />
+
+                <TextView
+                    android:id="@+id/tv_my_account_planned_meals_title"
+                    style="@style/MyMealPlannerSmallTitlesInBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/my_account_planned_meals_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_my_account_my_meals_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_my_account_my_meals_title"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/tv_my_account_favourite_recipes_number"
+                    style="@style/MyMealPlannerBiggerTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="25"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_my_account_favourite_recipes_title"
+                    app:layout_constraintStart_toStartOf="@+id/tv_my_account_favourite_recipes_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_my_account_favourite_recipes_title" />
+
+                <TextView
+                    android:id="@+id/tv_my_account_my_meals_number"
+                    style="@style/MyMealPlannerBiggerTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_my_account_my_meals_title"
+                    app:layout_constraintStart_toStartOf="@+id/tv_my_account_my_meals_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_my_account_my_meals_title" />
+
+                <TextView
+                    android:id="@+id/tv_my_account_planned_meals_number"
+                    style="@style/MyMealPlannerBiggerTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_my_account_planned_meals_title"
+                    app:layout_constraintStart_toStartOf="@+id/tv_my_account_planned_meals_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_my_account_planned_meals_title" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
