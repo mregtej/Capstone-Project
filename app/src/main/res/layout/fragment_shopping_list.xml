@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="60dp"
+    tools:context=".ui.ShoppingListFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_shopping_list_to_buy_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/shopping_list_to_buy_title"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_shopping_list_to_buy_collapse"
+            app:layout_constraintEnd_toStartOf="@+id/ll_shopping_list_to_buy_collapse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ll_shopping_list_to_buy_collapse" />
+
+        <LinearLayout
+            android:id="@+id/ll_shopping_list_to_buy_collapse"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_rectangle"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/bt_shopping_list_to_buy_collapse"
+                style="@style/MyMealPlannerIconButtons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/ic_collapse"
+                android:elevation="6dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_shopping_list_to_buy_ingredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_rectangle"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/ll_shopping_list_to_buy_collapse"
+            app:layout_constraintStart_toStartOf="@+id/tv_shopping_list_to_buy_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_shopping_list_to_buy_title">
+
+            <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rectangle">
+
+                <ImageView
+                    android:id="@+id/iv_shopping_list_to_buy_ingredients_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@mipmap/ic_ingredients"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_shopping_list_to_buy_ingredients_ingredient_title"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="148dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/shopping_list_ingredients_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_shopping_list_to_buy_ingredients_icon"
+                    app:layout_constraintStart_toEndOf="@+id/iv_shopping_list_to_buy_ingredients_icon"
+                    app:layout_constraintTop_toTopOf="@+id/iv_shopping_list_to_buy_ingredients_icon" />
+
+                <TextView
+                    android:id="@+id/tv_shopping_list_to_buy_ingredients_quantity_title"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/shopping_list_quantity_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_shopping_list_to_buy_ingredients_ingredient_title"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_shopping_list_to_buy_ingredients_units_title"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/tv_shopping_list_to_buy_ingredients_ingredient_title"
+                    app:layout_constraintTop_toTopOf="@+id/tv_shopping_list_to_buy_ingredients_ingredient_title"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/tv_shopping_list_to_buy_ingredients_units_title"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/shopping_list_units_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_shopping_list_to_buy_ingredients_quantity_title"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_shopping_list_to_buy_ingredients_bought_all"
+                    app:layout_constraintTop_toTopOf="@+id/tv_shopping_list_to_buy_ingredients_quantity_title" />
+
+                <LinearLayout
+                    android:id="@+id/ll_shopping_list_to_buy_ingredients_bought_all"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/shape_rectangle"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_shopping_list_to_buy_ingredients_units_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_shopping_list_to_buy_ingredients_units_title">
+
+                    <Button
+                        android:id="@+id/bt_shopping_list_to_buy_ingredients_bought_all"
+                        style="@style/MyMealPlannerIconButtons"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:alpha="0.4"
+                        android:background="@mipmap/ic_check_all"
+                        android:elevation="6dp" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <GridView
+                android:id="@+id/gv_shopping_list_to_buy_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_shopping_list_already_bought_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/shopping_list_already_bought_title"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_shopping_list_already_bought_collapse"
+            app:layout_constraintEnd_toStartOf="@+id/ll_shopping_list_already_bought_collapse"
+            app:layout_constraintStart_toStartOf="@+id/tv_shopping_list_to_buy_title"
+            app:layout_constraintTop_toTopOf="@+id/ll_shopping_list_already_bought_collapse" />
+
+        <LinearLayout
+            android:id="@+id/ll_shopping_list_already_bought_collapse"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_rectangle"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/ll_shopping_list_to_buy_collapse"
+            app:layout_constraintTop_toBottomOf="@+id/ll_shopping_list_to_buy_ingredients">
+
+            <Button
+                android:id="@+id/bt_shopping_list_already_bought_collapse"
+                style="@style/MyMealPlannerIconButtons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/ic_collapse"
+                android:elevation="6dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_shopping_list_already_bought_ingredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_rectangle"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/ll_shopping_list_already_bought_collapse"
+            app:layout_constraintStart_toStartOf="@+id/ll_shopping_list_to_buy_ingredients"
+            app:layout_constraintTop_toBottomOf="@+id/tv_shopping_list_already_bought_title">
+
+            <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rectangle">
+
+                <ImageView
+                    android:id="@+id/iv_shopping_list_already_bought_ingredients_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@mipmap/ic_ingredients"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_shopping_list_already_bought_ingredients_ingredient_title"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="148dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/shopping_list_ingredients_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_shopping_list_already_bought_ingredients_icon"
+                    app:layout_constraintStart_toEndOf="@+id/iv_shopping_list_already_bought_ingredients_icon"
+                    app:layout_constraintTop_toTopOf="@+id/iv_shopping_list_already_bought_ingredients_icon" />
+
+                <TextView
+                    android:id="@+id/tv_shopping_list_already_bought_ingredients_quantity_title"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/shopping_list_quantity_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_shopping_list_already_bought_ingredients_ingredient_title"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_shopping_list_already_bought_ingredients_units_title"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/tv_shopping_list_already_bought_ingredients_ingredient_title"
+                    app:layout_constraintTop_toTopOf="@+id/tv_shopping_list_already_bought_ingredients_ingredient_title"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/tv_shopping_list_already_bought_ingredients_units_title"
+                    style="@style/MyMealPlannerTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="52dp"
+                    android:layout_marginRight="52dp"
+                    android:text="@string/shopping_list_units_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_shopping_list_already_bought_ingredients_quantity_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_shopping_list_already_bought_ingredients_quantity_title" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+            <GridView
+                android:id="@+id/gv_shopping_list_already_bought_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

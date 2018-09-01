@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
                     return true;
                 case R.id.nav_shopping_list:
+                    sFragmentName = getString(R.string.shopping_list_screen_title);
+                    getSupportFragmentManager().
+                            beginTransaction()
+                            .replace(R.id.fl_meal_screen_fragment_container, new ShoppingListFragment(),
+                                    sFragmentName)
+                            .commit();
                     return true;
                 case R.id.nav_recipe_list:
                     return true;
