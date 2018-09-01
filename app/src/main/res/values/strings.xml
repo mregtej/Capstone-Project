@@ -16,4 +16,16 @@
     <string name="meal_plans_veggies_title">Veggies</string>
     <string name="meal_plans_show_more_button">Show More</string>
 
+    <!-- Meal Planner Screen Strings -->
+    <string name="meal_planner_screen_title">Meal Planner</string>
+    <string name="meal_planner_default_date">15th of March, 2018</string>
+    <string name="meal_planner_breakfast_title">Breakfast</string>
+    <string name="meal_planner_breakfast_meal_hint">Breakfast Meal</string>
+    <string name="meal_planner_brunch_title">Brunch</string>
+    <string name="meal_planner_brunch_meal_hint">Brunch Meal</string>
+    <string name="meal_planner_lunch_title">Lunch</string>
+    <string name="meal_planner_lunch_meal_hint">Lunch Meal</string>
+    <string name="meal_planner_dinner_title">Dinner</string>
+    <string name="meal_planner_dinner_meal_hint">Dinner Meal</string>
+
 </resources>

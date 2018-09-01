@@ -21,7 +21,6 @@ import butterknife.Unbinder;
  */
 public class MealPlansFragment extends Fragment {
 
-
     @BindView(R.id.bt_show_more_favourite_meals)
     Button btShowMoreFavouriteMeals;
     @BindView(R.id.bt_show_more_diet_meals)

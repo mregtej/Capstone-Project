@@ -33,10 +33,16 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().
                             beginTransaction()
                             .replace(R.id.fl_meal_screen_fragment_container, new MealPlansFragment(),
-                                    getString(R.string.meal_plans_screen_title))
+                                    sFragmentName)
                             .commit();
                     return true;
                 case R.id.nav_meal_planner:
+                    sFragmentName = getString(R.string.meal_planner_screen_title);
+                    getSupportFragmentManager().
+                            beginTransaction()
+                            .replace(R.id.fl_meal_screen_fragment_container, new MealPlannerFragment(),
+                                    sFragmentName)
+                            .commit();
                     return true;
                 case R.id.nav_shopping_list:
                     return true;
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().
                     beginTransaction()
                     .replace(R.id.fl_meal_screen_fragment_container, new MealPlansFragment(),
-                            getString(R.string.meal_plans_screen_title))
+                            sFragmentName)
                     .commit();
         } else {
             sFragmentName = savedInstanceState.getString(FRAGMENT_NAME_SAVE_INSTANCE_KEY);

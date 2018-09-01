@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="60dp"
+    tools:context=".ui.MealPlannerFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="700dp" >
+        
+        <CalendarView
+            android:id="@+id/cv_meal_planner_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+        </CalendarView>
+
+        <TextView
+            android:id="@+id/tv_meal_planner_date"
+            style="@style/MyMealPlannerSubTitles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/meal_planner_default_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cv_meal_planner_calendar" />
+
+        <TextView
+            android:id="@+id/tv_meal_planner_breakfast_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/meal_planner_breakfast_title"
+            app:layout_constraintEnd_toStartOf="@+id/bt_meal_planner_breakfast_meal_update"
+            app:layout_constraintStart_toStartOf="@+id/cv_meal_planner_calendar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meal_planner_date" />
+
+        <TextView
+            android:id="@+id/tv_meal_planner_breakfast_meal"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingHorizontal="8dp"
+            android:maxLines="1"
+            android:paddingVertical="4dp"
+            android:background="@drawable/shape_rectangle"
+            android:hint="@string/meal_planner_breakfast_meal_hint"
+            app:layout_constraintEnd_toStartOf="@+id/bt_meal_planner_breakfast_meal_update"
+            app:layout_constraintStart_toStartOf="@+id/tv_meal_planner_breakfast_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meal_planner_breakfast_title" />
+
+        <Button
+            android:id="@+id/bt_meal_planner_breakfast_meal_update"
+            style="@style/MyMealPlannerIconButtons"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@mipmap/ic_update"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_meal_planner_breakfast_meal"
+            app:layout_constraintEnd_toEndOf="@+id/tv_meal_planner_date"
+            app:layout_constraintTop_toTopOf="@+id/tv_meal_planner_breakfast_meal" />
+
+        <TextView
+            android:id="@+id/tv_meal_planner_brunch_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/meal_planner_brunch_title"
+            app:layout_constraintEnd_toStartOf="@+id/bt_meal_planner_brunch_meal_update"
+            app:layout_constraintStart_toStartOf="@+id/tv_meal_planner_breakfast_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meal_planner_breakfast_meal" />
+
+        <TextView
+            android:id="@+id/tv_meal_planner_brunch_meal"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:background="@drawable/shape_rectangle"
+            android:hint="@string/meal_planner_brunch_meal_hint"
+            android:maxLines="1"
+            android:paddingVertical="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_meal_planner_brunch_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_meal_planner_brunch_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meal_planner_brunch_title" />
+
+        <Button
+            android:id="@+id/bt_meal_planner_brunch_meal_update"
+            style="@style/MyMealPlannerIconButtons"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@mipmap/ic_update"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_meal_planner_brunch_meal"
+            app:layout_constraintEnd_toEndOf="@+id/bt_meal_planner_breakfast_meal_update"
+            app:layout_constraintTop_toTopOf="@+id/tv_meal_planner_brunch_meal" />
+
+        <TextView
+            android:id="@+id/tv_meal_planner_lunch_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/meal_planner_lunch_title"
+            app:layout_constraintEnd_toStartOf="@+id/bt_meal_planner_lunch_meal_update"
+            app:layout_constraintStart_toStartOf="@+id/tv_meal_planner_brunch_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meal_planner_brunch_meal" />
+
+        <TextView
+            android:id="@+id/tv_meal_planner_lunch_meal"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:background="@drawable/shape_rectangle"
+            android:hint="@string/meal_planner_lunch_meal_hint"
+            android:maxLines="1"
+            android:paddingVertical="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_meal_planner_lunch_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_meal_planner_lunch_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meal_planner_lunch_title" />
+
+        <Button
+            android:id="@+id/bt_meal_planner_lunch_meal_update"
+            style="@style/MyMealPlannerIconButtons"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@mipmap/ic_update"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_meal_planner_lunch_meal"
+            app:layout_constraintEnd_toEndOf="@+id/bt_meal_planner_brunch_meal_update"
+            app:layout_constraintTop_toTopOf="@+id/tv_meal_planner_lunch_meal" />
+
+        <TextView
+            android:id="@+id/tv_meal_planner_dinner_title"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/meal_planner_dinner_title"
+            app:layout_constraintEnd_toStartOf="@+id/bt_meal_planner_dinner_meal_update"
+            app:layout_constraintStart_toStartOf="@+id/tv_meal_planner_lunch_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meal_planner_lunch_meal" />
+
+        <TextView
+            android:id="@+id/tv_meal_planner_dinner_meal"
+            style="@style/MyMealPlannerTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingHorizontal="8dp"
+            android:background="@drawable/shape_rectangle"
+            android:hint="@string/meal_planner_dinner_meal_hint"
+            android:maxLines="1"
+            android:paddingVertical="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_meal_planner_dinner_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_meal_planner_dinner_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meal_planner_dinner_title" />
+
+        <Button
+            android:id="@+id/bt_meal_planner_dinner_meal_update"
+            style="@style/MyMealPlannerIconButtons"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@mipmap/ic_update"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_meal_planner_dinner_meal"
+            app:layout_constraintEnd_toEndOf="@+id/bt_meal_planner_lunch_meal_update"
+            app:layout_constraintTop_toTopOf="@+id/tv_meal_planner_dinner_meal" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

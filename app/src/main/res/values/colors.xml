@@ -4,6 +4,7 @@
     <!-- App Material Design Colors-->
     <color name="colorPrimary">#FFB300</color>
     <color name="colorPrimaryLight">#FFE54C</color>
+    <color name="colorPrimaryLight2">#FFC977</color>
     <color name="colorPrimaryDark">#C68400</color>
     <color name="colorPrimaryDark2">#A16200</color>
     <color name="colorAccent">#004CFF</color>
