@@ -32,8 +32,8 @@
             android:id="@+id/ll_shopping_list_to_buy_collapse"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/shape_rectangle"
             android:orientation="vertical"
@@ -54,10 +54,12 @@
             android:id="@+id/ll_shopping_list_to_buy_ingredients"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/shape_rectangle"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/ll_shopping_list_to_buy_collapse"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_shopping_list_to_buy_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_shopping_list_to_buy_title">
 
@@ -66,17 +68,18 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_rectangle">
+                android:background="@drawable/header_table_shopping_list">
 
                 <ImageView
                     android:id="@+id/iv_shopping_list_to_buy_ingredients_icon"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:background="@mipmap/ic_ingredients"
+                    android:backgroundTint="@color/windowBackground"
                     android:elevation="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +87,7 @@
 
                 <TextView
                     android:id="@+id/tv_shopping_list_to_buy_ingredients_ingredient_title"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerBoldTitlesInWhite"
                     android:layout_width="148dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -96,7 +99,7 @@
 
                 <TextView
                     android:id="@+id/tv_shopping_list_to_buy_ingredients_quantity_title"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerBoldTitlesInWhite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -113,7 +116,7 @@
 
                 <TextView
                     android:id="@+id/tv_shopping_list_to_buy_ingredients_units_title"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerBoldTitlesInWhite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -196,7 +199,7 @@
             android:background="@drawable/shape_rectangle"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/ll_shopping_list_already_bought_collapse"
+            app:layout_constraintEnd_toEndOf="@+id/ll_shopping_list_to_buy_ingredients"
             app:layout_constraintStart_toStartOf="@+id/ll_shopping_list_to_buy_ingredients"
             app:layout_constraintTop_toBottomOf="@+id/tv_shopping_list_already_bought_title">
 
@@ -205,25 +208,26 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_rectangle">
+                android:background="@drawable/header_table_shopping_list">
 
                 <ImageView
                     android:id="@+id/iv_shopping_list_already_bought_ingredients_icon"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:background="@mipmap/ic_ingredients"
                     android:elevation="6dp"
+                    android:backgroundTint="@color/windowBackground"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_shopping_list_already_bought_ingredients_ingredient_title"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerBoldTitlesInWhite"
                     android:layout_width="148dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -235,7 +239,7 @@
 
                 <TextView
                     android:id="@+id/tv_shopping_list_already_bought_ingredients_quantity_title"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerBoldTitlesInWhite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -252,7 +256,7 @@
 
                 <TextView
                     android:id="@+id/tv_shopping_list_already_bought_ingredients_units_title"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerBoldTitlesInWhite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="52dp"
