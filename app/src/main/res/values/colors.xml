@@ -10,10 +10,13 @@
     <color name="colorAccent">#004CFF</color>
     <color name="colorAccentDark">#0024CA</color>
     <color name="colorAccentLight">#6D78FF</color>
-    <color name="windowBackground">#F3F3F3</color>
+    <color name="windowBackground">#d0d0d0</color>
 
     <!-- App Bottom Navigation Bar Colors -->
     <color name="colorNavBarIconChecked">#666666</color>
     <color name="colorNavBarIconNotChecked">#AAAAAA</color>
+
+    <!-- App CardView Colors-->
+    <color name="cardBackground">@android:color/white</color>
 
 </resources>

@@ -166,7 +166,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="180dp"
-            android:background="@drawable/shape_rectangle">
+            android:background="@drawable/card_shape_rectangle">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"

@@ -28,13 +28,13 @@
     <string name="meal_planner_dinner_title">Dinner</string>
     <string name="meal_planner_dinner_meal_hint">Dinner Meal</string>
 
-    <!-- My Account Screen Strings -->
+    <!-- Shopping List Screen Strings -->
     <string name="shopping_list_screen_title">Shopping List</string>
     <string name="shopping_list_to_buy_title">To buy</string>
-    <string name="shopping_list_ingredients_title">Ingredients</string>
-    <string name="shopping_list_quantity_title">Qty</string>
-    <string name="shopping_list_units_title">Units</string>
     <string name="shopping_list_already_bought_title">Already bought</string>
+    <string name="shopping_list_header_ingredients_title">Ingredients</string>
+    <string name="shopping_list_header_quantity_title">Qty</string>
+    <string name="shopping_list_header_units_title">Units</string>
 
     <!-- My Account Screen Strings -->
     <string name="my_account_screen_title">My Account</string>
