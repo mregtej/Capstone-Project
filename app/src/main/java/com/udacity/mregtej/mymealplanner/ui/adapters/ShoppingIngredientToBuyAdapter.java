@@ -22,14 +22,17 @@ public class ShoppingIngredientToBuyAdapter
 
     List<ShoppingIngredient> mShoppingIngredientList;
     private Context mContext;
+    private ShoppingIngredientToBuyClickListener mShoppingIngredientToBuyClickListener;
 
 
     //--------------------------------------------------------------------------------|
     //                                 Constructors                                   |
     //--------------------------------------------------------------------------------|
 
-    public ShoppingIngredientToBuyAdapter(List<ShoppingIngredient> ingredients) {
+    public ShoppingIngredientToBuyAdapter(List<ShoppingIngredient> ingredients,
+                                          ShoppingIngredientToBuyClickListener listener) {
         this.mShoppingIngredientList = ingredients;
+        this.mShoppingIngredientToBuyClickListener = listener;
     }
 
 
@@ -59,6 +62,9 @@ public class ShoppingIngredientToBuyAdapter
         // Populate UI elements
         populateUIView(holder, ingredient);
 
+        // Set OnClickListener
+        setOnViewClickListener(holder);
+
     }
 
     @Override
@@ -68,11 +74,35 @@ public class ShoppingIngredientToBuyAdapter
 
 
     //--------------------------------------------------------------------------------|
+    //                               Public Methods                                   |
+    //--------------------------------------------------------------------------------|
+
+    public void removeItem(int i) {
+        mShoppingIngredientList.remove(i);
+    }
+
+    public void addItem(ShoppingIngredient ingredient) {
+        mShoppingIngredientList.add(ingredient);
+    }
+
+    public ShoppingIngredient getItem(int i) { return mShoppingIngredientList.get(i); }
+
+
+    //--------------------------------------------------------------------------------|
     //                             Getters / Setters                                  |
     //--------------------------------------------------------------------------------|
 
     public List<ShoppingIngredient> getmShoppingIngredientList() {
         return mShoppingIngredientList;
+    }
+
+
+    //--------------------------------------------------------------------------------|
+    //                          Fragment--> Activity Comm                             |
+    //--------------------------------------------------------------------------------|
+
+    public interface ShoppingIngredientToBuyClickListener {
+        public void onShoppingIngredientAlreadyBoughtClick(int position);
     }
 
 
@@ -115,6 +145,28 @@ public class ShoppingIngredientToBuyAdapter
         holder.ingredientName.setText(ingredient.getName());
         holder.ingredientQuantity.setText(ingredient.getQuantity());
         holder.ingredientUnits.setText(ingredient.getUnits());
+    }
+
+
+    //--------------------------------------------------------------------------------|
+    //                              Support Methods                                   |
+    //--------------------------------------------------------------------------------|
+
+    /**
+     * Set a film click-listener on the film-view
+     *
+     * @param    holder    ViewHolder (View container)
+     */
+    private void setOnViewClickListener(final ViewHolder holder) {
+        holder.ingredientBought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mShoppingIngredientToBuyClickListener != null) {
+                    mShoppingIngredientToBuyClickListener.
+                            onShoppingIngredientAlreadyBoughtClick((int)holder.shoppingIngredientViewLayout.getTag());
+                }
+            }
+        });
     }
 
 }

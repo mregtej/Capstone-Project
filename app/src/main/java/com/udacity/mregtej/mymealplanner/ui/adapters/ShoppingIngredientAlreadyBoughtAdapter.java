@@ -22,14 +22,17 @@ public class ShoppingIngredientAlreadyBoughtAdapter
 
     List<ShoppingIngredient> mShoppingIngredientList;
     private Context mContext;
+    private ShoppingIngredientAlreadyBoughtClickListener mShoppingIngredientAlreadyBoughtClickListener;
 
 
     //--------------------------------------------------------------------------------|
     //                                 Constructors                                   |
     //--------------------------------------------------------------------------------|
 
-    public ShoppingIngredientAlreadyBoughtAdapter(List<ShoppingIngredient> ingredients) {
+    public ShoppingIngredientAlreadyBoughtAdapter(List<ShoppingIngredient> ingredients,
+                                                  ShoppingIngredientAlreadyBoughtClickListener listener ) {
         this.mShoppingIngredientList = ingredients;
+        mShoppingIngredientAlreadyBoughtClickListener = listener;
     }
 
 
@@ -58,12 +61,30 @@ public class ShoppingIngredientAlreadyBoughtAdapter
         // Populate UI elements
         populateUIView(holder, ingredient);
 
+        // Set OnClickListener
+        setOnViewClickListener(holder);
+
     }
 
     @Override
     public int getItemCount() {
         return mShoppingIngredientList.size();
     }
+
+
+    //--------------------------------------------------------------------------------|
+    //                               Public methods                                   |
+    //--------------------------------------------------------------------------------|
+
+    public void removeItem(int i) {
+        mShoppingIngredientList.remove(i);
+    }
+
+    public void addItem(ShoppingIngredient ingredient) {
+        mShoppingIngredientList.add(ingredient);
+    }
+
+    public ShoppingIngredient getItem(int i) { return mShoppingIngredientList.get(i); }
 
 
     //--------------------------------------------------------------------------------|
@@ -88,7 +109,7 @@ public class ShoppingIngredientAlreadyBoughtAdapter
         @BindView(R.id.tv_shopping_ingredient_units)
         TextView ingredientUnits;
         @BindView(R.id.iv_shopping_ingredient_remove)
-        ImageView ingredientRemoved;
+        ImageView ingredientBackToBuyList;
         private final View shoppingIngredientViewLayout;
 
         public ViewHolder(View itemView) {
@@ -97,6 +118,15 @@ public class ShoppingIngredientAlreadyBoughtAdapter
             ButterKnife.bind(this, itemView);
         }
 
+    }
+
+
+    //--------------------------------------------------------------------------------|
+    //                          Fragment--> Activity Comm                             |
+    //--------------------------------------------------------------------------------|
+
+    public interface ShoppingIngredientAlreadyBoughtClickListener {
+        public void onShoppingIngredientBackToBuyListClick(int position);
     }
 
 
@@ -114,6 +144,27 @@ public class ShoppingIngredientAlreadyBoughtAdapter
         holder.ingredientName.setText(ingredient.getName());
         holder.ingredientQuantity.setText(ingredient.getQuantity());
         holder.ingredientUnits.setText(ingredient.getUnits());
+    }
+
+    //--------------------------------------------------------------------------------|
+    //                              Support Methods                                   |
+    //--------------------------------------------------------------------------------|
+
+    /**
+     * Set a film click-listener on the film-view
+     *
+     * @param    holder    ViewHolder (View container)
+     */
+    private void setOnViewClickListener(final ViewHolder holder) {
+        holder.ingredientBackToBuyList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mShoppingIngredientAlreadyBoughtClickListener != null) {
+                    mShoppingIngredientAlreadyBoughtClickListener.
+                            onShoppingIngredientBackToBuyListClick((int)holder.shoppingIngredientViewLayout.getTag());
+                }
+            }
+        });
     }
 
 }
