@@ -36,6 +36,9 @@
     <string name="shopping_list_header_quantity_title">Qty</string>
     <string name="shopping_list_header_units_title">Units</string>
 
+    <!-- Recipe List Screen Strings -->
+    <string name="recipe_list_screen_title">Recipe List</string>
+
     <!-- My Account Screen Strings -->
     <string name="my_account_screen_title">My Account</string>
     <string name="my_account_default_name">John Doe</string>
