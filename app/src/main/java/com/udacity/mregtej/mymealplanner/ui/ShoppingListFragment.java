@@ -1,9 +1,6 @@
 package com.udacity.mregtej.mymealplanner.ui;
 
-
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,7 +11,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +20,7 @@ import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.ShoppingIngredient;
 import com.udacity.mregtej.mymealplanner.ui.adapters.ShoppingIngredientAlreadyBoughtAdapter;
 import com.udacity.mregtej.mymealplanner.ui.adapters.ShoppingIngredientToBuyAdapter;
+import com.udacity.mregtej.mymealplanner.ui.utils.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +51,14 @@ public class ShoppingListFragment extends Fragment implements
     private static final String SHOPPING_INGREDIENTS_ALREADY_BOUGHT_KEY =
             "shopping-ingredients-already-bought";
 
+    /** Key for storing the expand/collapse status of the to buy ingredient list in savedInstanceState */
+    private static final String SHOPPING_INGREDIENTS_TO_BUY_EXPANDED_KEY =
+            "shopping-ingredients-to-buy-expanded";
+
+    /** Key for storing the expand/collapse status of the to buy ingredient list in savedInstanceState */
+    private static final String SHOPPING_INGREDIENTS_ALREADY_BOUGHT_EXPANDED_KEY =
+            "shopping-ingredients-already-bought-expanded";
+
     @BindView(R.id.iv_shopping_list_to_buy_title_collapse)
     ImageView ivShoppingListToBuyTitleCollapse;
     @BindView(R.id.iv_shopping_list_to_buy_header_check_all)
@@ -70,6 +75,7 @@ public class ShoppingListFragment extends Fragment implements
     private Context mContext;
     Unbinder unbinder;
     ActionBar actionBar;
+
     /** List state stored in savedInstanceState */
     private Parcelable mListStateIngredientsToBuy;
     private Parcelable mListStateIngredientsAlreadyBought;
@@ -82,6 +88,11 @@ public class ShoppingListFragment extends Fragment implements
     private RecyclerView.LayoutManager mShoppingIngredientsAlreadyBoughtLayoutManager;
     /** Shopping Ingredients Custom ArrayAdapter */
     private ShoppingIngredientAlreadyBoughtAdapter mShoppingIngredientsAlreadyBoughtAdapter;
+
+    /** Flag for storing if ShoppingIngredientsToBuyRecyclerView is expanded */
+    private boolean isShoppingIngredientsToBuyRecyclerViewExpanded;
+    /** Flag for storing if ShoppingIngredientsAlreadyBoughtRecyclerView is expanded */
+    private boolean isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded;
 
     public ShoppingListFragment() {
         // Required empty public constructor
@@ -111,6 +122,16 @@ public class ShoppingListFragment extends Fragment implements
                     getParcelableArrayList(SHOPPING_INGREDIENTS_TO_BUY_KEY);
             List<ShoppingIngredient> ingredientsAlreadyBought = savedInstanceState.
                     getParcelableArrayList(SHOPPING_INGREDIENTS_ALREADY_BOUGHT_KEY);
+
+            isShoppingIngredientsToBuyRecyclerViewExpanded = savedInstanceState.
+                    getBoolean(SHOPPING_INGREDIENTS_TO_BUY_EXPANDED_KEY);
+            isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded = savedInstanceState.
+                    getBoolean(SHOPPING_INGREDIENTS_ALREADY_BOUGHT_EXPANDED_KEY);
+            setRecyclerViewVisibility(
+                    isShoppingIngredientsToBuyRecyclerViewExpanded, rvShoppingListToBuyBodyTable);
+            setRecyclerViewVisibility(
+                    isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded,
+                    rvShoppingListAlreadyBoughtBodyTable);
 
             mShoppingIngredientsToBuyAdapter =
                     new ShoppingIngredientToBuyAdapter(ingredientsToBuy, this);
@@ -143,6 +164,15 @@ public class ShoppingListFragment extends Fragment implements
             mShoppingIngredientsAlreadyBoughtAdapter =
                     new ShoppingIngredientAlreadyBoughtAdapter(ingredientsAlreadyBought, this);
 
+            // RecyclerViews expanded by default
+            isShoppingIngredientsToBuyRecyclerViewExpanded = true;
+            isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded = true;
+            setRecyclerViewVisibility(
+                    isShoppingIngredientsToBuyRecyclerViewExpanded, rvShoppingListToBuyBodyTable);
+            setRecyclerViewVisibility(
+                    isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded,
+                    rvShoppingListAlreadyBoughtBodyTable);
+
             // Set Adapter and notifyDataSetChanged
             rvShoppingListToBuyBodyTable.setAdapter(mShoppingIngredientsToBuyAdapter);
             mShoppingIngredientsToBuyAdapter.notifyDataSetChanged();
@@ -153,6 +183,12 @@ public class ShoppingListFragment extends Fragment implements
 
         // Set OnClickListeners
         setOnClickListeners();
+
+        // Update Expand/Collapse UI status
+        updateStatusCollapseView(isShoppingIngredientsToBuyRecyclerViewExpanded,
+                ivShoppingListToBuyTitleCollapse);
+        updateStatusCollapseView(isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded,
+                ivShoppingListAlreadyBoughtTitleCollapse);
 
         return view;
     }
@@ -182,6 +218,11 @@ public class ShoppingListFragment extends Fragment implements
         outState.putParcelableArrayList(SHOPPING_INGREDIENTS_ALREADY_BOUGHT_KEY,
                 (ArrayList<ShoppingIngredient>) mShoppingIngredientsAlreadyBoughtAdapter
                         .getmShoppingIngredientList());
+
+        outState.putBoolean(SHOPPING_INGREDIENTS_TO_BUY_EXPANDED_KEY,
+                isShoppingIngredientsToBuyRecyclerViewExpanded);
+        outState.putBoolean(SHOPPING_INGREDIENTS_ALREADY_BOUGHT_EXPANDED_KEY,
+                isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded);
     }
 
     @Override
@@ -192,6 +233,19 @@ public class ShoppingListFragment extends Fragment implements
                     .getParcelable(SHOPPING_INGREDIENTS_TO_BUY_LIST_STATE_KEY);
             mListStateIngredientsAlreadyBought = savedInstanceState
                     .getParcelable(SHOPPING_INGREDIENTS_ALREADY_BOUGHT_LIST_STATE_KEY);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mListStateIngredientsToBuy != null) {
+            mShoppingIngredientsToBuyLayoutManager
+                    .onRestoreInstanceState(mListStateIngredientsToBuy);
+        }
+        if (mListStateIngredientsAlreadyBought != null) {
+            mShoppingIngredientsAlreadyBoughtLayoutManager
+                    .onRestoreInstanceState(mListStateIngredientsAlreadyBought);
         }
     }
 
@@ -225,6 +279,11 @@ public class ShoppingListFragment extends Fragment implements
         }
     }
 
+
+    //--------------------------------------------------------------------------------|
+    //                                  UI Methods                                    |
+    //--------------------------------------------------------------------------------|
+
     private void setActionBarTitle(String title) {
         actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -251,9 +310,50 @@ public class ShoppingListFragment extends Fragment implements
                 .setLayoutManager(mShoppingIngredientsAlreadyBoughtLayoutManager);
     }
 
+    /**
+     * Expand / Collapse RecyclerView
+     * TODO Improve performance of expand transition
+     *
+     * @param isExpanded    RecyclerView visible state
+     * @param view          RecyclerView
+     */
+    private void setRecyclerViewVisibility(boolean isExpanded, View view) {
+        if(isExpanded) {
+            ViewUtils.expandView(view);
+        } else {
+            ViewUtils.collapseView(view);
+        }
+    }
+
+    /**
+     * Update UI status of Expand/Collapse GridView Button
+     *
+     * @param isExpanded    RecyclerView visible state
+     * @param view          Expand/Collapse View button
+     */
+    private void updateStatusCollapseView(boolean isExpanded, ImageView view) {
+        // Handle expansion / collapse of RecyclerViews
+        if(isExpanded) {
+            view.setImageResource(R.mipmap.ic_collapse);
+        } else {
+            view.setImageResource(R.mipmap.ic_expand);
+        }
+    }
+
+    /**
+     * Set OnClickListeners for:
+     *  - Expand/Collapse to buy list button
+     *  - Expand/Collapse already bought list button
+     *  - Mark all ingredients as bought button
+     *  - Remove all bought ingredients button
+     */
     private void setOnClickListeners() {
 
-        // TODO Set ivShoppingListToBuyTitleCollapse
+        /**************************************************/
+        /*      Expand/Collapse to buy list button        */
+        /*   Expand/Collapse already bought list button   */
+        /**************************************************/
+        setCollapseViewClickListeners();
 
         /**************************************************/
         /*      Mark all ingredients as bought button     */
@@ -268,8 +368,6 @@ public class ShoppingListFragment extends Fragment implements
             disableToBuyAllBoughtButton();
 
         }
-
-        // TODO Set ivShoppingListAlreadyBoughtTitleCollapse
 
         /**************************************************/
         /*      Remove all bought ingredients button      */
@@ -322,6 +420,36 @@ public class ShoppingListFragment extends Fragment implements
 
         // Update icon and disable button
         disableAlreadyBoughtRemoveAllButton();
+
+    }
+
+    private void setCollapseViewClickListeners() {
+
+        // Set Expand/Collapse OnClick action for To Buy Ingredient List RecyclerView
+        ivShoppingListToBuyTitleCollapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isShoppingIngredientsToBuyRecyclerViewExpanded =
+                        !isShoppingIngredientsToBuyRecyclerViewExpanded;
+                setRecyclerViewVisibility(isShoppingIngredientsToBuyRecyclerViewExpanded,
+                        rvShoppingListToBuyBodyTable);
+                updateStatusCollapseView(isShoppingIngredientsToBuyRecyclerViewExpanded,
+                        ivShoppingListToBuyTitleCollapse);
+            }
+        });
+
+        // Set Expand/Collapse OnClick action for Already Bought Ingredient List RecyclerView
+        ivShoppingListAlreadyBoughtTitleCollapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded =
+                        !isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded;
+                setRecyclerViewVisibility(isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded,
+                        rvShoppingListAlreadyBoughtBodyTable);
+                updateStatusCollapseView(isShoppingIngredientsAlreadyBoughtRecyclerViewExpanded,
+                        ivShoppingListAlreadyBoughtTitleCollapse);
+            }
+        });
 
     }
 

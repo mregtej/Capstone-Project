@@ -153,7 +153,7 @@ public class ShoppingIngredientToBuyAdapter
     //--------------------------------------------------------------------------------|
 
     /**
-     * Set a film click-listener on the film-view
+     * Set a click-listener on the ingredient to buy
      *
      * @param    holder    ViewHolder (View container)
      */
@@ -162,8 +162,10 @@ public class ShoppingIngredientToBuyAdapter
             @Override
             public void onClick(View v) {
                 if(mShoppingIngredientToBuyClickListener != null) {
+                    // TODO Add visual delay for displaying the tick
                     mShoppingIngredientToBuyClickListener.
-                            onShoppingIngredientAlreadyBoughtClick((int)holder.shoppingIngredientViewLayout.getTag());
+                            onShoppingIngredientAlreadyBoughtClick(
+                                    (int)holder.shoppingIngredientViewLayout.getTag());
                 }
             }
         });

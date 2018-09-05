@@ -1,6 +1,7 @@
 package com.udacity.mregtej.mymealplanner.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,15 +43,18 @@ public class ShoppingIngredientAlreadyBoughtAdapter
 
     @NonNull
     @Override
-    public ShoppingIngredientAlreadyBoughtAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ShoppingIngredientAlreadyBoughtAdapter
+            .ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.view_shopping_ingredient_already_bought, parent, false);
+        View view = inflater.inflate(R.layout.view_shopping_ingredient_already_bought, parent,
+                false);
         return new ShoppingIngredientAlreadyBoughtAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShoppingIngredientAlreadyBoughtAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ShoppingIngredientAlreadyBoughtAdapter.ViewHolder holder,
+                                 int position) {
 
         // Retrieve i-ingredient from shopping ingredient list
         ShoppingIngredient ingredient = mShoppingIngredientList.get(position);
@@ -140,10 +144,17 @@ public class ShoppingIngredientAlreadyBoughtAdapter
      * @param holder     ViewHolder (View container)
      * @param ingredient Shopping Ingredient object
      */
-    private void populateUIView(ShoppingIngredientAlreadyBoughtAdapter.ViewHolder holder, ShoppingIngredient ingredient) {
+    private void populateUIView(ShoppingIngredientAlreadyBoughtAdapter.ViewHolder holder,
+                                ShoppingIngredient ingredient) {
         holder.ingredientName.setText(ingredient.getName());
+        holder.ingredientName.setPaintFlags(holder.ingredientName.getPaintFlags()
+                | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.ingredientQuantity.setText(ingredient.getQuantity());
+        holder.ingredientQuantity.setPaintFlags(holder.ingredientQuantity.getPaintFlags()
+                | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.ingredientUnits.setText(ingredient.getUnits());
+        holder.ingredientUnits.setPaintFlags(holder.ingredientUnits.getPaintFlags()
+                | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
     //--------------------------------------------------------------------------------|
@@ -161,7 +172,8 @@ public class ShoppingIngredientAlreadyBoughtAdapter
             public void onClick(View v) {
                 if(mShoppingIngredientAlreadyBoughtClickListener != null) {
                     mShoppingIngredientAlreadyBoughtClickListener.
-                            onShoppingIngredientBackToBuyListClick((int)holder.shoppingIngredientViewLayout.getTag());
+                            onShoppingIngredientBackToBuyListClick(
+                                    (int)holder.shoppingIngredientViewLayout.getTag());
                 }
             }
         });
