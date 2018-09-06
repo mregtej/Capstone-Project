@@ -75,7 +75,6 @@ public class MealPlannerFragment extends Fragment {
         return view;
     }
 
-
     private void setActionBarTitle(String title) {
         actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {

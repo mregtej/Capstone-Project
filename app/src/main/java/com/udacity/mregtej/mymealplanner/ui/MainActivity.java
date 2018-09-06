@@ -8,12 +8,16 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.udacity.mregtej.mymealplanner.R;
+import com.udacity.mregtej.mymealplanner.datamodel.MealPlan;
 import com.udacity.mregtej.mymealplanner.ui.utils.BottomNavigationViewHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements MealPlansFragment.OnMealPlansFragmentInteractionListener{
+
+    private static final String MEAL_MENU_SAVE_INSTANCE_KEY = "meal-menu";
 
     private static final String FRAGMENT_NAME_SAVE_INSTANCE_KEY = "fragment-name";
 
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout flMealScreenFragmentContainer;
     @BindView(R.id.bnv_app_navigation)
     BottomNavigationView bnvAppNavigation;
+
     private String sFragmentName;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -102,6 +107,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(FRAGMENT_NAME_SAVE_INSTANCE_KEY, sFragmentName);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onMealPlanPreviewClick(MealPlan mealPlan) {
+        /*
+        sFragmentName = "MealMenuScreen";
+        Bundle bundle = new Bundle();
+        MealMenuFragment fragment = new MealMenuFragment();
+        bundle.putParcelable(MEAL_MENU_SAVE_INSTANCE_KEY, mealPlan);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().
+                beginTransaction()
+                .add(R.id.fl_meal_screen_fragment_container, fragment, sFragmentName)
+                .addToBackStack(null)
+                .commit();
+                */
     }
 
 }
