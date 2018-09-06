@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMealPlanPreviewClick(MealPlan mealPlan) {
-        /*
         sFragmentName = "MealMenuScreen";
         Bundle bundle = new Bundle();
         MealMenuFragment fragment = new MealMenuFragment();
@@ -122,7 +121,6 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.fl_meal_screen_fragment_container, fragment, sFragmentName)
                 .addToBackStack(null)
                 .commit();
-                */
     }
 
 }
