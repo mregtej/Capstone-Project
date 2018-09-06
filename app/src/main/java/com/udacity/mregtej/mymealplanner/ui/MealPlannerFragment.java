@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.udacity.mregtej.mymealplanner.R;
@@ -32,20 +33,20 @@ public class MealPlannerFragment extends Fragment {
     TextView tvMealPlannerDate;
     @BindView(R.id.tv_meal_planner_breakfast_meal)
     TextView tvMealPlannerBreakfastMeal;
-    @BindView(R.id.bt_meal_planner_breakfast_meal_update)
-    Button btMealPlannerBreakfastMealUpdate;
+    @BindView(R.id.iv_meal_planner_breakfast_meal_update)
+    ImageView ivMealPlannerBreakfastMealUpdate;
     @BindView(R.id.tv_meal_planner_brunch_meal)
     TextView tvMealPlannerBrunchMeal;
-    @BindView(R.id.bt_meal_planner_brunch_meal_update)
-    Button btMealPlannerBrunchMealUpdate;
+    @BindView(R.id.iv_meal_planner_brunch_meal_update)
+    ImageView ivMealPlannerBrunchMealUpdate;
     @BindView(R.id.tv_meal_planner_lunch_meal)
     TextView tvMealPlannerLunchMeal;
-    @BindView(R.id.bt_meal_planner_lunch_meal_update)
-    Button btMealPlannerLunchMealUpdate;
+    @BindView(R.id.iv_meal_planner_lunch_meal_update)
+    ImageView ivMealPlannerLunchMealUpdate;
     @BindView(R.id.tv_meal_planner_dinner_meal)
     TextView tvMealPlannerDinnerMeal;
-    @BindView(R.id.bt_meal_planner_dinner_meal_update)
-    Button btMealPlannerDinnerMealUpdate;
+    @BindView(R.id.iv_meal_planner_dinner_meal_update)
+    ImageView ivMealPlannerDinnerMealUpdate;
 
     Unbinder unbinder;
     Context mContext;
