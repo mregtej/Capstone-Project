@@ -16,6 +16,12 @@
     <string name="meal_plans_veggies_title">Veggies</string>
     <string name="meal_plans_show_more_button">Show More</string>
 
+    <!-- Meal Menu Day Screen Strings -->
+    <string name="meal_menu_day_breakfast">Breakfast</string>
+    <string name="meal_menu_day_brunch">Brunch</string>
+    <string name="meal_menu_day_lunch">Lunch</string>
+    <string name="meal_menu_day_dinner">Dinner</string>
+
     <!-- Meal Planner Screen Strings -->
     <string name="meal_planner_screen_title">Meal Planner</string>
     <string name="meal_planner_default_date">15th of March, 2018</string>
@@ -50,9 +56,5 @@
     <string name="my_account_favourite_recipes_title">Fav Recipes</string>
     <string name="my_account_my_meals_title">My Meals</string>
     <string name="my_account_planned_meals_title">Planned Meals</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>
