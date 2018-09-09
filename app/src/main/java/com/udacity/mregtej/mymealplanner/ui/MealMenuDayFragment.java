@@ -93,8 +93,8 @@ public class MealMenuDayFragment extends Fragment {
             case R.id.iv_meal_menu_day_breakfast_update:
                 break;
             case R.id.iv_meal_menu_day_breakfast_recipe_photo:
-                // Intent intent = new Intent(mContext, RecipeActivity.class);
-                // startActivity(intent);
+                Intent intent = new Intent(mContext, RecipeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.iv_meal_menu_day_brunch_update:
                 break;

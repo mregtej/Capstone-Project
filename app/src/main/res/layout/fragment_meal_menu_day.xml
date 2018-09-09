@@ -490,7 +490,7 @@
         android:alpha="1"
         android:background="@drawable/button_shape_circle"
         android:elevation="4dp"
-        android:src="@mipmap/ic_schedule_72"
+        android:src="@mipmap/ic_schedule"
         android:stateListAnimator="@animator/fab_raise"
         app:fabSize="normal"
         app:backgroundTint="@color/colorPrimary"/>

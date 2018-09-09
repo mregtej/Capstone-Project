@@ -18,5 +18,6 @@
 
     <!-- App CardView Colors-->
     <color name="cardBackground">@android:color/white</color>
+    <color name="recipeCardBackground">#AAAAAA</color>
 
 </resources>

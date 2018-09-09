@@ -7,8 +7,9 @@
     tools:context=".ui.RecipeActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/abl_appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="220dp"
         android:background="@color/colorPrimary">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -40,26 +41,146 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/image_scrim_gradient" />
 
-                <LinearLayout
-                    android:id="@+id/ll_recipe_data"
-                    android:layout_width="match_parent"
+                <FrameLayout
+                    android:id="@+id/ll_recipe_main_data"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="bottom|left"
+                    android:layout_margin="12dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_recipe_name"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:maxLines="2"
-                        android:fontFamily="sans-serif"
-                        android:textSize="18sp"
-                        android:text="Recipe Name"/>
+                        android:orientation="vertical" >
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_recipe_name"
+                            style="@style/MyMealPlannerBiggerTitlesInWhite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/recipe_screen_default_recipe_name"/>
+
+                        <TextView
+                            android:id="@+id/tv_recipe_author"
+                            style="@style/MyMealPlannerBoldTitlesInWhite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="@string/recipe_screen_default_recipe_author"/>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/ll_recipe_timer_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|left"
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_recipe_data_timer_icon"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:padding="8dp"
+                            android:elevation="4dp"
+                            android:background="@drawable/button_shape_circle"
+                            android:backgroundTint="@color/recipeCardBackground"
+                            android:alpha="0.8"
+                            android:src="@mipmap/ic_timer"
+                            android:stateListAnimator="@animator/fab_raise" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/recipe_card_shape_rectangle"
+                            android:layout_gravity="center_vertical"
+                            android:alpha="0.8">
+
+                            <TextView
+                                android:id="@+id/tv_recipe_data_timer_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/MyMealPlannerBoldTitlesInWhite"
+                                android:layout_gravity="center_vertical"
+                                android:alpha="1.0"
+                                android:paddingHorizontal="4dp"
+                                android:maxLines="1"
+                                android:text="1hr 15min"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/ll_recipe_icons_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|right"
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_recipe_icon_back"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_marginRight="4dp"
+                            android:padding="8dp"
+                            android:elevation="4dp"
+                            android:background="@drawable/button_shape_circle"
+                            android:backgroundTint="@color/recipeCardBackground"
+                            android:alpha="0.8"
+                            android:src="@mipmap/ic_back"
+                            android:stateListAnimator="@animator/fab_raise" />
+
+                        <ImageView
+                            android:id="@+id/iv_recipe_icon_bookmark"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="4dp"
+                            android:padding="8dp"
+                            android:elevation="4dp"
+                            android:background="@drawable/button_shape_circle"
+                            android:backgroundTint="@color/recipeCardBackground"
+                            android:alpha="0.8"
+                            android:src="@mipmap/ic_bookmark"
+                            android:stateListAnimator="@animator/fab_raise" />
+
+                        <ImageView
+                            android:id="@+id/iv_recipe_icon_plan"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_marginLeft="4dp"
+                            android:padding="8dp"
+                            android:elevation="4dp"
+                            android:background="@drawable/button_shape_circle"
+                            android:backgroundTint="@color/recipeCardBackground"
+                            android:alpha="0.8"
+                            android:src="@mipmap/ic_schedule"
+                            android:stateListAnimator="@animator/fab_raise" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
             </FrameLayout>
 
@@ -77,13 +198,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="true">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="true" >
 
         <FrameLayout
             android:id="@+id/fl_recipe_screen_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
     </ScrollView>
 
