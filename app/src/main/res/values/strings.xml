@@ -61,10 +61,23 @@
     <string name="recipe_screen_title">Recipe</string>
     <string name="recipe_screen_default_recipe_name">Recipe Name</string>
     <string name="recipe_screen_default_recipe_author">\u0040Author</string>
-
-    <!-- Recipe Screen + Nutritional Facts Screen Strings -->
     <string name="recipe_nutritional_facts_tab_title">Nutritional Facts</string>
     <string name="recipe_ingredients_tab_title">Ingredients</string>
     <string name="recipe_recipe_steps_tab_title">Recipe Steps</string>
+
+    <!-- Recipe Screen + Nutritional Facts Screen Strings -->
+    <string name="recipe_nutritional_facts_amount_per_serving_title">Amount per serving</string>
+    <string name="recipe_nutritional_facts_pro_daily_value_title">\u0025 daily value</string>
+    <string name="recipe_nutritional_facts_calories_title">Calories: </string>
+    <string name="recipe_nutritional_facts_fat_title">Fat: </string>
+    <string name="recipe_nutritional_facts_carbs_title">Carbs: </string>
+    <string name="recipe_nutritional_facts_fiber_title">Fiber: </string>
+    <string name="recipe_nutritional_facts_protein_title">Protein: </string>
+    <string name="recipe_nutritional_facts_sugar_title">Sugars: </string>
+    <string name="recipe_nutritional_facts_sodium_title">Sodium: </string>
+    <string name="recipe_nutritional_facts_kcal_units">kcal</string>
+    <string name="recipe_nutritional_facts_g_units">g</string>
+    <string name="recipe_nutritional_facts_mg_units">mg</string>
+    <string name="recipe_nutritional_facts_procent">\u0025</string>
 
 </resources>

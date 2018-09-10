@@ -26,8 +26,6 @@ public class RecipeActivity extends AppCompatActivity {
     TextView tvRecipeAuthor;
     @BindView(R.id.tv_recipe_data_timer_time)
     TextView tvRecipeDataTimerTime;
-    @BindView(R.id.iv_recipe_icon_back)
-    ImageView ivRecipeIconBack;
     @BindView(R.id.iv_recipe_icon_bookmark)
     ImageView ivRecipeIconBookmark;
     @BindView(R.id.iv_recipe_icon_plan)
@@ -83,11 +81,9 @@ public class RecipeActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    @OnClick({R.id.iv_recipe_icon_back, R.id.iv_recipe_icon_bookmark, R.id.iv_recipe_icon_plan})
+    @OnClick({R.id.iv_recipe_icon_bookmark, R.id.iv_recipe_icon_plan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_recipe_icon_back:
-                break;
             case R.id.iv_recipe_icon_bookmark:
                 break;
             case R.id.iv_recipe_icon_plan:
