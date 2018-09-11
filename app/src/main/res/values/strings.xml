@@ -80,4 +80,13 @@
     <string name="recipe_nutritional_facts_mg_units">mg</string>
     <string name="recipe_nutritional_facts_procent">\u0025</string>
 
+    <!-- Recipe Screen + Nutritional Facts Screen Strings -->
+    <string name="recipe_steps_default_step_number">1.</string>
+    <string name="recipe_steps_default_step_description">Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit. Aperiam atque ipsam nesciunt nihil quaerat. At consequuntur dolores earum
+        error eveniet facere fuga hic illo impedit libero, modi nostrum officiis porro quam soluta
+        voluptatibus voluptatum. Asperiores corporis fugiat molestiae non voluptatibus. Architecto
+        culpa hic illum ipsam laudantium? Assumenda dignissimos dolores facere.</string>
+
+
 </resources>

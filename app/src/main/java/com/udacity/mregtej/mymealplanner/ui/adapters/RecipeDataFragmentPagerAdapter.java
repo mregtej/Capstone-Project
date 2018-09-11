@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.ui.MealMenuDayFragment;
 import com.udacity.mregtej.mymealplanner.ui.RecipeNutritionalFactsFragment;
+import com.udacity.mregtej.mymealplanner.ui.RecipeStepsFragment;
 
 public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -27,10 +28,24 @@ public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        RecipeNutritionalFactsFragment recipeDataFragment = new RecipeNutritionalFactsFragment();
+        Fragment recipeDataFragment = null;
+        switch (position) {
+            case 0:
+                recipeDataFragment = new RecipeNutritionalFactsFragment();
+                break;
+            case 1:
+                recipeDataFragment = new RecipeNutritionalFactsFragment();
+                break;
+            case 2:
+            default:
+                recipeDataFragment = new RecipeStepsFragment();
+                break;
+        }
         Bundle args = new Bundle();
         args.putInt(MealMenuDayFragment.POSITION_KEY, position + 1);
-        recipeDataFragment.setArguments(args);
+        if(recipeDataFragment != null) {
+            recipeDataFragment.setArguments(args);
+        }
         return recipeDataFragment;
     }
 
