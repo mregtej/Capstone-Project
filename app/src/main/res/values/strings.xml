@@ -15,6 +15,7 @@
     <string name="meal_plans_diet_title">Losing Weight</string>
     <string name="meal_plans_veggies_title">Veggies</string>
     <string name="meal_plans_show_more_button">Show More</string>
+    <string name="meal_plans_default_meal_plan_title">Meal Plan Title</string>
 
     <!-- Meal Menu Day Screen Strings -->
     <string name="meal_menu_day_breakfast">Breakfast</string>

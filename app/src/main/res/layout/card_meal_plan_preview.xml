@@ -26,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="1dp"
-                android:background="@drawable/card_shape_rectangle" />
+                android:background="@drawable/card_shape_rectangle"
+                android:src="@drawable/im_recipe"/>
 
             <View
                 android:id="@+id/v_card_meal_plan_photo_scrim"
@@ -51,7 +52,7 @@
                     android:maxLines="2"
                     android:fontFamily="sans-serif"
                     android:textSize="18sp"
-                    android:text="Meal Plan Name"/>
+                    android:text="@string/meal_plans_default_meal_plan_title"/>
 
             </LinearLayout>
 
