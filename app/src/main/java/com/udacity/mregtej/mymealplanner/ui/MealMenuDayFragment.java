@@ -162,7 +162,9 @@ public class MealMenuDayFragment extends Fragment implements
 
     @Override
     public void onMealMenuDayMealtimeClick(int position) {
-
+        Intent intent = new Intent(mContext, RecipeActivity.class);
+        // TODO Add extras
+        startActivity(intent);
     }
 
 }

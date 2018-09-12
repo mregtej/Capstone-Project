@@ -67,6 +67,9 @@ public class MealMenuDayMealtimeAdapter extends
         // Populate UI elements
         populateUIView(holder, recipe);
 
+        // Set OnViewClickListeners
+        setOnViewClickListener(holder);
+
     }
 
     @Override
