@@ -17,6 +17,15 @@
             android:layout_height="wrap_content"
             android:stretchColumns="1" >
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_meal_menu_day_data"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="1dp"
+                android:stretchMode="columnWidth" />
+
+            <!--
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/cl_meal_menu_day_breakfast"
                 android:layout_width="0dp"
@@ -474,6 +483,8 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.5" />
+
+                -->
 
         </android.support.constraint.ConstraintLayout>
 
