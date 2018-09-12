@@ -56,7 +56,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_name"
-                            style="@style/MyMealPlannerBiggerTitlesInWhite"
+                            style="@style/MyMealPlannerTextStyle.H1Titles.White"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="2"
@@ -64,7 +64,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_author"
-                            style="@style/MyMealPlannerBoldTitlesInWhite"
+                            style="@style/MyMealPlannerTextStyle.Titles.White"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
@@ -113,7 +113,7 @@
                                 android:id="@+id/tv_recipe_data_timer_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/MyMealPlannerBoldTitlesInWhite"
+                                style="@style/MyMealPlannerTextStyle.Titles.White"
                                 android:layout_gravity="center_vertical"
                                 android:textSize="14sp"
                                 android:alpha="1.0"

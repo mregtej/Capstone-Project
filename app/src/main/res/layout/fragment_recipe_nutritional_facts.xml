@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/tv_recipe_screen_nutritional_facts_amount_title"
-                style="@style/MyMealPlannerSubTitles"
+                style="@style/MyMealPlannerTextStyle.SubTitles"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -48,7 +48,7 @@
 
             <TextView
                 android:id="@+id/tv_recipe_screen_nutritional_facts_pro_daily_title"
-                style="@style/MyMealPlannerSubTitles"
+                style="@style/MyMealPlannerTextStyle.SubTitles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -91,7 +91,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_calories_title"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
@@ -103,7 +103,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_calories_value"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
@@ -115,7 +115,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_calories_units"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
@@ -127,7 +127,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_calories_pro_day"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
@@ -140,7 +140,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_calories_procent"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
@@ -175,7 +175,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fat_title"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
@@ -187,7 +187,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fat_value"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
@@ -199,7 +199,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fat_units"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
@@ -211,7 +211,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fat_pro_day"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
@@ -224,7 +224,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fat_procent"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
@@ -259,7 +259,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_carbs_title"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
@@ -271,7 +271,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_carbs_value"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
@@ -283,7 +283,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_carbs_units"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
@@ -295,7 +295,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_carbs_pro_day"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
@@ -308,7 +308,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_carbs_procent"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
@@ -343,7 +343,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fiber_title"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
@@ -355,7 +355,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fiber_value"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
@@ -367,7 +367,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fiber_units"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
@@ -379,7 +379,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fiber_pro_day"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
@@ -392,7 +392,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_fiber_procent"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
@@ -427,7 +427,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_protein_title"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
@@ -439,7 +439,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_protein_value"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
@@ -451,7 +451,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_protein_units"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
@@ -463,7 +463,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_protein_pro_day"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
@@ -476,7 +476,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_protein_procent"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
@@ -511,7 +511,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sugars_title"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
@@ -523,7 +523,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sugars_value"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
@@ -535,7 +535,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sugars_units"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
@@ -547,7 +547,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sugars_pro_day"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
@@ -560,7 +560,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sugars_procent"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
@@ -595,7 +595,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sodium_title"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
@@ -607,7 +607,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sodium_value"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
@@ -619,7 +619,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sodium_units"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
@@ -631,7 +631,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sodium_pro_day"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
@@ -644,7 +644,7 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_screen_nutritional_facts_sodium_procent"
-                            style="@style/MyMealPlannerSmallTitlesInBlack"
+                            style="@style/MyMealPlannerTextStyle.SmallTitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"

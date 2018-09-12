@@ -17,39 +17,49 @@
         <item name="coordinatorLayoutStyle">@style/Widget.Support.CoordinatorLayout</item>
     </style>
 
-    <style name="MyMealPlannerTitles" parent="@style/TextAppearance.AppCompat.Title">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="MyMealPlannerTextStyle" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:background">@color/colorSurface</item>
+        <item name="android:textColor">@color/onColorSurface</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="MyMealPlannerSubTitles" parent="MyMealPlannerTitles">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="MyMealPlannerHeaderTableTitles" parent="MyMealPlannerTitles">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="MyMealPlannerBoldTitlesInWhite" parent="MyMealPlannerTitles">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="MyMealPlannerBiggerTitles" parent="MyMealPlannerTitles">
+    <style name="MyMealPlannerTextStyle.H1Titles">
         <item name="android:textSize">26sp</item>
     </style>
 
-    <style name="MyMealPlannerBiggerTitlesInWhite" parent="MyMealPlannerBiggerTitles">
-        <item name="android:textColor">@android:color/white</item>
+    <style name="MyMealPlannerTextStyle.H1Titles.White">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/onColorPrimary</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="MyMealPlannerSmallTitlesInBlack" parent="MyMealPlannerTitles">
+    <style name="MyMealPlannerTextStyle.Titles">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MyMealPlannerTextStyle.Titles.White">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/onColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyMealPlannerTextStyle.SubTitles">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="MyMealPlannerTextStyle.SmallTitles">
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="MyMealPlannerTextStyle.TableTitles">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyMealPlannerTextStyle.TableTitles.White">
+        <item name="android:textColor">@color/onColorPrimary</item>
     </style>
 
     <style name="MyMealPlannerTextButtons" parent="@style/Widget.AppCompat.Button.Borderless">

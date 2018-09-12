@@ -25,7 +25,7 @@
 
             <TextView
                 android:id="@+id/tv_favourite_meals_title"
-                style="@style/MyMealPlannerTitles"
+                style="@style/MyMealPlannerTextStyle.Titles"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -82,7 +82,7 @@
 
             <TextView
                 android:id="@+id/tv_diet_meals_title"
-                style="@style/MyMealPlannerTitles"
+                style="@style/MyMealPlannerTextStyle.Titles"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -140,7 +140,7 @@
 
             <TextView
                 android:id="@+id/tv_veggie_meals_title"
-                style="@style/MyMealPlannerTitles"
+                style="@style/MyMealPlannerTextStyle.Titles"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

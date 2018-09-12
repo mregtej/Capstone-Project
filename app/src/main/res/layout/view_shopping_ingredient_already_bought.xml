@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tv_shopping_ingredient_name"
-        style="@style/MyMealPlannerTitles"
+        style="@style/MyMealPlannerTextStyle.SmallTitles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -17,8 +17,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/shopping_list_header_ingredients_title"
-        android:textColor="@android:color/black"
-        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_shopping_ingredient_quantity"
         app:layout_constraintEnd_toStartOf="@+id/tv_shopping_ingredient_quantity"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,29 +24,25 @@
 
     <TextView
         android:id="@+id/tv_shopping_ingredient_quantity"
-        style="@style/MyMealPlannerTitles"
+        style="@style/MyMealPlannerTextStyle.SmallTitles"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/shopping_list_header_quantity_title"
-        android:textColor="@android:color/black"
-        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_shopping_ingredient_units"
         app:layout_constraintEnd_toStartOf="@+id/tv_shopping_ingredient_units"
         app:layout_constraintTop_toTopOf="@+id/tv_shopping_ingredient_units" />
 
     <TextView
         android:id="@+id/tv_shopping_ingredient_units"
-        style="@style/MyMealPlannerTitles"
+        style="@style/MyMealPlannerTextStyle.SmallTitles"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/shopping_list_header_units_title"
-        android:textColor="@android:color/black"
-        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_shopping_ingredient_check"
         app:layout_constraintEnd_toStartOf="@+id/v_shopping_ingredient_inter_separator"
         app:layout_constraintTop_toTopOf="@+id/iv_shopping_ingredient_remove" />

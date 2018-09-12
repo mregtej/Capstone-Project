@@ -34,7 +34,7 @@
 
                 <TextView
                     android:id="@+id/iv_my_account_user_name"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerTextStyle.Titles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -111,7 +111,7 @@
 
                 <TextView
                     android:id="@+id/tv_my_account_send_feedback_title"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerTextStyle.Titles"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -140,7 +140,7 @@
 
                 <TextView
                     android:id="@+id/tv_my_account_about_me_title"
-                    style="@style/MyMealPlannerTitles"
+                    style="@style/MyMealPlannerTextStyle.Titles"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -174,7 +174,7 @@
 
                 <TextView
                     android:id="@+id/tv_my_account_favourite_recipes_title"
-                    style="@style/MyMealPlannerSmallTitlesInBlack"
+                    style="@style/MyMealPlannerTextStyle.SmallTitles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -186,7 +186,7 @@
 
                 <TextView
                     android:id="@+id/tv_my_account_my_meals_title"
-                    style="@style/MyMealPlannerSmallTitlesInBlack"
+                    style="@style/MyMealPlannerTextStyle.SmallTitles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -201,7 +201,7 @@
 
                 <TextView
                     android:id="@+id/tv_my_account_planned_meals_title"
-                    style="@style/MyMealPlannerSmallTitlesInBlack"
+                    style="@style/MyMealPlannerTextStyle.SmallTitles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -214,7 +214,7 @@
 
                 <TextView
                     android:id="@+id/tv_my_account_favourite_recipes_number"
-                    style="@style/MyMealPlannerBiggerTitles"
+                    style="@style/MyMealPlannerTextStyle.H1Titles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -227,7 +227,7 @@
 
                 <TextView
                     android:id="@+id/tv_my_account_my_meals_number"
-                    style="@style/MyMealPlannerBiggerTitles"
+                    style="@style/MyMealPlannerTextStyle.H1Titles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -240,7 +240,7 @@
 
                 <TextView
                     android:id="@+id/tv_my_account_planned_meals_number"
-                    style="@style/MyMealPlannerBiggerTitles"
+                    style="@style/MyMealPlannerTextStyle.H1Titles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
