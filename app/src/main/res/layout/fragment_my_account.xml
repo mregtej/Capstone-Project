@@ -60,7 +60,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/v_separator"
-            android:background="@color/windowBackground"
+            android:background="@color/colorBackground"
             android:gravity="center"
             android:orientation="vertical">
 

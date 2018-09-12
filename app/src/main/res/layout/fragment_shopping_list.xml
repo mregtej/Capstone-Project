@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="60dp"
-    android:background="@color/windowBackground"
+    android:background="@color/colorBackground"
     tools:context=".ui.ShoppingListFragment">
 
     <android.support.constraint.ConstraintLayout
