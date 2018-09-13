@@ -53,6 +53,11 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="MyMealPlannerTextStyle.MiniTitles">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="MyMealPlannerTextStyle.TableTitles">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">14sp</item>
@@ -72,6 +77,23 @@
 
     <style name="MyMealPlannerIconButtons" parent="@style/Widget.AppCompat.Button">
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="MyMealPlannerTextInputLayoutTheme" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/onColorSurface</item>
+        <item name="android:textSize">18sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/onColorPrimary</item>
+        <item name="colorControlNormal">@color/onColorSurface</item>
+        <item name="colorControlActivated">@color/colorPrimaryLight</item>
+    </style>
+
+
+    <style name="MyMealPlannerThemeEditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/onColorSurface</item>
+        <item name="colorControlActivated">@color/colorPrimaryLight</item>
+        <item name="colorControlHighlight">@color/colorPrimaryLight</item>
     </style>
 
 </resources>
