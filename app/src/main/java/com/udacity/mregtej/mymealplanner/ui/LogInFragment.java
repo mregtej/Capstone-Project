@@ -29,6 +29,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.udacity.mregtej.mymealplanner.R;
+import com.udacity.mregtej.mymealplanner.application.MyMealPlanner;
 import com.udacity.mregtej.mymealplanner.datamodel.GoogleAccountData;
 
 import java.util.concurrent.Executor;
@@ -95,6 +96,7 @@ public class LogInFragment extends Fragment {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(mContext, gso);
+        ((MyMealPlanner) mContext.getApplication()).setmGoogleSignInClient(mGoogleSignInClient);
 
         // Request default focus
         etLoginScreenEmail.requestFocus();
@@ -119,12 +121,13 @@ public class LogInFragment extends Fragment {
         super.onStart();
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        mGoogleSignInClient.silentSignIn().addOnCompleteListener(new OnCompleteListener<GoogleSignInAccount>() {
-            @Override
-            public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
-                handleSignInResult(task);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(mContext);
+        if(account != null) {
+            final GoogleAccountData googleAccountData = retrieveGoogleAccountData(account);
+            if(mListener != null) {
+                mListener.onSuccessfulGMailLogIn(googleAccountData);
             }
-        });
+        }
     }
 
     @Override
@@ -234,6 +237,7 @@ public class LogInFragment extends Fragment {
     }
 
     private void signInWithGMail() {
+        pbLoginScreenProgress.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_GMAIL_SIGN_IN);
     }
@@ -249,7 +253,6 @@ public class LogInFragment extends Fragment {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-                //handleSignInResult(task);
             } catch (ApiException e) {
                 Log.w(TAG, getString(R.string.login_screen_failed_google_sign_in), e);
                 if(mListener != null) {
@@ -285,6 +288,7 @@ public class LogInFragment extends Fragment {
         String familyName = account.getFamilyName();
         String givenName = account.getGivenName();
         Uri photoUrl = account.getPhotoUrl();
+
         return new GoogleAccountData(id, displayName, email, familyName, givenName, photoUrl);
     }
 
@@ -295,6 +299,7 @@ public class LogInFragment extends Fragment {
         mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                pbLoginScreenProgress.setVisibility(View.INVISIBLE);
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success");

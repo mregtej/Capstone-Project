@@ -67,7 +67,8 @@ public class RecipeActivity extends AppCompatActivity {
             // Load MealPlansFragment by default
             sFragmentName = getString(R.string.recipe_screen_title);
             getSupportFragmentManager().
-                    beginTransaction().replace(R.id.fl_recipe_screen_fragment_container, new RecipeDataFragment(), sFragmentName).commit();
+                    beginTransaction().replace(R.id.fl_recipe_screen_fragment_container,
+                    new RecipeDataFragment(), sFragmentName).commit();
         } else {
             sFragmentName = savedInstanceState.getString(FRAGMENT_NAME_SAVE_INSTANCE_KEY);
             getSupportFragmentManager().findFragmentByTag(sFragmentName);

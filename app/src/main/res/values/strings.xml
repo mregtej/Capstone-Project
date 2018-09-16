@@ -88,6 +88,7 @@
         bla bla bla bla</string>
     <string name="my_account_send_feedback_title">Send feedback</string>
     <string name="my_account_about_me_title">About me</string>
+    <string name="my_account_logout_me_title">Log out</string>
     <string name="my_account_favourite_recipes_title">Fav Recipes</string>
     <string name="my_account_my_meals_title">My Meals</string>
     <string name="my_account_planned_meals_title">Planned Meals</string>

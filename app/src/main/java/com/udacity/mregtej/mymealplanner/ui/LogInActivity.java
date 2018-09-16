@@ -39,11 +39,11 @@ public class LogInActivity extends AppCompatActivity implements
         auth = FirebaseAuth.getInstance();
 
         // Auto log-in
-        if (auth.getCurrentUser() != null) {
-            Intent intent = new Intent(LogInActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }
+        // if (auth.getCurrentUser() != null) {
+        //    Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+        //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //    startActivity(intent);
+        // }
 
         // Set the view now
         setContentView(R.layout.activity_log_in);
@@ -144,7 +144,8 @@ public class LogInActivity extends AppCompatActivity implements
         Bundle bundle = new Bundle();
         bundle.putParcelable(GOOGLE_ACCOUNT_DATA_KEY, data);
         intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
@@ -153,4 +154,11 @@ public class LogInActivity extends AppCompatActivity implements
         Toast.makeText(this, getString(R.string.login_screen_failed_google_sign_in)
                 , Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
 }
