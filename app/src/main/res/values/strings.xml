@@ -10,7 +10,7 @@
     <string name="login_screen_or_label">or</string>
     <string name="login_screen_register_title">Not a member? Register me!</string>
     <string name="login_screen_forgot_password">Forgot your password?</string>
-    <string name="login_screen_failed_gmail_sign_in">Failed sign in with GMail</string>
+    <string name="login_screen_failed_google_sign_in">Google sign in failed</string>
 
     <!-- Sign-Up Screen Strings -->
     <string name="sign_up_screen_title">Sign Up Screen</string>
