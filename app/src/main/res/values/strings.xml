@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">MyMealPlanner</string>
+    <string name="app_shared_preferences">MyMealPlannerSharedPrefs</string>
 
     <!-- Log-In Screen Strings -->
     <string name="login_screen_screen_title">Login Screen</string>
@@ -35,6 +36,8 @@
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
     <string name="enter_valid_email">Enter valid email address</string>
+    <string name="login_type" translatable="false">login-type</string>
+    <string name="default_login_type" translatable="false">not-logged</string>
 
     <!-- App Bottom Navigation Bar Strings -->
     <string name="nav_title_meal_plans">Meals</string>

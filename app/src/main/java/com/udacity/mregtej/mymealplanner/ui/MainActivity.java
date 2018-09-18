@@ -1,6 +1,8 @@
 package com.udacity.mregtej.mymealplanner.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,10 +16,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.application.MyMealPlanner;
 import com.udacity.mregtej.mymealplanner.datamodel.GoogleAccountData;
 import com.udacity.mregtej.mymealplanner.datamodel.MealPlan;
+import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
 import com.udacity.mregtej.mymealplanner.ui.utils.BottomNavigationViewHelper;
 
 import butterknife.BindView;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity
 
     private String sFragmentName;
     private GoogleAccountData mGoogleAccountData;
+    private SharedPreferences mSharedPreferences;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -128,6 +133,10 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+        // Get SharedPreferences
+        mSharedPreferences = getSharedPreferences(
+                getString(R.string.app_shared_preferences), Context.MODE_PRIVATE);
+
     }
 
     @Override
@@ -152,10 +161,25 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSignOut() {
-        GoogleSignInClient client = ((MyMealPlanner) this.getApplication()).getmGoogleSignInClient();
-        if(client != null) {
-            client.signOut()
-                    .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+
+        String loginType = mSharedPreferences.getString(getString(R.string.login_type),
+                MyMealPlannerGlobals.NOT_LOGGED);
+        switch(loginType) {
+            case MyMealPlannerGlobals.MAIL_LOGGED:
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    FirebaseAuth.getInstance().signOut();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user == null) {
+                        Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                }
+                break;
+            case MyMealPlannerGlobals.GOOGLE_LOGGED:
+                GoogleSignInClient client = ((MyMealPlanner) this.getApplication()).getmGoogleSignInClient();
+                if(client != null) {
+                    client.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Intent intent = new Intent(MainActivity.this, LogInActivity.class);
@@ -163,6 +187,12 @@ public class MainActivity extends AppCompatActivity
                             startActivity(intent);
                         }
                     });
+                }
+                break;
+            default:
+            case MyMealPlannerGlobals.NOT_LOGGED:
+                break;
+
         }
     }
 

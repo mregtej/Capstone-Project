@@ -1,7 +1,9 @@
 package com.udacity.mregtej.mymealplanner.ui;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
@@ -18,8 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.GoogleAccountData;
+import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
 import com.udacity.mregtej.mymealplanner.ui.utils.RoundedImageView;
 
 import butterknife.BindView;
@@ -83,6 +85,8 @@ public class MyAccountFragment extends Fragment {
 
     private OnMyAccountFragmentInteractionListener mListener;
     private GoogleAccountData mGoogleAccountData;
+    private SharedPreferences mSharedPreferences;
+    private Activity mContext;
 
     public MyAccountFragment() {
         // Required empty public constructor
@@ -94,7 +98,8 @@ public class MyAccountFragment extends Fragment {
         if (context instanceof OnMyAccountFragmentInteractionListener) {
             mListener = (OnMyAccountFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement OnMyAccountFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnMyAccountFragmentInteractionListener");
         }
     }
 
@@ -108,6 +113,11 @@ public class MyAccountFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my_account, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        mContext = getActivity();
+
+        // Get SharedPreferences
+        mSharedPreferences = mContext.getSharedPreferences(
+                getString(R.string.app_shared_preferences), Context.MODE_PRIVATE);
 
         // Retrieve Data sent from Activity
         if(savedInstanceState != null) {
@@ -159,9 +169,19 @@ public class MyAccountFragment extends Fragment {
         });
 
         // Display Account info
-        tvMyAccountUserName.setText(mGoogleAccountData.getDisplayName());
-        Picasso.get().load(mGoogleAccountData.getPhotoUrl()).fit().into(ivMyAccountUserPhoto);
-
+        String loginType = mSharedPreferences.getString(getString(R.string.login_type),
+                getString(R.string.default_login_type));
+        switch (loginType) {
+            case MyMealPlannerGlobals.GOOGLE_LOGGED:
+                tvMyAccountUserName.setText(mGoogleAccountData.getDisplayName());
+                Picasso.get().load(mGoogleAccountData.getPhotoUrl()).fit().into(ivMyAccountUserPhoto);
+                break;
+            case MyMealPlannerGlobals.MAIL_LOGGED:
+                break;
+            default:
+            case MyMealPlannerGlobals.NOT_LOGGED:
+                break;
+        }
     }
 
     private void hideActionBar() {

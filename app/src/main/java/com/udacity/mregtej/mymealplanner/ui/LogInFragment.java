@@ -3,6 +3,7 @@ package com.udacity.mregtej.mymealplanner.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,12 +28,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.application.MyMealPlanner;
 import com.udacity.mregtej.mymealplanner.datamodel.GoogleAccountData;
-
-import java.util.concurrent.Executor;
+import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +72,7 @@ public class LogInFragment extends Fragment {
     private OnLogInFragmentInteractionListener mListener;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private SharedPreferences mSharedPreferences;
 
     public LogInFragment() {
         // Required empty public constructor
@@ -98,6 +100,10 @@ public class LogInFragment extends Fragment {
         mGoogleSignInClient = GoogleSignIn.getClient(mContext, gso);
         ((MyMealPlanner) mContext.getApplication()).setmGoogleSignInClient(mGoogleSignInClient);
 
+        // Get SharedPreferences
+        mSharedPreferences = mContext.getSharedPreferences(
+                getString(R.string.app_shared_preferences), Context.MODE_PRIVATE);
+
         // Request default focus
         etLoginScreenEmail.requestFocus();
 
@@ -119,14 +125,32 @@ public class LogInFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(mContext);
-        if(account != null) {
-            final GoogleAccountData googleAccountData = retrieveGoogleAccountData(account);
-            if(mListener != null) {
-                mListener.onSuccessfulGMailLogIn(googleAccountData);
-            }
+
+        String loginType = mSharedPreferences.getString(getString(R.string.login_type), MyMealPlannerGlobals.NOT_LOGGED);
+        switch(loginType) {
+            case MyMealPlannerGlobals.MAIL_LOGGED:
+                 // Auto log-in
+                 if (mAuth.getCurrentUser() != null) {
+                     if(mListener != null) {
+                         // TODO Personal data for mail log-in?
+                         mListener.onSuccessfulMailLogIn();
+                     }
+                 }
+                break;
+            case MyMealPlannerGlobals.GOOGLE_LOGGED:
+                // Check for existing Google Sign In account, if the user is already signed in
+                // the GoogleSignInAccount will be non-null.
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(mContext);
+                if(account != null) {
+                    final GoogleAccountData googleAccountData = retrieveGoogleAccountData(account);
+                    if(mListener != null) {
+                        mListener.onSuccessfulGMailLogIn(googleAccountData);
+                    }
+                }
+                break;
+            default:
+            case MyMealPlannerGlobals.NOT_LOGGED:
+                break;
         }
     }
 
@@ -160,7 +184,7 @@ public class LogInFragment extends Fragment {
                 }
                 break;
             case R.id.bt_login_screen_google_login:
-                signInWithGMail();
+                signInWithGoogle();
                 break;
         }
     }
@@ -230,13 +254,18 @@ public class LogInFragment extends Fragment {
                         } else {
                             if (mListener != null) {
                                 mListener.onSuccessfulMailLogIn();
+                                // Save Google Sign-in flag to shared preferences
+                                // TODO Enum / Hash-table implementation?
+                                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                editor.putString(getString(R.string.login_type), MyMealPlannerGlobals.MAIL_LOGGED);
+                                editor.commit();
                             }
                         }
                     }
                 });
     }
 
-    private void signInWithGMail() {
+    private void signInWithGoogle() {
         pbLoginScreenProgress.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_GMAIL_SIGN_IN);
@@ -306,6 +335,11 @@ public class LogInFragment extends Fragment {
                     final GoogleAccountData googleAccountData = retrieveGoogleAccountData(acct);
                     if(mListener != null) {
                         mListener.onSuccessfulGMailLogIn(googleAccountData);
+                        // Save Google Sign-in flag to shared preferences
+                        // TODO Enum / Hash-table implementation?
+                        SharedPreferences.Editor editor = mSharedPreferences.edit();
+                        editor.putString(getString(R.string.login_type), MyMealPlannerGlobals.GOOGLE_LOGGED);
+                        editor.commit();
                     }
                 } else {
                     // If sign in fails, display a message to the user.

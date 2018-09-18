@@ -27,23 +27,12 @@ public class LogInActivity extends AppCompatActivity implements
     @BindView(R.id.fl_log_in_screen_fragment_container)
     FrameLayout flLogInScreenFragmentContainer;
 
-    private FirebaseAuth auth;
     private String sFragmentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        // Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
-        // Auto log-in
-        // if (auth.getCurrentUser() != null) {
-        //    Intent intent = new Intent(LogInActivity.this, MainActivity.class);
-        //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        //    startActivity(intent);
-        // }
 
         // Set the view now
         setContentView(R.layout.activity_log_in);
