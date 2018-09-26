@@ -6,16 +6,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.ui.MealMenuDayFragment;
 
 public class MealMenuFragmentPagerAdapter extends FragmentPagerAdapter {
+    private Menu mMenu;
     private int mNumDays;
     private Context mContext;
 
-    public MealMenuFragmentPagerAdapter(FragmentManager fm, Context context, int number_of_days) {
+    public MealMenuFragmentPagerAdapter(FragmentManager fm, Context context, Menu menu) {
         super(fm);
         mContext = context;
-        mNumDays = number_of_days;
+        mMenu = menu;
+        mNumDays = menu.getMealDays().size();
     }
 
     @Override
@@ -28,6 +31,7 @@ public class MealMenuFragmentPagerAdapter extends FragmentPagerAdapter {
         MealMenuDayFragment mealMenuDayFragment = new MealMenuDayFragment();
         Bundle args = new Bundle();
         args.putInt(MealMenuDayFragment.POSITION_KEY, position + 1);
+        args.putParcelable(MealMenuDayFragment.MEAL_DAY_KEY, mMenu.getMealDays().get(position));
         mealMenuDayFragment.setArguments(args);
         return mealMenuDayFragment;
     }

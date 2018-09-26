@@ -145,14 +145,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMealPlanPreviewClick(Menu menu) {
-        sFragmentName = "MealMenuScreen";
         Bundle bundle = new Bundle();
         MealMenuFragment fragment = new MealMenuFragment();
         bundle.putParcelable(MEAL_MENU_SAVE_INSTANCE_KEY, menu);
         fragment.setArguments(bundle);
         getSupportFragmentManager().
                 beginTransaction()
-                .add(R.id.fl_meal_screen_fragment_container, fragment, sFragmentName)
+                .add(R.id.fl_meal_screen_fragment_container, fragment, menu.getTitle())
                 .addToBackStack(null)
                 .commit();
     }

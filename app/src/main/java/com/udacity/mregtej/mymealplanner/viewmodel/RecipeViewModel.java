@@ -8,25 +8,27 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.udacity.mregtej.mymealplanner.application.MyMealPlanner;
-import com.udacity.mregtej.mymealplanner.datamodel.Menu;
+import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.repository.MyMealPlannerRepository;
 
 import java.util.List;
 
-public class MenuViewModel extends AndroidViewModel {
+public class RecipeViewModel extends AndroidViewModel {
 
     private final MyMealPlannerRepository myMealPlannerRepository;
 
-    public MenuViewModel(Application application, MyMealPlannerRepository repository) {
+    public RecipeViewModel(Application application, MyMealPlannerRepository repository) {
         super(application);
         this.myMealPlannerRepository = repository;
     }
 
-    public LiveData<List<Menu>> getMenus() {
-        return myMealPlannerRepository.getMenus();
+    public LiveData<List<Recipe>> getRecipes() {
+        return myMealPlannerRepository.getRecipes();
     }
 
-    public void setMenus() { myMealPlannerRepository.setMenus(); }
+    public void setRecipes() {
+        myMealPlannerRepository.setRecipes();
+    }
 
     /**
      * A creator is used to inject the product ID into the ViewModel
@@ -48,8 +50,7 @@ public class MenuViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new MenuViewModel(mApplication, mRepository);
+            return (T) new RecipeViewModel(mApplication, mRepository);
         }
     }
-
 }

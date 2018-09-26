@@ -3,17 +3,26 @@ package com.udacity.mregtej.mymealplanner.ui.adapters;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
+import com.udacity.mregtej.mymealplanner.ui.utils.UrlUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MealMenuDayMealtimeAdapter extends
         RecyclerView.Adapter<MealMenuDayMealtimeAdapter.ViewHolder> {
@@ -27,6 +36,7 @@ public class MealMenuDayMealtimeAdapter extends
     List<Recipe> mMealDayRecipeList;
     private Context mContext;
     private MealMenuDayMealtimeClickListener mMealMenuDayMealtimeClickListener;
+    private static String[] mMealTimeTitles;
 
 
     //--------------------------------------------------------------------------------|
@@ -51,6 +61,7 @@ public class MealMenuDayMealtimeAdapter extends
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.view_mealtime_menu, parent, false);
+        mMealTimeTitles = mContext.getResources().getStringArray(R.array.mealtime_titles);
         return new MealMenuDayMealtimeAdapter.ViewHolder(view);
     }
 
@@ -93,15 +104,23 @@ public class MealMenuDayMealtimeAdapter extends
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.tv_mealtime_menu_meal_title)
+        TextView mealTimeTitle;
+        @BindView(R.id.iv_mealtime_menu_meal_update)
+        ImageView mealTimeRecipeUpdate;
+        @BindView(R.id.iv_mealtime_menu_meal_recipe_photo)
+        ImageView mealTimeRecipePhoto;
+        @BindView(R.id.tv_mealtime_menu_meal_recipe_name)
+        TextView mealTimeRecipeName;
+
         private final View mealMenuDayMealtimeViewLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mealMenuDayMealtimeViewLayout = itemView;
-
+            ButterKnife.bind(this, itemView);
             // Resize film poster size
             resizeRecipeCard();
-
         }
 
         private void resizeRecipeCard() {
@@ -143,7 +162,18 @@ public class MealMenuDayMealtimeAdapter extends
      * @param recipe        Recipe object
      */
     private void populateUIView(MealMenuDayMealtimeAdapter.ViewHolder holder, Recipe recipe) {
-        // TODO fill-in
+
+        holder.mealTimeTitle.setText(mMealTimeTitles[(int)holder.mealMenuDayMealtimeViewLayout.getTag()]);
+        // TODO Implement recipe update button
+        String imageUrl = recipe.getImageUrl();
+        if(imageUrl != null && !imageUrl.isEmpty() && UrlUtils.isValid(imageUrl)) {
+            Picasso.get()
+                    .load(imageUrl)
+                    .error(ContextCompat.getDrawable(mContext, R.drawable.im_recipe))
+                    .fit()
+                    .into(holder.mealTimeRecipePhoto);
+        }
+        holder.mealTimeRecipeName.setText(recipe.getTitle());
     }
 
     //--------------------------------------------------------------------------------|

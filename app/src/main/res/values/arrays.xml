@@ -5,4 +5,10 @@
         <item>@string/recipe_ingredients_tab_title</item>
         <item>@string/recipe_recipe_steps_tab_title</item>
     </string-array>
+    <string-array name="mealtime_titles">
+        <item>@string/meal_menu_day_breakfast</item>
+        <item>@string/meal_menu_day_brunch</item>
+        <item>@string/meal_menu_day_lunch</item>
+        <item>@string/meal_menu_day_dinner</item>
+    </string-array>
 </resources>

@@ -16,6 +16,9 @@ import com.udacity.mregtej.mymealplanner.application.MyMealPlannerExecutors;
 import com.udacity.mregtej.mymealplanner.datamodel.MealDay;
 import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.datamodel.MenuCategory;
+import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
+import com.udacity.mregtej.mymealplanner.datamodel.RecipeIngredient;
+import com.udacity.mregtej.mymealplanner.datamodel.RecipeStep;
 import com.udacity.mregtej.mymealplanner.remotedatabase.MyMealPlannerRTDBContract;
 
 import java.util.ArrayList;
@@ -128,18 +131,80 @@ public class MyMealPlannerRepository {
         return menuCategories;
     }
 
+    public LiveData<List<Recipe>> getRecipes() {
+        final MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
+        mExecutors.mainThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                mMyMealPlannerFirebaseDatabase.getReference(
+                        MyMealPlannerRTDBContract.RT_MENU_RECIPES_TABLE_NAME)
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                List<Recipe> data = new ArrayList<>();
+                                for(DataSnapshot recipe : dataSnapshot.getChildren()){
+                                    data.add(recipe.getValue(Recipe.class));
+                                }
+                                recipes.setValue(data);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.w(TAG, "Failed to read value.", databaseError.toException());
+                                recipes.setValue(null);
+                            }
+                        });
+            }
+        });
+        return recipes;
+    }
+
     /**
      * TODO Remove it before release
      */
-    public void populateMenus() {
-        /*
+    public void setRecipes() {
+        ArrayList<RecipeIngredient> ingredients = new ArrayList<>();
+        ingredients.add(new RecipeIngredient("Eggplant","g", 270.0));
+        ingredients.add(new RecipeIngredient("Green paprika","g", 50.0));
+        ingredients.add(new RecipeIngredient("Onion","g", 100.0));
+        ingredients.add(new RecipeIngredient("Olive oil","tbsp", 1.0));
+        ingredients.add(new RecipeIngredient("Pepper"," ", 0.0));
+        ingredients.add(new RecipeIngredient("Salt"," ", 0.0));
+        ArrayList<RecipeStep> steps = new ArrayList<>();
+        steps.add(new RecipeStep(0,"aaa", "aaa bbb ccc", " ", " "));
+        steps.add(new RecipeStep(1,"aaa", "aaa bbb ccc", " ", " "));
+        steps.add(new RecipeStep(2,"aaa", "aaa bbb ccc", " ", " "));
+        steps.add(new RecipeStep(3,"aaa", "aaa bbb ccc", " ", " "));
+        steps.add(new RecipeStep(4,"aaa", "aaa bbb ccc", " ", " "));
+        steps.add(new RecipeStep(5,"aaa", "aaa bbb ccc", " ", " "));
+        mMyMealPlannerFirebaseDatabase.getReference(
+                MyMealPlannerRTDBContract.RT_MENU_RECIPES_TABLE_NAME).push().setValue(
+                        new Recipe(
+                                " ",
+                                " ",
+                                " ",
+                                "Stuffed Eggplant with ground beef",
+                                4,
+                                "01:15:00",
+                                ingredients,
+                                steps));
+    }
+
+
+
+
+    /**
+     * TODO Remove it before release
+     */
+    public void setMenus() {
         ArrayList<MealDay> meals = new ArrayList<MealDay>();
         meals.add(new MealDay(0, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(1, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(2, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(3, "aaa", "bbb", "ccc", "ddd"));
         mMyMealPlannerFirebaseDatabase.getReference("menus").push().setValue(new Menu(
-                new MenuCategory("veggies"),
+                " ",
+                " ",
                 " ",
                 "Veggies Menu 1",
                 meals));
@@ -149,7 +214,8 @@ public class MyMealPlannerRepository {
         meals.add(new MealDay(2, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(3, "aaa", "bbb", "ccc", "ddd"));
         mMyMealPlannerFirebaseDatabase.getReference("menus").push().setValue(new Menu(
-                new MenuCategory("veggies"),
+                " ",
+                " ",
                 " ",
                 "Veggies Menu 2",
                 meals));
@@ -159,7 +225,8 @@ public class MyMealPlannerRepository {
         meals.add(new MealDay(2, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(3, "aaa", "bbb", "ccc", "ddd"));
         mMyMealPlannerFirebaseDatabase.getReference("menus").push().setValue(new Menu(
-                new MenuCategory("veggies"),
+                " ",
+                " ",
                 " ",
                 "Veggies Menu 3",
                 meals));
@@ -169,7 +236,8 @@ public class MyMealPlannerRepository {
         meals.add(new MealDay(2, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(3, "aaa", "bbb", "ccc", "ddd"));
         mMyMealPlannerFirebaseDatabase.getReference("menus").push().setValue(new Menu(
-                new MenuCategory("veggies"),
+                " ",
+                " ",
                 " ",
                 "Veggies Menu 4",
                 meals));
@@ -179,7 +247,8 @@ public class MyMealPlannerRepository {
         meals.add(new MealDay(2, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(3, "aaa", "bbb", "ccc", "ddd"));
         mMyMealPlannerFirebaseDatabase.getReference("menus").push().setValue(new Menu(
-                new MenuCategory("veggies"),
+                " ",
+                " ",
                 " ",
                 "Veggies Menu 5",
                 meals));
@@ -189,11 +258,11 @@ public class MyMealPlannerRepository {
         meals.add(new MealDay(2, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(3, "aaa", "bbb", "ccc", "ddd"));
         mMyMealPlannerFirebaseDatabase.getReference("menus").push().setValue(new Menu(
-                new MenuCategory("veggies"),
+                " ",
+                " ",
                 " ",
                 "Veggies Menu 6",
                 meals));
-                */
     }
 
 }

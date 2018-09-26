@@ -1,11 +1,14 @@
 package com.udacity.mregtej.mymealplanner.ui;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -18,11 +21,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.udacity.mregtej.mymealplanner.R;
+import com.udacity.mregtej.mymealplanner.datamodel.MealDay;
+import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
 import com.udacity.mregtej.mymealplanner.ui.adapters.MealMenuDayMealtimeAdapter;
+import com.udacity.mregtej.mymealplanner.viewmodel.RecipeViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,19 +43,25 @@ import butterknife.Unbinder;
 public class MealMenuDayFragment extends Fragment implements
         MealMenuDayMealtimeAdapter.MealMenuDayMealtimeClickListener {
 
-    public static final String POSITION_KEY = "meal-menu-day-fragment-position";
+    public static final String POSITION_KEY = "meal-day-fragment-position";
+    public static final String MEAL_DAY_KEY = "meal-day";
 
     /* Key for storing the list state in savedInstanceState */
-    private static final String MEAL_MENU_DAY_RECIPE_LIST_STATE_KEY = "meal-menu-day-recipe-list-state";
+    private static final String MEAL_MENU_DAY_RECIPE_LIST_STATE_KEY = "meal-day-recipe-list-state";
 
     /**
      * Key for storing the meal-day recipes to buy in savedInstanceState
      */
-    private static final String MEAL_MENU_DAY_RECIPE_LIST_KEY = "meal-menu-day-recipe-list";
+    private static final String MEAL_MENU_DAY_RECIPE_LIST_KEY = "meal-day-recipe-list";
 
     Unbinder unbinder;
     Context mContext;
     ActionBar actionBar;
+
+    private MealDay mMealDay;
+
+    /**  ViewModel instance */
+    private RecipeViewModel mRecipeViewModel;
 
     @BindView(R.id.rv_meal_menu_day_data)
     RecyclerView rvMealMenuDayData;
@@ -96,16 +109,25 @@ public class MealMenuDayFragment extends Fragment implements
 
         } else {
 
+            mMealDay = getArguments().getParcelable(MEAL_DAY_KEY);
+
+            // Subscribe MealMenuDayFragment to receive notifications from RecipeViewModel
+            registerToRecipeViewModel();
+
+            // Get recipes
+            getRecipes();
+
+            /*
             ArrayList<Recipe> mealDayRecipes = new ArrayList<>();
-            // TODO Fill in
             mealDayRecipes.add(null);
             mealDayRecipes.add(null);
             mealDayRecipes.add(null);
             mealDayRecipes.add(null);
+
             mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(mealDayRecipes, this);
             // Set Adapter and notifyDataSetChanged
             rvMealMenuDayData.setAdapter(mMealPlannerMealtimeAdapter);
-            mMealPlannerMealtimeAdapter.notifyDataSetChanged();
+            mMealPlannerMealtimeAdapter.notifyDataSetChanged(); */
 
         }
 
@@ -165,6 +187,62 @@ public class MealMenuDayFragment extends Fragment implements
         Intent intent = new Intent(mContext, RecipeActivity.class);
         // TODO Add extras
         startActivity(intent);
+    }
+
+    /**
+     * Registers the View into Recipe ViewModel to receive updated recipes (Observer pattern)
+     */
+    private void registerToRecipeViewModel() {
+        // Create RecipeViewModel Factory for param injection
+        RecipeViewModel.Factory recipeFactory = new RecipeViewModel.Factory(
+                getActivity().getApplication());
+        // Get instance of RecipeViewModel
+        mRecipeViewModel = ViewModelProviders.of(this, recipeFactory)
+                .get(RecipeViewModel.class);
+    }
+
+    private void setRecipes() {
+        mRecipeViewModel.setRecipes();
+    }
+
+    private void getRecipes() {
+        mRecipeViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(@Nullable List<Recipe> recipes) {
+                if(recipes == null || recipes.isEmpty()) { return; }
+                else {
+                    populateMealMenuDayMealtimeAdapter(recipes);
+                }
+            }
+        });
+    }
+
+    /**
+     * Populate ArrayAdapters's list of recipes
+     *
+     * @param   recipes       Retrieved list of recipes from Realtime Database
+     */
+    private void populateMealMenuDayMealtimeAdapter(List<Recipe> recipes) {
+        Recipe[] mealDayRecipes = new Recipe[4];
+
+        for(Recipe recipe : recipes) {
+            if(mMealDay.getRecipeBreakfastId().equals(recipe.getId())) {
+                mealDayRecipes[0] = recipe;
+            } else if(mMealDay.getRecipeBrunchId().equals(recipe.getId())) {
+                mealDayRecipes[1] = recipe;
+            } else if(mMealDay.getRecipeLunchId().equals(recipe.getId())) {
+                mealDayRecipes[2] = recipe;
+            } else if(mMealDay.getRecipeDinnerId().equals(recipe.getId())) {
+                mealDayRecipes[3] = recipe;
+            } else {}
+        }
+
+        // Set Adapter and notifyDataSetChanged
+        mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(
+                new ArrayList<>(Arrays.asList(mealDayRecipes)), this);
+        rvMealMenuDayData.setAdapter(mMealPlannerMealtimeAdapter);
+        mMealPlannerMealtimeAdapter.notifyDataSetChanged();
+
     }
 
 }

@@ -9,6 +9,8 @@ public class MyMealPlannerRTDBContract {
     public static final String RT_MENU_CATEGORIES_TABLE_NAME = "menuCategories";
     /** Menus Table Name */
     public static final String RT_MENUS_TABLE_NAME = "menus";
+    /** Recipes Table Name */
+    public static final String RT_MENU_RECIPES_TABLE_NAME = "recipes";
 
     /** Available MenuCategories */
     public static final String RT_MENU_CATEGORY_FAVOURITES_COLUMN_VALUE = "Favourites";

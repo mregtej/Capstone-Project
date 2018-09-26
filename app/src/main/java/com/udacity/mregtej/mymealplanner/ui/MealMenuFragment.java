@@ -2,6 +2,7 @@ package com.udacity.mregtej.mymealplanner.ui;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.udacity.mregtej.mymealplanner.R;
+import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.ui.adapters.MealMenuFragmentPagerAdapter;
 
 /**
@@ -21,7 +23,9 @@ import com.udacity.mregtej.mymealplanner.ui.adapters.MealMenuFragmentPagerAdapte
  */
 public class MealMenuFragment extends Fragment {
 
+    private static final String MEAL_MENU_SAVE_INSTANCE_KEY = "meal-menu";
 
+    private Menu mMenu;
     ActionBar actionBar;
     private Context mContext;
 
@@ -33,18 +37,38 @@ public class MealMenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Get Activity Context
         mContext = getActivity();
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meal_menu, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_meal_menu, container, false);
+
+        // Handle screen rotation and/or screen creation
+        if (savedInstanceState == null) {
+            mMenu = getArguments().getParcelable(MEAL_MENU_SAVE_INSTANCE_KEY);
+            setActionBarTitle(mMenu.getTitle());
+        } else {
+            mMenu = savedInstanceState.getParcelable(MEAL_MENU_SAVE_INSTANCE_KEY);
+        }
+
+        // Return rootView
+        return rootView;
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(MEAL_MENU_SAVE_INSTANCE_KEY, mMenu);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         final ViewPager mViewPager = (ViewPager) view.findViewById(R.id.vp_meal_menu_weekly_pager);
-        mViewPager.setAdapter(new MealMenuFragmentPagerAdapter(getChildFragmentManager(), getActivity(), 7));
+        mViewPager.setAdapter(new MealMenuFragmentPagerAdapter(getChildFragmentManager(), getActivity(), mMenu));
 
         // Attach the page change listener inside the activity
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -68,6 +92,25 @@ public class MealMenuFragment extends Fragment {
                 // Code goes here
             }
         });
+    }
+
+    //--------------------------------------------------------------------------------|
+    //                                   UI Methods                                   |
+    //--------------------------------------------------------------------------------|
+
+    /**
+     * Set screen name as ActionBar Title
+     *
+     * @param   title   Screen name
+     */
+    private void setActionBarTitle(String title) {
+        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+            if (!actionBar.isShowing()) {
+                actionBar.show();
+            }
+        }
     }
 
 }
