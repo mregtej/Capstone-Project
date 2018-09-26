@@ -2,20 +2,28 @@ package com.udacity.mregtej.mymealplanner.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.udacity.mregtej.mymealplanner.R;
-import com.udacity.mregtej.mymealplanner.datamodel.MealPlan;
+import com.udacity.mregtej.mymealplanner.datamodel.Menu;
+import com.udacity.mregtej.mymealplanner.ui.utils.UrlUtils;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MealPlansPreviewAdapter
         extends RecyclerView.Adapter<MealPlansPreviewAdapter.ViewHolder> {
 
-    List<MealPlan> mMealPlanList;
+    List<Menu> mMenuList;
     private Context mContext;
     private MealPlansPreviewClickListener mMealPlansPreviewClickListener;
 
@@ -24,8 +32,8 @@ public class MealPlansPreviewAdapter
     //                                 Constructors                                   |
     //--------------------------------------------------------------------------------|
 
-    public MealPlansPreviewAdapter(List<MealPlan> mealPlans, MealPlansPreviewClickListener listener) {
-        this.mMealPlanList = mealPlans;
+    public MealPlansPreviewAdapter(List<Menu> menus, MealPlansPreviewClickListener listener) {
+        this.mMenuList = menus;
         this.mMealPlansPreviewClickListener = listener;
     }
 
@@ -49,13 +57,13 @@ public class MealPlansPreviewAdapter
                                  int position) {
 
         // Retrieve i-ingredient from shopping ingredient list
-        MealPlan mealPlan = mMealPlanList.get(position);
+        Menu menu = mMenuList.get(position);
 
         // Set position-tag
         holder.mealPlanViewLayout.setTag(position);
 
         // Populate UI elements
-        populateUIView(holder, mealPlan);
+        populateUIView(holder, menu);
 
         // Set OnClickListener
         setOnViewClickListener(holder);
@@ -64,7 +72,7 @@ public class MealPlansPreviewAdapter
 
     @Override
     public int getItemCount() {
-        return mMealPlanList.size();
+        return mMenuList.size();
     }
 
 
@@ -72,10 +80,13 @@ public class MealPlansPreviewAdapter
     //                             Getters / Setters                                  |
     //--------------------------------------------------------------------------------|
 
-    public List<MealPlan> getmMealPlanList() {
-        return mMealPlanList;
+    public List<Menu> getmMenuList() {
+        return mMenuList;
     }
 
+    public void setmMenuList(List<Menu> mMenuList) {
+        this.mMenuList = mMenuList;
+    }
 
     //--------------------------------------------------------------------------------|
     //                              Support Classes                                   |
@@ -83,11 +94,16 @@ public class MealPlansPreviewAdapter
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.tv_card_meal_plan_name)
+        TextView mealPlanTitle;
+        @BindView(R.id.iv_card_meal_plan_photo)
+        ImageView mealPlanPhoto;
         private final View mealPlanViewLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mealPlanViewLayout = itemView;
+            ButterKnife.bind(this, itemView);
         }
 
     }
@@ -97,7 +113,7 @@ public class MealPlansPreviewAdapter
     //--------------------------------------------------------------------------------|
 
     public interface MealPlansPreviewClickListener {
-        public void onMealPlansPreviewClickListenerClick(MealPlan mealPlan);
+        public void onMealPlansPreviewClickListenerClick(Menu menu);
     }
 
 
@@ -109,10 +125,18 @@ public class MealPlansPreviewAdapter
      * Populate UI view elements
      *
      * @param holder        ViewHolder (View container)
-     * @param mealPlan      Meal Plan object
+     * @param menu          Meal Plan object
      */
-    private void populateUIView(MealPlansPreviewAdapter.ViewHolder holder, MealPlan mealPlan) {
-        // TODO fill-in
+    private void populateUIView(MealPlansPreviewAdapter.ViewHolder holder, Menu menu) {
+        holder.mealPlanTitle.setText(menu.getTitle());
+        String imageUrl = menu.getImageUrl();
+        if(imageUrl != null && !imageUrl.isEmpty() && UrlUtils.isValid(imageUrl)) {
+            Picasso.get()
+                    .load(imageUrl)
+                    .error(ContextCompat.getDrawable(mContext, R.drawable.im_recipe))
+                    .fit()
+                    .into(holder.mealPlanPhoto);
+        }
     }
 
     //--------------------------------------------------------------------------------|
@@ -130,7 +154,7 @@ public class MealPlansPreviewAdapter
             public void onClick(View v) {
                 if(mMealPlansPreviewClickListener != null) {
                     mMealPlansPreviewClickListener
-                            .onMealPlansPreviewClickListenerClick(mMealPlanList.get(
+                            .onMealPlansPreviewClickListenerClick(mMenuList.get(
                                     (int)holder.mealPlanViewLayout.getTag()));
                 }
             }

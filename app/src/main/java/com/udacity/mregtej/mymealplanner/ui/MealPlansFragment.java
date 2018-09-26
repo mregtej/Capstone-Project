@@ -1,9 +1,14 @@
 package com.udacity.mregtej.mymealplanner.ui;
 
+import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +20,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.udacity.mregtej.mymealplanner.R;
-import com.udacity.mregtej.mymealplanner.datamodel.MealPlan;
+import com.udacity.mregtej.mymealplanner.datamodel.Menu;
+import com.udacity.mregtej.mymealplanner.datamodel.MenuCategory;
+import com.udacity.mregtej.mymealplanner.remotedatabase.MyMealPlannerRTDBContract;
 import com.udacity.mregtej.mymealplanner.ui.adapters.MealPlansPreviewAdapter;
+import com.udacity.mregtej.mymealplanner.viewmodel.MenuCategoryViewModel;
+import com.udacity.mregtej.mymealplanner.viewmodel.MenuViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,7 +39,8 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapter.MealPlansPreviewClickListener {
+public class MealPlansFragment extends Fragment
+        implements MealPlansPreviewAdapter.MealPlansPreviewClickListener {
 
     /**
      * Key for storing the list state in savedInstanceState
@@ -64,11 +75,20 @@ public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapt
     @BindView(R.id.bt_show_more_veggie_meals)
     Button btShowMoreVeggieMeals;
 
+    /**  ViewModel instance */
+    private MenuViewModel mMenuViewModel;
+
+    /**  ViewModel instance */
+    private MenuCategoryViewModel mMenuCategoryViewModel;
+
     RecyclerView rvFavouriteMealCards;
     RecyclerView rvDietMealCards;
     RecyclerView rvVeggieMealCards;
     Unbinder unbinder;
     ActionBar actionBar;
+    private Activity mContext;
+
+    private HashMap<String, String> mMenuCategories = new HashMap<String, String>();
 
     private OnMealPlansFragmentInteractionListener mListener;
 
@@ -131,7 +151,7 @@ public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapt
     }
 
     public interface OnMealPlansFragmentInteractionListener {
-        void onMealPlanPreviewClick(MealPlan mealPlan);
+        void onMealPlanPreviewClick(Menu menu);
     }
 
     @Override
@@ -143,6 +163,7 @@ public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapt
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_meal_plans, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        mContext = getActivity();
 
         // Inflate RecyclerViews
         rvFavouriteMealCards = (RecyclerView) rootView.findViewById(R.id.rv_favourite_meal_cards);
@@ -157,19 +178,19 @@ public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapt
 
         if (savedInstanceState != null) {
 
-            List<MealPlan> favouriteMealPlans = savedInstanceState.
+            List<Menu> favouriteMenus = savedInstanceState.
                     getParcelableArrayList(FAVOURITE_MEAL_PLANS_LIST_KEY);
-            mFavouriteMealPlanListAdapter = new MealPlansPreviewAdapter(favouriteMealPlans, this);
+            mFavouriteMealPlanListAdapter = new MealPlansPreviewAdapter(favouriteMenus, this);
             rvFavouriteMealCards.setAdapter(mFavouriteMealPlanListAdapter);
             mFavouriteMealPlanListAdapter.notifyDataSetChanged();
 
-            List<MealPlan> dietMealPlans = savedInstanceState.
+            List<Menu> dietMealPlans = savedInstanceState.
                     getParcelableArrayList(DIET_MEAL_PLANS_LIST_KEY);
             mDietMealPlanListAdapter = new MealPlansPreviewAdapter(dietMealPlans, this);
             rvDietMealCards.setAdapter(mDietMealPlanListAdapter);
             mDietMealPlanListAdapter.notifyDataSetChanged();
 
-            List<MealPlan> veggieMealPlans = savedInstanceState.
+            List<Menu> veggieMealPlans = savedInstanceState.
                     getParcelableArrayList(VEGGIE_MEAL_PLANS_LIST_KEY);
             mVeggieMealPlanListAdapter = new MealPlansPreviewAdapter(veggieMealPlans, this);
             rvVeggieMealCards.setAdapter(mVeggieMealPlanListAdapter);
@@ -177,60 +198,28 @@ public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapt
 
         } else {
 
-            ArrayList<MealPlan> favouriteMealPlans = new ArrayList<>();
-            // TODO Fill in
-            favouriteMealPlans.add(null);
-            favouriteMealPlans.add(null);
-            favouriteMealPlans.add(null);
-            favouriteMealPlans.add(null);
-            favouriteMealPlans.add(null);
-            favouriteMealPlans.add(null);
-            mFavouriteMealPlanListAdapter = new MealPlansPreviewAdapter(favouriteMealPlans, this);
+            // Subscribe MealPlansFragment to receive notifications from MenuViewModel
+            registerToMenuViewModel();
 
-            ArrayList<MealPlan> dietMealPlans = new ArrayList<>();
-            // TODO Fill in
-            dietMealPlans.add(null);
-            dietMealPlans.add(null);
-            dietMealPlans.add(null);
-            dietMealPlans.add(null);
-            dietMealPlans.add(null);
-            dietMealPlans.add(null);
-            mDietMealPlanListAdapter = new MealPlansPreviewAdapter(dietMealPlans, this);
+            // Subscribe MealPlansFragment to receive notifications from MenuCategoryViewModel
+            registerToMenuCategoryViewModel();
 
-            ArrayList<MealPlan> veggieMealPlans = new ArrayList<>();
-            // TODO Fill in
-            veggieMealPlans.add(null);
-            veggieMealPlans.add(null);
-            veggieMealPlans.add(null);
-            veggieMealPlans.add(null);
-            veggieMealPlans.add(null);
-            veggieMealPlans.add(null);
-            mVeggieMealPlanListAdapter = new MealPlansPreviewAdapter(veggieMealPlans, this);
+            // Get menu categories
+            getMenuCategories();
 
-            // Set Adapter and notifyDataSetChanged
-            rvFavouriteMealCards.setAdapter(mFavouriteMealPlanListAdapter);
-            mFavouriteMealPlanListAdapter.notifyDataSetChanged();
-            rvDietMealCards.setAdapter(mDietMealPlanListAdapter);
-            mDietMealPlanListAdapter.notifyDataSetChanged();
-            rvVeggieMealCards.setAdapter(mVeggieMealPlanListAdapter);
-            mVeggieMealPlanListAdapter.notifyDataSetChanged();
+            // Get menus (delayed action because categories are previously needed)
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    // Actions to do after 1 second
+                    getMenus();
+                }
+            }, 1000);
 
         }
 
         return rootView;
 
-    }
-
-    private void setRecyclerViewLayoutManager(View rootView) {
-        mFavouriteMealPlanLayoutManager = new GridLayoutManager(rootView.getContext(),
-                1, GridLayoutManager.HORIZONTAL, false);
-        rvFavouriteMealCards.setLayoutManager(mFavouriteMealPlanLayoutManager);
-        mDietMealPlanLayoutManager = new GridLayoutManager(rootView.getContext(),
-                1, GridLayoutManager.HORIZONTAL, false);
-        rvDietMealCards.setLayoutManager(mDietMealPlanLayoutManager);
-        mVeggieMealPlanLayoutManager = new GridLayoutManager(rootView.getContext(),
-                1, GridLayoutManager.HORIZONTAL, false);
-        rvVeggieMealCards.setLayoutManager(mVeggieMealPlanLayoutManager);
     }
 
     @Override
@@ -240,17 +229,17 @@ public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapt
         mListStateFavouriteMealPlan = mFavouriteMealPlanLayoutManager.onSaveInstanceState();
         outState.putParcelable(FAVOURITE_MEAL_PLANS_LIST_STATE_KEY, mListStateFavouriteMealPlan);
         outState.putParcelableArrayList(FAVOURITE_MEAL_PLANS_LIST_KEY,
-                (ArrayList<MealPlan>) mFavouriteMealPlanListAdapter.getmMealPlanList());
+                (ArrayList<Menu>) mFavouriteMealPlanListAdapter.getmMenuList());
 
         mListStateDietMealPlan = mDietMealPlanLayoutManager.onSaveInstanceState();
         outState.putParcelable(DIET_MEAL_PLANS_LIST_STATE_KEY, mListStateDietMealPlan);
         outState.putParcelableArrayList(DIET_MEAL_PLANS_LIST_KEY,
-                (ArrayList<MealPlan>) mDietMealPlanListAdapter.getmMealPlanList());
+                (ArrayList<Menu>) mDietMealPlanListAdapter.getmMenuList());
 
         mListStateVeggieMealPlan = mVeggieMealPlanLayoutManager.onSaveInstanceState();
         outState.putParcelable(VEGGIE_MEAL_PLANS_LIST_STATE_KEY, mListStateVeggieMealPlan);
         outState.putParcelableArrayList(VEGGIE_MEAL_PLANS_LIST_KEY,
-                (ArrayList<MealPlan>) mVeggieMealPlanListAdapter.getmMealPlanList());
+                (ArrayList<Menu>) mVeggieMealPlanListAdapter.getmMenuList());
     }
 
     @Override
@@ -266,13 +255,27 @@ public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapt
         }
     }
 
+
+    //--------------------------------------------------------------------------------|
+    //                        Fragment --> Activity Comm Methods                      |
+    //--------------------------------------------------------------------------------|
+
     @Override
-    public void onMealPlansPreviewClickListenerClick(MealPlan mealPlan) {
+    public void onMealPlansPreviewClickListenerClick(Menu menu) {
         if (mListener != null) {
-            mListener.onMealPlanPreviewClick(mealPlan);
+            mListener.onMealPlanPreviewClick(menu);
         }
     }
 
+    //--------------------------------------------------------------------------------|
+    //                                   UI Methods                                   |
+    //--------------------------------------------------------------------------------|
+
+    /**
+     * Set screen name as ActionBar Title
+     *
+     * @param   title   Screen name
+     */
     private void setActionBarTitle(String title) {
         actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -280,6 +283,141 @@ public class MealPlansFragment extends Fragment implements MealPlansPreviewAdapt
             if (!actionBar.isShowing()) {
                 actionBar.show();
             }
+        }
+    }
+
+    /**
+     * Set RecyclerViews" layout managers
+     *
+     * @param   rootView    parent view
+     */
+    private void setRecyclerViewLayoutManager(View rootView) {
+        mFavouriteMealPlanLayoutManager = new GridLayoutManager(rootView.getContext(),
+                1, GridLayoutManager.HORIZONTAL, false);
+        rvFavouriteMealCards.setLayoutManager(mFavouriteMealPlanLayoutManager);
+        mDietMealPlanLayoutManager = new GridLayoutManager(rootView.getContext(),
+                1, GridLayoutManager.HORIZONTAL, false);
+        rvDietMealCards.setLayoutManager(mDietMealPlanLayoutManager);
+        mVeggieMealPlanLayoutManager = new GridLayoutManager(rootView.getContext(),
+                1, GridLayoutManager.HORIZONTAL, false);
+        rvVeggieMealCards.setLayoutManager(mVeggieMealPlanLayoutManager);
+    }
+
+    /**
+     * Populate ArrayAdapters's list of menus classified by menu category
+     *
+     * @param   menus       Retrieved list of menus from Realtime Database
+     */
+    private void populateMenusAdapters(List<Menu> menus) {
+
+        // TODO Load available menu categories from xml?
+        List<Menu> favouriteMenus = new ArrayList<>();
+        List<Menu> losingWeightMenus = new ArrayList<>();
+        List<Menu> veggiesMenus = new ArrayList<>();
+
+        for(Menu menu : menus) {
+            if(mMenuCategories.containsKey(menu.getCategoryID())) {
+                switch(mMenuCategories.get(menu.getCategoryID())) {
+                    case(MyMealPlannerRTDBContract.RT_MENU_CATEGORY_FAVOURITES_COLUMN_VALUE):
+                        favouriteMenus.add(menu);
+                        break;
+                    case(MyMealPlannerRTDBContract.RT_MENU_CATEGORY_LOSING_WEIGHT_COLUMN_VALUE):
+                        losingWeightMenus.add(menu);
+                        break;
+                    case(MyMealPlannerRTDBContract.RT_MENU_CATEGORY_VEGGIES_COLUMN_VALUE):
+                        veggiesMenus.add(menu);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        mFavouriteMealPlanListAdapter = new MealPlansPreviewAdapter(favouriteMenus, this);
+        rvFavouriteMealCards.setAdapter(mFavouriteMealPlanListAdapter);
+        mFavouriteMealPlanListAdapter.notifyDataSetChanged();
+
+        mDietMealPlanListAdapter = new MealPlansPreviewAdapter(losingWeightMenus, this);
+        rvDietMealCards.setAdapter(mDietMealPlanListAdapter);
+        mDietMealPlanListAdapter.notifyDataSetChanged();
+
+        mVeggieMealPlanListAdapter = new MealPlansPreviewAdapter(veggiesMenus, this);
+        rvVeggieMealCards.setAdapter(mVeggieMealPlanListAdapter);
+        mVeggieMealPlanListAdapter.notifyDataSetChanged();
+
+    }
+
+    //--------------------------------------------------------------------------------|
+    //                               DataModel Methods                                |
+    //--------------------------------------------------------------------------------|
+
+    /**
+     * Registers the View into Recipe ViewModel to receive updated recipes (Observer pattern)
+     */
+    private void registerToMenuViewModel() {
+        // Create RecipeViewModel Factory for param injection
+        MenuViewModel.Factory menuFactory = new MenuViewModel.Factory(
+                getActivity().getApplication());
+        // Get instance of RecipeViewModel
+        mMenuViewModel = ViewModelProviders.of(this, menuFactory)
+                .get(MenuViewModel.class);
+    }
+
+    /**
+     * Registers the View into Recipe ViewModel to receive updated recipes (Observer pattern)
+     */
+    private void registerToMenuCategoryViewModel() {
+        // Create RecipeViewModel Factory for param injection
+        MenuCategoryViewModel.Factory menuCategoryFactory = new MenuCategoryViewModel.Factory(
+                getActivity().getApplication());
+        // Get instance of RecipeViewModel
+        mMenuCategoryViewModel = ViewModelProviders.of(this, menuCategoryFactory)
+                .get(MenuCategoryViewModel.class);
+    }
+
+    /**
+     * Retrieve list of Menus from MenuViewModel (Observer pattern)
+     */
+    private void getMenus(){
+        mMenuViewModel.getMenus().observe(this, new Observer<List<Menu>>() {
+            @Override
+            public void onChanged(@Nullable List<Menu> menus) {
+                if(menus == null || menus.isEmpty()) { return; }
+                else {
+                    populateMenusAdapters(menus);
+                }
+            }
+        });
+    }
+
+    /**
+     * Retrieve list of MenuCategories from MenuCategoryViewModel (Observer pattern)
+     */
+    private void getMenuCategories() {
+        mMenuCategoryViewModel.getMenuCategories().observe(this, new Observer<List<MenuCategory>>() {
+            @Override
+            public void onChanged(@Nullable List<MenuCategory> menuCategories) {
+                if(menuCategories == null || menuCategories.isEmpty()) { return; }
+                else {
+                    populateMenuCategories(menuCategories);
+                }
+            }
+        });
+    }
+
+
+    //--------------------------------------------------------------------------------|
+    //                               Private Methods                                  |
+    //--------------------------------------------------------------------------------|
+
+    /**
+     * Populate menu categories HashMap
+     *
+     * @param   menuCategories      Retrieved list of menu categories from Realtime Database
+     */
+    private void populateMenuCategories(List<MenuCategory> menuCategories) {
+        for(MenuCategory menuCategory : menuCategories) {
+            mMenuCategories.put(menuCategory.getId(), menuCategory.getCategory());
         }
     }
 
