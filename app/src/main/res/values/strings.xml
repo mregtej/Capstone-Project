@@ -121,14 +121,12 @@
 
     <!-- Recipe Screen + Nutritional Facts Screen Strings -->
     <string name="recipe_steps_default_step_number">1.</string>
+    <string name="recipe_steps_default_step_short_description">Recipe step description</string>
     <string name="recipe_steps_default_step_description">Lorem ipsum dolor sit amet, consectetur
         adipisicing elit. Aperiam atque ipsam nesciunt nihil quaerat. At consequuntur dolores earum
         error eveniet facere fuga hic illo impedit libero, modi nostrum officiis porro quam soluta
         voluptatibus voluptatum. Asperiores corporis fugiat molestiae non voluptatibus. Architecto
         culpa hic illum ipsam laudantium? Assumenda dignissimos dolores facere.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

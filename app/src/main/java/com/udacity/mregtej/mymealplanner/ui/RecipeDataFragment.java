@@ -63,7 +63,7 @@ public class RecipeDataFragment extends Fragment {
 
         // Set Adapter to ViewPager
         vpRecipeDataPager.setAdapter(new RecipeDataFragmentPagerAdapter(getChildFragmentManager(),
-                getActivity()));
+                getActivity(), mRecipe));
         // Attach the page change listener inside the activity
         vpRecipeDataPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 

@@ -94,6 +94,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         ImageView recipeStepDone;
         @BindView(R.id.tv_recipe_step_number)
         TextView recipeStepNumber;
+        @BindView(R.id.tv_recipe_step_short_description)
+        TextView recipeStepShortDescription;
         @BindView(R.id.tv_recipe_step_description)
         TextView recipeStepDescription;
         private final View recipeStepViewLayout;
@@ -116,6 +118,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
                                 R.drawable.card_shape_rectangle));
                         recipeStepNumber.setPaintFlags(recipeStepNumber.getPaintFlags()
                                 & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                        recipeStepShortDescription.setPaintFlags(recipeStepShortDescription.getPaintFlags()
+                                & ~Paint.STRIKE_THRU_TEXT_FLAG);
                         recipeStepDescription.setPaintFlags(recipeStepDescription.getPaintFlags()
                                 & ~Paint.STRIKE_THRU_TEXT_FLAG);
                     } else {
@@ -125,6 +129,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
                                 R.color.colorPrimary));
                         recipeStepDone.setImageDrawable(drawable);
                         recipeStepNumber.setPaintFlags(recipeStepNumber.getPaintFlags()
+                                | Paint.STRIKE_THRU_TEXT_FLAG);
+                        recipeStepShortDescription.setPaintFlags(recipeStepShortDescription.getPaintFlags()
                                 | Paint.STRIKE_THRU_TEXT_FLAG);
                         recipeStepDescription.setPaintFlags(recipeStepDescription.getPaintFlags()
                                 | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -147,9 +153,10 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
      * @param recipeStep    RecipeStep object
      */
     private void populateUIView(RecipeStepsAdapter.ViewHolder holder, RecipeStep recipeStep) {
-        // TODO fill-in
         holder.recipeStepNumber.setText(
-                Integer.toString((Integer)holder.recipeStepViewLayout.getTag() + 1) + ".");
+                Integer.toString((int)recipeStep.getId() + 1) + ".");
+        holder.recipeStepShortDescription.setText(recipeStep.getShortDescription());
+        holder.recipeStepDescription.setText(recipeStep.getDescription());
     }
 
 }
