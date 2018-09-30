@@ -147,7 +147,7 @@ public class MealMenuDayMealtimeAdapter extends
     //--------------------------------------------------------------------------------|
 
     public interface MealMenuDayMealtimeClickListener {
-        public void onMealMenuDayMealtimeClick(int position);
+        public void onMealMenuDayMealtimeClick(Recipe recipe);
     }
 
 
@@ -181,7 +181,7 @@ public class MealMenuDayMealtimeAdapter extends
     //--------------------------------------------------------------------------------|
 
     /**
-     * Set a film click-listener on the film-view
+     * Set a recipe click-listener on the meal-day menu view
      *
      * @param    holder    ViewHolder (View container)
      */
@@ -190,8 +190,8 @@ public class MealMenuDayMealtimeAdapter extends
             @Override
             public void onClick(View v) {
                 if(mMealMenuDayMealtimeClickListener != null) {
-                    mMealMenuDayMealtimeClickListener.onMealMenuDayMealtimeClick(
-                            (int)holder.mealMenuDayMealtimeViewLayout.getTag());
+                    mMealMenuDayMealtimeClickListener.onMealMenuDayMealtimeClick(mMealDayRecipeList
+                            .get((int)holder.mealMenuDayMealtimeViewLayout.getTag()));
                 }
             }
         });

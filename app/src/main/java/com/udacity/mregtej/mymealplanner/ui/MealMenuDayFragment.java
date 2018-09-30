@@ -44,7 +44,10 @@ public class MealMenuDayFragment extends Fragment implements
         MealMenuDayMealtimeAdapter.MealMenuDayMealtimeClickListener {
 
     public static final String POSITION_KEY = "meal-day-fragment-position";
+
     public static final String MEAL_DAY_KEY = "meal-day";
+
+    public static final String RECIPE_KEY = "recipe";
 
     /* Key for storing the list state in savedInstanceState */
     private static final String MEAL_MENU_DAY_RECIPE_LIST_STATE_KEY = "meal-day-recipe-list-state";
@@ -117,18 +120,6 @@ public class MealMenuDayFragment extends Fragment implements
             // Get recipes
             getRecipes();
 
-            /*
-            ArrayList<Recipe> mealDayRecipes = new ArrayList<>();
-            mealDayRecipes.add(null);
-            mealDayRecipes.add(null);
-            mealDayRecipes.add(null);
-            mealDayRecipes.add(null);
-
-            mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(mealDayRecipes, this);
-            // Set Adapter and notifyDataSetChanged
-            rvMealMenuDayData.setAdapter(mMealPlannerMealtimeAdapter);
-            mMealPlannerMealtimeAdapter.notifyDataSetChanged(); */
-
         }
 
         return rootView;
@@ -183,9 +174,11 @@ public class MealMenuDayFragment extends Fragment implements
     }
 
     @Override
-    public void onMealMenuDayMealtimeClick(int position) {
+    public void onMealMenuDayMealtimeClick(Recipe recipe) {
         Intent intent = new Intent(mContext, RecipeActivity.class);
-        // TODO Add extras
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RECIPE_KEY, recipe);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

@@ -12,6 +12,7 @@ public class Recipe implements Parcelable {
     private String imageUrl;
     private String title;
     private int servings;
+    private String author;
     private String cookingTime;
     private ArrayList<RecipeIngredient> ingredients;
     private ArrayList<RecipeStep> recipeSteps;
@@ -20,13 +21,14 @@ public class Recipe implements Parcelable {
     }
 
     public Recipe(String id, String category, String imageUrl, String title, int servings,
-                  String cookingTime, ArrayList<RecipeIngredient> ingredients,
+                  String author, String cookingTime, ArrayList<RecipeIngredient> ingredients,
                   ArrayList<RecipeStep> recipeSteps) {
         this.id = id;
         this.category = category;
         this.imageUrl = imageUrl;
         this.title = title;
         this.servings = servings;
+        this.author = author;
         this.cookingTime = cookingTime;
         this.ingredients = ingredients;
         this.recipeSteps = recipeSteps;
@@ -44,6 +46,7 @@ public class Recipe implements Parcelable {
         dest.writeString(this.imageUrl);
         dest.writeString(this.title);
         dest.writeInt(this.servings);
+        dest.writeString(this.author);
         dest.writeString(this.cookingTime);
         dest.writeTypedList(this.ingredients);
         dest.writeTypedList(this.recipeSteps);
@@ -55,6 +58,7 @@ public class Recipe implements Parcelable {
         this.imageUrl = in.readString();
         this.title = in.readString();
         this.servings = in.readInt();
+        this.author = in.readString();
         this.cookingTime = in.readString();
         this.ingredients = in.createTypedArrayList(RecipeIngredient.CREATOR);
         this.recipeSteps = in.createTypedArrayList(RecipeStep.CREATOR);
@@ -111,6 +115,10 @@ public class Recipe implements Parcelable {
     public void setServings(int servings) {
         this.servings = servings;
     }
+
+    public String getAuthor() { return author; }
+
+    public void setAuthor(String author) { this.author = author; }
 
     public String getCookingTime() {
         return cookingTime;

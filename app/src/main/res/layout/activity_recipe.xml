@@ -46,7 +46,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|left"
-                    android:layout_margin="12dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginVertical="18dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -56,15 +57,16 @@
 
                         <TextView
                             android:id="@+id/tv_recipe_name"
-                            style="@style/MyMealPlannerTextStyle.H1Titles.White"
+                            style="@style/MyMealPlannerTextStyle.Titles.White"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
                             android:maxLines="2"
                             android:text="@string/recipe_screen_default_recipe_name"/>
 
                         <TextView
                             android:id="@+id/tv_recipe_author"
-                            style="@style/MyMealPlannerTextStyle.Titles.White"
+                            style="@style/MyMealPlannerTextStyle.TableTitles.White"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="1"

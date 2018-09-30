@@ -2,6 +2,8 @@ package com.udacity.mregtej.mymealplanner.ui;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.udacity.mregtej.mymealplanner.R;
+import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.ui.adapters.MealMenuFragmentPagerAdapter;
 import com.udacity.mregtej.mymealplanner.ui.adapters.RecipeDataFragmentPagerAdapter;
 
@@ -24,12 +27,15 @@ public class RecipeDataFragment extends Fragment {
 
     public static final String POSITION_KEY = "recipe-data-fragment-position";
 
+    private static final String RECIPE_KEY = "recipe";
+
     @BindView(R.id.pts_recipe_data_pager_title_strip)
     PagerTitleStrip ptsRecipeDataPagerTitleStrip;
     @BindView(R.id.vp_recipe_data_pager)
     ViewPager vpRecipeDataPager;
 
     Unbinder unbinder;
+    private Recipe mRecipe;
 
     public RecipeDataFragment() {
         // Required empty public constructor
@@ -41,6 +47,19 @@ public class RecipeDataFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_data, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+
+        if(savedInstanceState == null) {
+            mRecipe = getArguments().getParcelable(RECIPE_KEY);
+        } else {
+            mRecipe = savedInstanceState.getParcelable(RECIPE_KEY);
+        }
+
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         // Set Adapter to ViewPager
         vpRecipeDataPager.setAdapter(new RecipeDataFragmentPagerAdapter(getChildFragmentManager(),
@@ -67,8 +86,12 @@ public class RecipeDataFragment extends Fragment {
                 // Code goes here
             }
         });
+    }
 
-        return rootView;
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(RECIPE_KEY, mRecipe);
     }
 
     @Override
@@ -76,4 +99,5 @@ public class RecipeDataFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

@@ -185,6 +185,7 @@ public class MyMealPlannerRepository {
                                 " ",
                                 "Stuffed Eggplant with ground beef",
                                 4,
+                                "John Doe",
                                 "01:15:00",
                                 ingredients,
                                 steps));
