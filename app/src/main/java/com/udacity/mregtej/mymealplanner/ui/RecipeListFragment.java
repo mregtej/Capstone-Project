@@ -1,9 +1,16 @@
 package com.udacity.mregtej.mymealplanner.ui;
 
+import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +23,7 @@ import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
 import com.udacity.mregtej.mymealplanner.ui.adapters.RecipeListAdapter;
+import com.udacity.mregtej.mymealplanner.viewmodel.RecipeViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +36,8 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecipeListFragment extends Fragment {
+public class RecipeListFragment extends Fragment
+        implements RecipeListAdapter.RecipeListClickListener {
 
     /* Key for storing the list state in savedInstanceState */
     private static final String RECIPE_LIST_STATE_KEY = "recipe-list-state";
@@ -36,9 +45,13 @@ public class RecipeListFragment extends Fragment {
     /** Key for storing the ingredients to buy in savedInstanceState */
     private static final String RECIPE_LIST_KEY = "recipe-list";
 
+    public static final String RECIPE_KEY = "recipe";
+
+
     @BindView(R.id.rv_recipe_list)
     RecyclerView rvRecipeList;
 
+    private Activity mContext;
     ActionBar actionBar;
     Unbinder unbinder;
 
@@ -55,6 +68,8 @@ public class RecipeListFragment extends Fragment {
      */
     private Parcelable mListStateRecipes;
 
+    /**  ViewModel instance */
+    private RecipeViewModel mRecipeViewModel;
 
     public RecipeListFragment() {
         // Required empty public constructor
@@ -69,6 +84,7 @@ public class RecipeListFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+        mContext = getActivity();
         unbinder = ButterKnife.bind(this, rootView);
 
         // Load & set GridLayout
@@ -79,37 +95,88 @@ public class RecipeListFragment extends Fragment {
 
             List<Recipe> recipes = savedInstanceState.
                     getParcelableArrayList(RECIPE_LIST_KEY);
-            mRecipeListAdapter = new RecipeListAdapter(recipes);
+            mRecipeListAdapter = new RecipeListAdapter(recipes, this);
             rvRecipeList.setAdapter(mRecipeListAdapter);
             mRecipeListAdapter.notifyDataSetChanged();
 
         } else {
 
-            ArrayList<Recipe> recipes = new ArrayList<>();
-            // TODO Only used for testing - Dynamic injection
-            // TODO Fill in
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            recipes.add(null);
-            mRecipeListAdapter = new RecipeListAdapter(recipes);
+            // Subscribe RecipeListFragment to receive notifications from RecipeViewModel
+            registerToRecipeViewModel();
 
-            // Set Adapter and notifyDataSetChanged
-            rvRecipeList.setAdapter(mRecipeListAdapter);
-            mRecipeListAdapter.notifyDataSetChanged();
+            // Get recipes
+            getRecipes();
 
         }
 
         return rootView;
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mListStateRecipes = mRecipeListLayoutManager.onSaveInstanceState();
+
+        outState.putParcelable(RECIPE_LIST_STATE_KEY, mListStateRecipes);
+        outState.putParcelableArrayList(RECIPE_LIST_KEY, (ArrayList<Recipe>)
+                mRecipeListAdapter.getmRecipeList());
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            mListStateRecipes = savedInstanceState.getParcelable(RECIPE_LIST_STATE_KEY);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    //--------------------------------------------------------------------------------|
+    //                               DataModel Methods                                |
+    //--------------------------------------------------------------------------------|
+
+    /**
+     * Registers the View into Recipe ViewModel to receive updated recipes (Observer pattern)
+     */
+    private void registerToRecipeViewModel() {
+        // Create RecipeViewModel Factory for param injection
+        RecipeViewModel.Factory menuFactory = new RecipeViewModel.Factory(
+                getActivity().getApplication());
+        // Get instance of RecipeViewModel
+        mRecipeViewModel = ViewModelProviders.of(this, menuFactory)
+                .get(RecipeViewModel.class);
+    }
+
+    /**
+     * Retrieve list of Menus from MenuViewModel (Observer pattern)
+     */
+    private void getRecipes(){
+        mRecipeViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(@Nullable List<Recipe> recipes) {
+                if(recipes == null || recipes.isEmpty()) { return; }
+                else {
+                    populateRecipeListAdapter(recipes);
+                }
+            }
+        });
+    }
+
+
+    //--------------------------------------------------------------------------------|
+    //                               Private Methods                                  |
+    //--------------------------------------------------------------------------------|
+
+    private void populateRecipeListAdapter(List<Recipe> recipes) {
+        mRecipeListAdapter = new RecipeListAdapter(recipes, this);
+        rvRecipeList.setAdapter(mRecipeListAdapter);
+        mRecipeListAdapter.notifyDataSetChanged();
     }
 
     private void setRecyclerViewLayoutManager(View rootView) {
@@ -139,28 +206,12 @@ public class RecipeListFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mListStateRecipes = mRecipeListLayoutManager.onSaveInstanceState();
-
-        outState.putParcelable(RECIPE_LIST_STATE_KEY, mListStateRecipes);
-        outState.putParcelableArrayList(RECIPE_LIST_KEY, (ArrayList<Recipe>)
-                mRecipeListAdapter.getmRecipeList());
+    public void onRecipeClickListenerClick(Recipe recipe) {
+        Intent intent = new Intent(mContext, RecipeActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RECIPE_KEY, recipe);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            mListStateRecipes = savedInstanceState.getParcelable(RECIPE_LIST_STATE_KEY);
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
 }
 

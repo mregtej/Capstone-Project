@@ -4,6 +4,7 @@ package com.udacity.mregtej.mymealplanner.ui.adapters;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
+import com.udacity.mregtej.mymealplanner.ui.utils.UrlUtils;
 
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class RecipeListAdapter
 
     List<Recipe> mRecipeList;
     private Context mContext;
+    private RecipeListClickListener mRecipeListClickListener;
 
     /**ScreenWidth (in px) - Runtime resize of GridView elements */
     private final int mScreenWidth;
@@ -40,8 +44,9 @@ public class RecipeListAdapter
     //                                 Constructors                                   |
     //--------------------------------------------------------------------------------|
 
-    public RecipeListAdapter(List<Recipe> recipes) {
+    public RecipeListAdapter(List<Recipe> recipes, RecipeListClickListener listener) {
         this.mRecipeList = recipes;
+        this.mRecipeListClickListener = listener;
         mScreenWidth = getScreenWidth();
     }
 
@@ -70,6 +75,9 @@ public class RecipeListAdapter
 
         // Populate UI elements
         populateUIView(holder, recipe);
+
+        // Set OnViewClickListener
+        setOnViewClickListener(holder);
 
     }
 
@@ -140,7 +148,15 @@ public class RecipeListAdapter
      * @param recipe     Shopping Ingredient object
      */
     private void populateUIView(RecipeListAdapter.ViewHolder holder, Recipe recipe) {
-        // TODO fill-in
+        holder.recipeName.setText(recipe.getTitle());
+        String imageUrl = recipe.getImageUrl();
+        if(imageUrl != null && !imageUrl.isEmpty() && UrlUtils.isValid(imageUrl)) {
+            Picasso.get()
+                    .load(imageUrl)
+                    .error(ContextCompat.getDrawable(mContext, R.drawable.im_recipe))
+                    .fit()
+                    .into(holder.recipePhoto);
+        }
     }
 
 
@@ -150,6 +166,38 @@ public class RecipeListAdapter
 
     private static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+
+    //--------------------------------------------------------------------------------|
+    //                          Fragment--> Activity Comm                             |
+    //--------------------------------------------------------------------------------|
+
+    public interface RecipeListClickListener {
+        public void onRecipeClickListenerClick(Recipe recipe);
+    }
+
+
+    //--------------------------------------------------------------------------------|
+    //                              Support Methods                                   |
+    //--------------------------------------------------------------------------------|
+
+    /**
+     * Set a film click-listener on the film-view
+     *
+     * @param    holder    ViewHolder (View container)
+     */
+    private void setOnViewClickListener(final ViewHolder holder) {
+        holder.recipeViewLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mRecipeListClickListener != null) {
+                    mRecipeListClickListener
+                            .onRecipeClickListenerClick(mRecipeList.get(
+                                    (int)holder.recipeViewLayout.getTag()));
+                }
+            }
+        });
     }
 
 }
