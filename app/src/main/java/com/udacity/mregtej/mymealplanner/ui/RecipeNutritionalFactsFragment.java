@@ -111,4 +111,5 @@ public class RecipeNutritionalFactsFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

@@ -104,6 +104,9 @@
     <string name="recipe_ingredients_tab_title">Ingredients</string>
     <string name="recipe_recipe_steps_tab_title">Recipe Steps</string>
 
+    <!-- Recipe Screen + Ingredients Screen Strings -->
+    <string name="recipe_ingredients_servings_title">Servings</string>
+
     <!-- Recipe Screen + Nutritional Facts Screen Strings -->
     <string name="recipe_nutritional_facts_amount_per_serving_title">Amount per serving</string>
     <string name="recipe_nutritional_facts_pro_daily_value_title">\u0025 daily value</string>

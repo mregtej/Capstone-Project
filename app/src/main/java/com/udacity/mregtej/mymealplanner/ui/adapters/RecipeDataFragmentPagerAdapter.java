@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
+import com.udacity.mregtej.mymealplanner.ui.RecipeIngredientsFragment;
 import com.udacity.mregtej.mymealplanner.ui.RecipeNutritionalFactsFragment;
 import com.udacity.mregtej.mymealplanner.ui.RecipeStepsFragment;
 
@@ -23,6 +24,9 @@ public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
 
     /** Key for passing the recipe ingredients to RecipeIngredientsFragment */
     private static final String RECIPE_INGREDIENTS_LIST_KEY = "recipe-ingredient-list";
+
+    /** Key for passing the recipe nutritional facts to RecipeIngredientsFragment */
+    private static final String RECIPE_NUTRITIONAL_FACTS_LIST_KEY = "recipe-nutritional-fact-list";
 
     private Recipe mRecipe;
     private static final int mNumScreenDataTitles = 3;
@@ -45,10 +49,12 @@ public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
         Bundle args = new Bundle();
         switch (position) {
             case 0:
-                recipeDataFragment = new RecipeNutritionalFactsFragment();
+                recipeDataFragment = new RecipeIngredientsFragment();
+                args.putParcelableArrayList(RECIPE_INGREDIENTS_LIST_KEY, mRecipe.getIngredients());
                 break;
             case 1:
                 recipeDataFragment = new RecipeNutritionalFactsFragment();
+                args.putParcelableArrayList(RECIPE_NUTRITIONAL_FACTS_LIST_KEY, mRecipe.getIngredients());
                 break;
             case 2:
             default:
