@@ -15,14 +15,14 @@ public class Recipe implements Parcelable {
     private String author;
     private String cookingTime;
     private ArrayList<RecipeIngredient> ingredients;
-    private ArrayList<RecipeStep> recipeSteps;
+    private ArrayList<RecipeNutritionalFact> nutritionalFacts;
+    private ArrayList<RecipeStep> steps;
 
-    public Recipe() {
-    }
+    public Recipe() { }
 
     public Recipe(String id, String category, String imageUrl, String title, int servings,
                   String author, String cookingTime, ArrayList<RecipeIngredient> ingredients,
-                  ArrayList<RecipeStep> recipeSteps) {
+                  ArrayList<RecipeNutritionalFact> nutritionalFacts, ArrayList<RecipeStep> steps) {
         this.id = id;
         this.category = category;
         this.imageUrl = imageUrl;
@@ -31,7 +31,8 @@ public class Recipe implements Parcelable {
         this.author = author;
         this.cookingTime = cookingTime;
         this.ingredients = ingredients;
-        this.recipeSteps = recipeSteps;
+        this.nutritionalFacts = nutritionalFacts;
+        this.steps = steps;
     }
 
     @Override
@@ -49,7 +50,8 @@ public class Recipe implements Parcelable {
         dest.writeString(this.author);
         dest.writeString(this.cookingTime);
         dest.writeTypedList(this.ingredients);
-        dest.writeTypedList(this.recipeSteps);
+        dest.writeTypedList(this.nutritionalFacts);
+        dest.writeTypedList(this.steps);
     }
 
     protected Recipe(Parcel in) {
@@ -61,7 +63,8 @@ public class Recipe implements Parcelable {
         this.author = in.readString();
         this.cookingTime = in.readString();
         this.ingredients = in.createTypedArrayList(RecipeIngredient.CREATOR);
-        this.recipeSteps = in.createTypedArrayList(RecipeStep.CREATOR);
+        this.nutritionalFacts = in.createTypedArrayList(RecipeNutritionalFact.CREATOR);
+        this.steps = in.createTypedArrayList(RecipeStep.CREATOR);
     }
 
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
@@ -116,9 +119,13 @@ public class Recipe implements Parcelable {
         this.servings = servings;
     }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public String getCookingTime() {
         return cookingTime;
@@ -136,13 +143,20 @@ public class Recipe implements Parcelable {
         this.ingredients = ingredients;
     }
 
-    public ArrayList<RecipeStep> getRecipeSteps() {
-        return recipeSteps;
+    public ArrayList<RecipeNutritionalFact> getNutritionalFacts() {
+        return nutritionalFacts;
     }
 
-    public void setRecipeSteps(ArrayList<RecipeStep> recipeSteps) {
-        this.recipeSteps = recipeSteps;
+    public void setNutritionalFacts(ArrayList<RecipeNutritionalFact> nutritionalFacts) {
+        this.nutritionalFacts = nutritionalFacts;
     }
 
+    public ArrayList<RecipeStep> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(ArrayList<RecipeStep> steps) {
+        this.steps = steps;
+    }
 }
 

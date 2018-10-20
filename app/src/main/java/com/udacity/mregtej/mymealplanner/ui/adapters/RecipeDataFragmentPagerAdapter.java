@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
-import com.udacity.mregtej.mymealplanner.ui.MealMenuDayFragment;
 import com.udacity.mregtej.mymealplanner.ui.RecipeNutritionalFactsFragment;
 import com.udacity.mregtej.mymealplanner.ui.RecipeStepsFragment;
 
@@ -54,7 +53,7 @@ public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
             case 2:
             default:
                 recipeDataFragment = new RecipeStepsFragment();
-                args.putParcelableArrayList(RECIPE_STEP_LIST_KEY, mRecipe.getRecipeSteps());
+                args.putParcelableArrayList(RECIPE_STEP_LIST_KEY, mRecipe.getSteps());
                 break;
         }
         args.putInt(POSITION_KEY, position + 1);

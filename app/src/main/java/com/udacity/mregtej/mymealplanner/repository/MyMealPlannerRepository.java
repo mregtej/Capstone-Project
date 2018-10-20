@@ -18,6 +18,7 @@ import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.datamodel.MenuCategory;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeIngredient;
+import com.udacity.mregtej.mymealplanner.datamodel.RecipeNutritionalFact;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeStep;
 import com.udacity.mregtej.mymealplanner.remotedatabase.MyMealPlannerRTDBContract;
 
@@ -164,30 +165,36 @@ public class MyMealPlannerRepository {
      */
     public void setRecipes() {
         ArrayList<RecipeIngredient> ingredients = new ArrayList<>();
-        ingredients.add(new RecipeIngredient("Eggplant","g", 270.0));
-        ingredients.add(new RecipeIngredient("Green paprika","g", 50.0));
-        ingredients.add(new RecipeIngredient("Onion","g", 100.0));
-        ingredients.add(new RecipeIngredient("Olive oil","tbsp", 1.0));
+        ingredients.add(new RecipeIngredient("Large sweet potato"," ", 1));
+        ingredients.add(new RecipeIngredient("Cooked spinach","g", 100));
+        ingredients.add(new RecipeIngredient("Egg"," ", 1));
+        ingredients.add(new RecipeIngredient("Chives","g", 15));
         ingredients.add(new RecipeIngredient("Pepper"," ", 0.0));
         ingredients.add(new RecipeIngredient("Salt"," ", 0.0));
+        ArrayList<RecipeNutritionalFact> nutritionalFacts = new ArrayList<>();
+        nutritionalFacts.add(new RecipeNutritionalFact("calories", "kcal", 265.5));
+        nutritionalFacts.add(new RecipeNutritionalFact("carbs", "g", 41.1));
+        nutritionalFacts.add(new RecipeNutritionalFact("cholesterol", "mg", 211.0));
+        nutritionalFacts.add(new RecipeNutritionalFact("fat", "g", 5.5));
+        nutritionalFacts.add(new RecipeNutritionalFact("protein", "g", 12.6));
+        nutritionalFacts.add(new RecipeNutritionalFact("sodium", "mg", 274.8));
         ArrayList<RecipeStep> steps = new ArrayList<>();
-        steps.add(new RecipeStep(0,"aaa", "aaa bbb ccc", " ", " "));
-        steps.add(new RecipeStep(1,"aaa", "aaa bbb ccc", " ", " "));
-        steps.add(new RecipeStep(2,"aaa", "aaa bbb ccc", " ", " "));
-        steps.add(new RecipeStep(3,"aaa", "aaa bbb ccc", " ", " "));
-        steps.add(new RecipeStep(4,"aaa", "aaa bbb ccc", " ", " "));
-        steps.add(new RecipeStep(5,"aaa", "aaa bbb ccc", " ", " "));
+        steps.add(new RecipeStep(0,"Preheat oven", "Preheat oven to 250°C.", " ", " "));
+        steps.add(new RecipeStep(1,"Cut and toast the potato", "Cut potato in half (longitudinally) and place on a baking sheet. Roast it 12-15 minutes to 200°C.", " ", " "));
+        steps.add(new RecipeStep(2,"Poached or fried an egg", "Put water on a stewpan, heat it and boil an egg for 4-5 min (poached egg); or put olive oil in a pan, heat it and fried an egg, stirring in salt and pepper as your taste (fried egg).", " ", " "));
+        steps.add(new RecipeStep(3,"Top ingredients and serve", "Top the potato with spinach, the egg and chives and stir in salt and pepper as your taste. Serve it.", " ", " "));
         mMyMealPlannerFirebaseDatabase.getReference(
                 MyMealPlannerRTDBContract.RT_MENU_RECIPES_TABLE_NAME).push().setValue(
                         new Recipe(
                                 " ",
                                 " ",
                                 " ",
-                                "Stuffed Eggplant with ground beef",
-                                4,
-                                "John Doe",
-                                "01:15:00",
+                                "Spinach & Egg Sweet Potato Toast",
+                                1,
+                                "EatingWell Magazine",
+                                "00:30:00",
                                 ingredients,
+                                nutritionalFacts,
                                 steps));
     }
 
