@@ -8,6 +8,7 @@
     android:background="@color/colorBackground"
     android:paddingHorizontal="4dp"
     android:paddingVertical="8dp"
+    android:layout_marginBottom="60dp"
     tools:context=".ui.RecipeNutritionalFactsFragment">
 
     <android.support.constraint.ConstraintLayout
@@ -30,6 +31,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/iv_recipe_screen_ingredients_reset_ingredients"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:alpha="1"
+                android:background="@drawable/button_shape_circle"
+                android:elevation="6dp"
+                android:src="@mipmap/ic_reset"
+                android:stateListAnimator="@animator/fab_raise"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_recipe_screen_ingredients_servings_label"
+                app:layout_constraintEnd_toStartOf="@+id/tv_recipe_screen_ingredients_servings_label"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_recipe_screen_ingredients_servings_number"
                 style="@style/MyMealPlannerTextStyle.SubTitles"
@@ -43,7 +64,7 @@
                 android:text="1"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_recipe_screen_ingredients_servings_label"
                 app:layout_constraintEnd_toStartOf="@+id/tv_recipe_screen_ingredients_servings_label"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_recipe_screen_ingredients_reset_ingredients"
                 app:layout_constraintTop_toTopOf="@+id/tv_recipe_screen_ingredients_servings_label" />
 
             <TextView
@@ -78,6 +99,8 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_marginTop="8dp"
                 android:alpha="1"
                 android:background="@drawable/button_shape_circle"

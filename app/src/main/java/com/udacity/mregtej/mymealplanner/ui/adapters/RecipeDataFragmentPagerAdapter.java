@@ -22,6 +22,9 @@ public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
     /** Key for passing the recipe steps to RecipeStepsFragment */
     private static final String RECIPE_STEP_LIST_KEY = "recipe-step-list";
 
+    /** Key for passing the recipe servings to RecipeIngredientsFragment */
+    private static final String RECIPE_SERVINGS_KEY = "recipe-servings";
+
     /** Key for passing the recipe ingredients to RecipeIngredientsFragment */
     private static final String RECIPE_INGREDIENTS_LIST_KEY = "recipe-ingredient-list";
 
@@ -51,6 +54,7 @@ public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 recipeDataFragment = new RecipeIngredientsFragment();
                 args.putParcelableArrayList(RECIPE_INGREDIENTS_LIST_KEY, mRecipe.getIngredients());
+                args.putInt(RECIPE_SERVINGS_KEY, mRecipe.getServings());
                 break;
             case 1:
                 recipeDataFragment = new RecipeNutritionalFactsFragment();

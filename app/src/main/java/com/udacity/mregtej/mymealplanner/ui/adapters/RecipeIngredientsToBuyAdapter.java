@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeIngredient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,15 +20,20 @@ import butterknife.ButterKnife;
 public class RecipeIngredientsToBuyAdapter
         extends RecyclerView.Adapter<RecipeIngredientsToBuyAdapter.ViewHolder> {
 
+    private double mRatio;
+
     private List<RecipeIngredient> mRecipeIngredientList;
+    private RecipeIngredientsToBuyClickListener mRecipeIngredientsToBuyClickListener;
     private Context mContext;
 
     //--------------------------------------------------------------------------------|
     //                                 Constructors                                   |
     //--------------------------------------------------------------------------------|
 
-    public RecipeIngredientsToBuyAdapter(List<RecipeIngredient> recipeIngredients) {
+    public RecipeIngredientsToBuyAdapter(List<RecipeIngredient> recipeIngredients,
+                                         RecipeIngredientsToBuyClickListener listener) {
         this.mRecipeIngredientList = recipeIngredients;
+        this.mRecipeIngredientsToBuyClickListener = listener;
     }
 
 
@@ -68,8 +72,43 @@ public class RecipeIngredientsToBuyAdapter
 
     @Override
     public int getItemCount() {
-        return mRecipeIngredientList.size();
+        if(mRecipeIngredientList != null) {
+            return mRecipeIngredientList.size();
+        } else { return 0; }
     }
+
+
+    //--------------------------------------------------------------------------------|
+    //                               Public methods                                   |
+    //--------------------------------------------------------------------------------|
+
+    public void removeItem(int i) {
+        mRecipeIngredientList.remove(i);
+    }
+
+    public void addItem(RecipeIngredient ingredient) {
+        mRecipeIngredientList.add(ingredient);
+    }
+
+    public RecipeIngredient getItem(int i) { return mRecipeIngredientList.get(i); }
+
+
+    //--------------------------------------------------------------------------------|
+    //                             Getters / Setters                                  |
+    //--------------------------------------------------------------------------------|
+
+    public List<RecipeIngredient> getmRecipeIngredientList() {
+        return mRecipeIngredientList;
+    }
+
+    public void setmRecipeIngredientList(List<RecipeIngredient> mRecipeIngredientList) {
+        this.mRecipeIngredientList = mRecipeIngredientList;
+    }
+
+    public void setmRatio(double mRatio) {
+        this.mRatio = mRatio;
+    }
+
 
     //--------------------------------------------------------------------------------|
     //                              Support Classes                                   |
@@ -94,6 +133,16 @@ public class RecipeIngredientsToBuyAdapter
         }
 
     }
+
+
+    //--------------------------------------------------------------------------------|
+    //                          Fragment--> Activity Comm                             |
+    //--------------------------------------------------------------------------------|
+
+    public interface RecipeIngredientsToBuyClickListener {
+        public void onRecipeIngredientsAlreadyBoughtClick(int position);
+    }
+
 
     //--------------------------------------------------------------------------------|
     //                                 UI Methods                                     |
@@ -122,17 +171,17 @@ public class RecipeIngredientsToBuyAdapter
      * @param    holder    ViewHolder (View container)
      */
     private void setOnViewClickListener(final ViewHolder holder) {
-        /*
-        holder.ingredientBackToBuyList.setOnClickListener(new View.OnClickListener() {
+        holder.ingredientBought.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mShoppingIngredientAlreadyBoughtClickListener != null) {
-                    mShoppingIngredientAlreadyBoughtClickListener.
-                            onShoppingIngredientBackToBuyListClick(
-                                    (int)holder.shoppingIngredientViewLayout.getTag());
+                if(mRecipeIngredientsToBuyClickListener != null) {
+                    // TODO Add visual delay for displaying the tick
+                    mRecipeIngredientsToBuyClickListener.
+                            onRecipeIngredientsAlreadyBoughtClick(
+                                    (int)holder.recipeIngredientViewLayout.getTag());
                 }
             }
-        }); */
+        });
     }
 
 }
