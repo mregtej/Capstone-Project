@@ -1,7 +1,9 @@
 package com.udacity.mregtej.mymealplanner.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.mregtej.mymealplanner.R;
+import com.udacity.mregtej.mymealplanner.datamodel.RecipeNutritionalFact;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +25,8 @@ import butterknife.Unbinder;
  */
 public class RecipeNutritionalFactsFragment extends Fragment {
 
+    /** Key for passing the recipe nutritional facts to RecipeIngredientsFragment */
+    private static final String RECIPE_NUTRITIONAL_FACTS_LIST_KEY = "recipe-nutritional-fact-list";
 
     @BindView(R.id.v_recipe_screen_nutritional_facts_calories_daily_bar)
     View vRecipeScreenNutritionalFactsCaloriesDailyBar;
@@ -51,16 +58,16 @@ public class RecipeNutritionalFactsFragment extends Fragment {
     TextView tvRecipeScreenNutritionalFactsCarbsProDay;
     @BindView(R.id.cl_recipe_screen_nutritional_facts_carbs)
     ConstraintLayout clRecipeScreenNutritionalFactsCarbs;
-    @BindView(R.id.v_recipe_screen_nutritional_facts_fiber_daily_bar)
-    View vRecipeScreenNutritionalFactsFiberDailyBar;
-    @BindView(R.id.tv_recipe_screen_nutritional_facts_fiber_value)
-    TextView tvRecipeScreenNutritionalFactsFiberValue;
-    @BindView(R.id.tv_recipe_screen_nutritional_facts_fiber_units)
-    TextView tvRecipeScreenNutritionalFactsFiberUnits;
-    @BindView(R.id.tv_recipe_screen_nutritional_facts_fiber_pro_day)
-    TextView tvRecipeScreenNutritionalFactsFiberProDay;
-    @BindView(R.id.cl_recipe_screen_nutritional_facts_fiber)
-    ConstraintLayout clRecipeScreenNutritionalFactsFiber;
+    @BindView(R.id.v_recipe_screen_nutritional_facts_cholesterol_daily_bar)
+    View vRecipeScreenNutritionalFactsCholesterolDailyBar;
+    @BindView(R.id.tv_recipe_screen_nutritional_facts_cholesterol_value)
+    TextView tvRecipeScreenNutritionalFactsCholesterolValue;
+    @BindView(R.id.tv_recipe_screen_nutritional_facts_cholesterol_units)
+    TextView tvRecipeScreenNutritionalFactsCholesterolUnits;
+    @BindView(R.id.tv_recipe_screen_nutritional_facts_cholesterol_pro_day)
+    TextView tvRecipeScreenNutritionalFactsCholesterolProDay;
+    @BindView(R.id.cl_recipe_screen_nutritional_facts_cholesterol)
+    ConstraintLayout clRecipeScreenNutritionalFactsCholesterol;
     @BindView(R.id.v_recipe_screen_nutritional_facts_protein_daily_bar)
     View vRecipeScreenNutritionalFactsProteinDailyBar;
     @BindView(R.id.tv_recipe_screen_nutritional_facts_protein_value)
@@ -91,6 +98,9 @@ public class RecipeNutritionalFactsFragment extends Fragment {
     TextView tvRecipeScreenNutritionalFactsSodiumProDay;
     @BindView(R.id.cl_recipe_screen_nutritional_facts_sodium)
     ConstraintLayout clRecipeScreenNutritionalFactsSodium;
+
+    private ArrayList<RecipeNutritionalFact> mRecipeNutritionalFacts;
+    private Context mContext;
     Unbinder unbinder;
 
     public RecipeNutritionalFactsFragment() {
@@ -100,16 +110,113 @@ public class RecipeNutritionalFactsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe_nutritional_facts, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+        View rootView = inflater.inflate(R.layout.fragment_recipe_nutritional_facts, container,
+                false);
+        unbinder = ButterKnife.bind(this, rootView);
+        mContext = getActivity();
+
+        if (savedInstanceState != null) {
+            // Retrieve recipe nutritional facts from savedInstanceState
+            mRecipeNutritionalFacts = savedInstanceState.
+                    getParcelableArrayList(RECIPE_NUTRITIONAL_FACTS_LIST_KEY);
+        } else {
+            // Retrieve recipe nutritional facts from Activity
+            mRecipeNutritionalFacts = getArguments().
+                    getParcelableArrayList(RECIPE_NUTRITIONAL_FACTS_LIST_KEY);
+        }
+
+        // Populate UI views
+        populateUIViews();
+
+        // Return rootView
+        return rootView;
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(RECIPE_NUTRITIONAL_FACTS_LIST_KEY, mRecipeNutritionalFacts);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void populateUIViews() {
+
+        if(mRecipeNutritionalFacts != null) {
+
+            for(RecipeNutritionalFact recipeNutritionalFact : mRecipeNutritionalFacts) {
+
+                String nutritionalFactTitle = recipeNutritionalFact.getTitle();
+
+                if (nutritionalFactTitle.equals(mContext.getString(
+                        R.string.recipe_nutritional_facts_calories_key))) {
+
+                    tvRecipeScreenNutritionalFactsCaloriesValue.setText(
+                            String.valueOf(recipeNutritionalFact.getQuantity()));
+                    tvRecipeScreenNutritionalFactsCaloriesUnits.setText(
+                            recipeNutritionalFact.getUnits());
+
+                } else if (nutritionalFactTitle.equals(mContext.getString(
+                        R.string.recipe_nutritional_facts_fat_key))) {
+
+                    tvRecipeScreenNutritionalFactsFatValue.setText(
+                            String.valueOf(recipeNutritionalFact.getQuantity()));
+                    tvRecipeScreenNutritionalFactsFatUnits.setText(
+                            recipeNutritionalFact.getUnits());
+
+                } else if (nutritionalFactTitle.equals(mContext.getString(
+                        R.string.recipe_nutritional_facts_cholesterol_key))) {
+
+                    tvRecipeScreenNutritionalFactsCholesterolValue.setText(
+                            String.valueOf(recipeNutritionalFact.getQuantity()));
+                    tvRecipeScreenNutritionalFactsCholesterolUnits.setText(
+                            recipeNutritionalFact.getUnits());
+
+                } else if (nutritionalFactTitle.equals(mContext.getString(
+                        R.string.recipe_nutritional_facts_fat_key))) {
+
+                    tvRecipeScreenNutritionalFactsFatValue.setText(
+                            String.valueOf(recipeNutritionalFact.getQuantity()));
+                    tvRecipeScreenNutritionalFactsFatUnits.setText(
+                            recipeNutritionalFact.getUnits());
+
+                } else if (nutritionalFactTitle.equals(mContext.getString(
+                        R.string.recipe_nutritional_facts_protein_key))) {
+
+                    tvRecipeScreenNutritionalFactsProteinValue.setText(
+                            String.valueOf(recipeNutritionalFact.getQuantity()));
+                    tvRecipeScreenNutritionalFactsProteinUnits.setText(
+                            recipeNutritionalFact.getUnits());
+
+                } else if (nutritionalFactTitle.equals(mContext.getString(
+                        R.string.recipe_nutritional_facts_sodium_key))) {
+
+                    tvRecipeScreenNutritionalFactsSodiumValue.setText(
+                            String.valueOf(recipeNutritionalFact.getQuantity()));
+                    tvRecipeScreenNutritionalFactsSodiumUnits.setText(
+                            recipeNutritionalFact.getUnits());
+
+                } else if (nutritionalFactTitle.equals(mContext.getString(
+                        R.string.recipe_nutritional_facts_sugars_key))) {
+
+                    tvRecipeScreenNutritionalFactsSugarsValue.setText(
+                            String.valueOf(recipeNutritionalFact.getQuantity()));
+                    tvRecipeScreenNutritionalFactsSugarsUnits.setText(
+                            recipeNutritionalFact.getUnits());
+
+                } else {}
+
+            }
+
+        }
+
     }
 
 }

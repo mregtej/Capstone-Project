@@ -113,7 +113,7 @@
     <string name="recipe_nutritional_facts_calories_title">Calories: </string>
     <string name="recipe_nutritional_facts_fat_title">Fat: </string>
     <string name="recipe_nutritional_facts_carbs_title">Carbs: </string>
-    <string name="recipe_nutritional_facts_fiber_title">Fiber: </string>
+    <string name="recipe_nutritional_facts_cholesterol_title">Cholesterol: </string>
     <string name="recipe_nutritional_facts_protein_title">Protein: </string>
     <string name="recipe_nutritional_facts_sugar_title">Sugars: </string>
     <string name="recipe_nutritional_facts_sodium_title">Sodium: </string>
@@ -121,6 +121,13 @@
     <string name="recipe_nutritional_facts_g_units">g</string>
     <string name="recipe_nutritional_facts_mg_units">mg</string>
     <string name="recipe_nutritional_facts_procent">\u0025</string>
+    <string translatable="false" name="recipe_nutritional_facts_calories_key">calories</string>
+    <string translatable="false" name="recipe_nutritional_facts_carbs_key">carbs</string>
+    <string translatable="false" name="recipe_nutritional_facts_cholesterol_key">cholesterol</string>
+    <string translatable="false" name="recipe_nutritional_facts_fat_key">fat</string>
+    <string translatable="false" name="recipe_nutritional_facts_protein_key">protein</string>
+    <string translatable="false" name="recipe_nutritional_facts_sodium_key">sodium</string>
+    <string translatable="false" name="recipe_nutritional_facts_sugars_key">sugars</string>
 
     <!-- Recipe Screen + Nutritional Facts Screen Strings -->
     <string name="recipe_steps_default_step_number">1.</string>
@@ -130,6 +137,5 @@
         error eveniet facere fuga hic illo impedit libero, modi nostrum officiis porro quam soluta
         voluptatibus voluptatum. Asperiores corporis fugiat molestiae non voluptatibus. Architecto
         culpa hic illum ipsam laudantium? Assumenda dignissimos dolores facere.</string>
-
 
 </resources>

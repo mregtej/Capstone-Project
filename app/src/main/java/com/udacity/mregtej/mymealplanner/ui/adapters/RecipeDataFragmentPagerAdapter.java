@@ -58,7 +58,7 @@ public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
                 break;
             case 1:
                 recipeDataFragment = new RecipeNutritionalFactsFragment();
-                args.putParcelableArrayList(RECIPE_NUTRITIONAL_FACTS_LIST_KEY, mRecipe.getIngredients());
+                args.putParcelableArrayList(RECIPE_NUTRITIONAL_FACTS_LIST_KEY, mRecipe.getNutritionalFacts());
                 break;
             case 2:
             default:
