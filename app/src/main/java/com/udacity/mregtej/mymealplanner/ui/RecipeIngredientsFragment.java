@@ -19,6 +19,7 @@ import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeIngredient;
 import com.udacity.mregtej.mymealplanner.ui.adapters.RecipeIngredientsAlreadyBoughtAdapter;
 import com.udacity.mregtej.mymealplanner.ui.adapters.RecipeIngredientsToBuyAdapter;
+import com.udacity.mregtej.mymealplanner.ui.utils.NumberUtils;
 import com.udacity.mregtej.mymealplanner.ui.utils.ViewUtils;
 
 import java.util.ArrayList;
@@ -324,12 +325,16 @@ public class RecipeIngredientsFragment extends Fragment implements
                 decreaseServings();
                 break;
             case R.id.iv_recipe_screen_ingredients_to_buy_title_collapse:
+                handleIngredientsToBuyCollapseView();
                 break;
             case R.id.iv_recipe_screen_ingredients_to_buy_header_check_all:
+                markAllIngredientsAsBought();
                 break;
             case R.id.iv_recipe_screen_ingredients_already_bought_title_collapse:
+                handleIngredientsAlreadyBoughtCollapseView();
                 break;
             case R.id.iv_recipe_screen_ingredients_already_bought_header_remove_all:
+                removeAllIngredientsBought();
                 break;
             case R.id.iv_recipe_screen_ingredients_reset_ingredients:
                 resetIngredientList();
@@ -401,12 +406,6 @@ public class RecipeIngredientsFragment extends Fragment implements
      * - Remove all bought ingredients button
      */
     private void setOnClickListeners() {
-
-        /**************************************************/
-        /*      Expand/Collapse to buy list button        */
-        /*   Expand/Collapse already bought list button   */
-        /**************************************************/
-        setCollapseViewClickListeners();
 
         /**************************************************/
         /*      Mark all ingredients as bought button     */
@@ -490,13 +489,13 @@ public class RecipeIngredientsFragment extends Fragment implements
             List<RecipeIngredient> recipeIngredientsToBuy =
                     mRecipeIngredientsToBuyAdapter.getmRecipeIngredientList();
             for(RecipeIngredient recipeIngredient : recipeIngredientsToBuy) {
-                recipeIngredient.setQuantity(recipeIngredient.getQuantity() * ratio);
+                recipeIngredient.setQuantity(NumberUtils.truncateQuantity(recipeIngredient.getQuantity()*ratio));
             }
 
             List<RecipeIngredient> recipeIngredientsAlreadyBought =
                     mRecipeIngredientsAlreadyBoughtAdapter.getmRecipeIngredientList();
             for(RecipeIngredient recipeIngredient : recipeIngredientsAlreadyBought) {
-                recipeIngredient.setQuantity(recipeIngredient.getQuantity() * ratio);
+                recipeIngredient.setQuantity(NumberUtils.truncateQuantity(recipeIngredient.getQuantity()*ratio));
             }
 
             // Notify data changes
@@ -517,13 +516,13 @@ public class RecipeIngredientsFragment extends Fragment implements
             List<RecipeIngredient> recipeIngredientsToBuy =
                     mRecipeIngredientsToBuyAdapter.getmRecipeIngredientList();
             for(RecipeIngredient recipeIngredient : recipeIngredientsToBuy) {
-                recipeIngredient.setQuantity(recipeIngredient.getQuantity() * ratio);
+                recipeIngredient.setQuantity(NumberUtils.truncateQuantity(recipeIngredient.getQuantity()*ratio));
             }
 
             List<RecipeIngredient> recipeIngredientsAlreadyBought =
                     mRecipeIngredientsAlreadyBoughtAdapter.getmRecipeIngredientList();
             for(RecipeIngredient recipeIngredient : recipeIngredientsAlreadyBought) {
-                recipeIngredient.setQuantity(recipeIngredient.getQuantity() * ratio);
+                recipeIngredient.setQuantity(NumberUtils.truncateQuantity(recipeIngredient.getQuantity()*ratio));
             }
 
             // Notify data changes
@@ -538,10 +537,12 @@ public class RecipeIngredientsFragment extends Fragment implements
         mRecipeIngredientsToBuyAdapter.setmRecipeIngredientList(
                 new ArrayList<RecipeIngredient>(mRecipeIngredients));
         isRecipeIngredientsToBuyRecyclerViewExpanded = true;
+        enableToBuyAllBoughtButton();
         // Mark null ingredients as "already bought"
         mRecipeIngredientsAlreadyBoughtAdapter.setmRecipeIngredientList(
                 new ArrayList<RecipeIngredient>());
         isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded = false;
+        disableAlreadyBoughtRemoveAllButton();
 
         // Update expand/collapse status
         setRecyclerViewVisibility(isRecipeIngredientsToBuyRecyclerViewExpanded,
@@ -567,13 +568,28 @@ public class RecipeIngredientsFragment extends Fragment implements
         List<RecipeIngredient> ingredientsToBuy = mRecipeIngredientsToBuyAdapter.getmRecipeIngredientList();
         if (ingredientsToBuy != null) {
             if (ingredientsToBuy.size() > 0) {
+                // Mark all ingredients as bought
                 for (int i = ingredientsToBuy.size() - 1; i >= 0; i--) {
                     mRecipeIngredientsAlreadyBoughtAdapter.addItem(ingredientsToBuy.get(i));
                     mRecipeIngredientsToBuyAdapter.removeItem(i);
                 }
+                // Enable remove all ingredients as bought button
+                enableAlreadyBoughtRemoveAllButton();
+                // Set collapse/expand view flags
+                isRecipeIngredientsToBuyRecyclerViewExpanded = false;
+                isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded = true;
+                // Update expand/collapse status
+                setRecyclerViewVisibility(isRecipeIngredientsToBuyRecyclerViewExpanded,
+                        rvRecipeScreenIngredientsToBuy);
+                setRecyclerViewVisibility(isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded,
+                        rvRecipeScreenIngredientsAlreadyBought);
+                updateStatusCollapseView(isRecipeIngredientsToBuyRecyclerViewExpanded,
+                        ivRecipeScreenIngredientsToBuyTitleCollapse);
+                updateStatusCollapseView(isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded,
+                        ivRecipeScreenIngredientsAlreadyBoughtTitleCollapse);
+                // Notify data changes on adapters
                 mRecipeIngredientsToBuyAdapter.notifyDataSetChanged();
                 mRecipeIngredientsAlreadyBoughtAdapter.notifyDataSetChanged();
-                enableAlreadyBoughtRemoveAllButton();
             }
         }
 
@@ -590,6 +606,14 @@ public class RecipeIngredientsFragment extends Fragment implements
             for (int i = ingredientsBought.size() - 1; i >= 0; i--) {
                 mRecipeIngredientsAlreadyBoughtAdapter.removeItem(i);
             }
+            // Set collapse/expand view flags
+            isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded = false;
+            // Update expand/collapse status
+            setRecyclerViewVisibility(isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded,
+                    rvRecipeScreenIngredientsAlreadyBought);
+            updateStatusCollapseView(isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded,
+                    ivRecipeScreenIngredientsAlreadyBoughtTitleCollapse);
+            // Notify data changes on adapters
             mRecipeIngredientsAlreadyBoughtAdapter.notifyDataSetChanged();
         }
 
@@ -598,28 +622,22 @@ public class RecipeIngredientsFragment extends Fragment implements
 
     }
 
-    private void setCollapseViewClickListeners() {
+    private void handleIngredientsToBuyCollapseView() {
+        isRecipeIngredientsToBuyRecyclerViewExpanded =
+                !isRecipeIngredientsToBuyRecyclerViewExpanded;
+        setRecyclerViewVisibility(isRecipeIngredientsToBuyRecyclerViewExpanded,
+                rvRecipeScreenIngredientsToBuy);
+        updateStatusCollapseView(isRecipeIngredientsToBuyRecyclerViewExpanded,
+                ivRecipeScreenIngredientsToBuyTitleCollapse);
+    }
 
-        // Set Expand/Collapse OnClick action for To Buy Ingredient List RecyclerView
-        ivRecipeScreenIngredientsToBuyTitleCollapse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isRecipeIngredientsToBuyRecyclerViewExpanded = !isRecipeIngredientsToBuyRecyclerViewExpanded;
-                setRecyclerViewVisibility(isRecipeIngredientsToBuyRecyclerViewExpanded, rvRecipeScreenIngredientsToBuy);
-                updateStatusCollapseView(isRecipeIngredientsToBuyRecyclerViewExpanded, ivRecipeScreenIngredientsToBuyTitleCollapse);
-            }
-        });
-
-        // Set Expand/Collapse OnClick action for Already Bought Ingredient List RecyclerView
-        ivRecipeScreenIngredientsAlreadyBoughtTitleCollapse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded = !isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded;
-                setRecyclerViewVisibility(isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded, rvRecipeScreenIngredientsAlreadyBought);
-                updateStatusCollapseView(isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded, ivRecipeScreenIngredientsAlreadyBoughtTitleCollapse);
-            }
-        });
-
+    private void handleIngredientsAlreadyBoughtCollapseView() {
+        isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded =
+                !isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded;
+        setRecyclerViewVisibility(isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded,
+                rvRecipeScreenIngredientsAlreadyBought);
+        updateStatusCollapseView(isRecipeIngredientsAlreadyBoughtRecyclerViewExpanded,
+                ivRecipeScreenIngredientsAlreadyBoughtTitleCollapse);
     }
 
     private void enableAlreadyBoughtRemoveAllButton() {
