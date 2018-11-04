@@ -106,13 +106,13 @@ public class ShoppingIngredientAlreadyBoughtAdapter
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_recipe_ingredient_name)
+        @BindView(R.id.tv_shopping_ingredient_name)
         TextView ingredientName;
-        @BindView(R.id.tv_recipe_ingredient_quantity)
+        @BindView(R.id.tv_shopping_ingredient_quantity)
         TextView ingredientQuantity;
-        @BindView(R.id.tv_recipe_ingredient_units)
+        @BindView(R.id.tv_shopping_ingredient_units)
         TextView ingredientUnits;
-        @BindView(R.id.iv_recipe_ingredient_remove)
+        @BindView(R.id.iv_shopping_ingredient_remove)
         ImageView ingredientBackToBuyList;
         private final View recipeIngredientViewLayout;
 
