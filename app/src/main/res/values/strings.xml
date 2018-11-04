@@ -110,6 +110,8 @@
     <!-- Recipe Screen + Nutritional Facts Screen Strings -->
     <string name="recipe_nutritional_facts_amount_per_serving_title">Amount per serving</string>
     <string name="recipe_nutritional_facts_pro_daily_value_title">\u0025 daily value</string>
+    <string name="recipe_nutritional_facts_reference_values_explanation">(*) Based on a 2000 Calorie
+        Intake; for Adults and Children 4 or More Years of Age</string>
     <string name="recipe_nutritional_facts_calories_title">Calories: </string>
     <string name="recipe_nutritional_facts_fat_title">Fat: </string>
     <string name="recipe_nutritional_facts_carbs_title">Carbs: </string>
