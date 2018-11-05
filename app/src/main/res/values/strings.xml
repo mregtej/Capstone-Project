@@ -60,6 +60,9 @@
     <string name="meal_menu_day_lunch">Lunch</string>
     <string name="meal_menu_day_dinner">Dinner</string>
 
+    <!-- Meal Menu Day Dialog Strings -->
+    <string name="add_mealday_to_calendar_choose_day_instructions">Please choose preferred day</string>
+
     <!-- Meal Planner Screen Strings -->
     <string name="meal_planner_screen_title">Meal Planner</string>
     <string name="meal_planner_default_date">15th of March, 2018</string>

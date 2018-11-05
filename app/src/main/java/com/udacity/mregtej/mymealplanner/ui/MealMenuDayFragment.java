@@ -9,20 +9,20 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.MealDay;
-import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
 import com.udacity.mregtej.mymealplanner.ui.adapters.MealMenuDayMealtimeAdapter;
@@ -40,8 +40,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MealMenuDayFragment extends Fragment implements
-        MealMenuDayMealtimeAdapter.MealMenuDayMealtimeClickListener {
+public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtimeAdapter.MealMenuDayMealtimeClickListener {
 
     public static final String POSITION_KEY = "meal-day-fragment-position";
 
@@ -57,19 +56,25 @@ public class MealMenuDayFragment extends Fragment implements
      */
     private static final String MEAL_MENU_DAY_RECIPE_LIST_KEY = "meal-day-recipe-list";
 
-    Unbinder unbinder;
-    Context mContext;
-    ActionBar actionBar;
 
-    private MealDay mMealDay;
-
-    /**  ViewModel instance */
-    private RecipeViewModel mRecipeViewModel;
-
+    @BindView(R.id.cl_meal_menu_day)
+    ConstraintLayout clMealMenuDay;
+    @BindView(R.id.fab_meal_menu_all_schedule)
+    FloatingActionButton fabMealMenuAllSchedule;
     @BindView(R.id.rv_meal_menu_day_data)
     RecyclerView rvMealMenuDayData;
     @BindView(R.id.fab_meal_menu_day_schedule)
     FloatingActionButton fabMealMenuDaySchedule;
+
+    Unbinder unbinder;
+    Context mContext;
+    ActionBar actionBar;
+    private MealDay mMealDay;
+
+    /**
+     * ViewModel instance
+     */
+    private RecipeViewModel mRecipeViewModel;
 
     /**
      * RecyclerView LayoutManager instance
@@ -131,24 +136,14 @@ public class MealMenuDayFragment extends Fragment implements
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fab_meal_menu_day_schedule})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.fab_meal_menu_day_schedule:
-                break;
-        }
-    }
-
     private void setRecyclerViewLayoutManager(View rootView) {
         switch (this.getResources().getConfiguration().orientation) {
             case MyMealPlannerGlobals.LANDSCAPE_VIEW: // Landscape Mode
-                mMealPlannerMealtimeLayoutManager = new GridLayoutManager(rootView.getContext(),
-                        MyMealPlannerGlobals.MEAL_MENU_DAY_RECIPE_GV_LAND_COLUMN_NUMB);
+                mMealPlannerMealtimeLayoutManager = new GridLayoutManager(rootView.getContext(), MyMealPlannerGlobals.MEAL_MENU_DAY_RECIPE_GV_LAND_COLUMN_NUMB);
                 break;
             case MyMealPlannerGlobals.PORTRAIT_VIEW: // Portrait Mode
             default:
-                mMealPlannerMealtimeLayoutManager = new GridLayoutManager(rootView.getContext(),
-                        MyMealPlannerGlobals.MEAL_MENU_DAY_RECIPE_GV_PORT_COLUMN_NUMB);
+                mMealPlannerMealtimeLayoutManager = new GridLayoutManager(rootView.getContext(), MyMealPlannerGlobals.MEAL_MENU_DAY_RECIPE_GV_PORT_COLUMN_NUMB);
                 break;
         }
         rvMealMenuDayData.setLayoutManager(mMealPlannerMealtimeLayoutManager);
@@ -160,8 +155,7 @@ public class MealMenuDayFragment extends Fragment implements
 
         mListStateMealPlannerMealtime = mMealPlannerMealtimeLayoutManager.onSaveInstanceState();
         outState.putParcelable(MEAL_MENU_DAY_RECIPE_LIST_KEY, mListStateMealPlannerMealtime);
-        outState.putParcelableArrayList(MEAL_MENU_DAY_RECIPE_LIST_KEY, (ArrayList<Recipe>)
-                mMealPlannerMealtimeAdapter.getmMealDayRecipeList());
+        outState.putParcelableArrayList(MEAL_MENU_DAY_RECIPE_LIST_KEY, (ArrayList<Recipe>) mMealPlannerMealtimeAdapter.getmMealDayRecipeList());
 
     }
 
@@ -187,11 +181,9 @@ public class MealMenuDayFragment extends Fragment implements
      */
     private void registerToRecipeViewModel() {
         // Create RecipeViewModel Factory for param injection
-        RecipeViewModel.Factory recipeFactory = new RecipeViewModel.Factory(
-                getActivity().getApplication());
+        RecipeViewModel.Factory recipeFactory = new RecipeViewModel.Factory(getActivity().getApplication());
         // Get instance of RecipeViewModel
-        mRecipeViewModel = ViewModelProviders.of(this, recipeFactory)
-                .get(RecipeViewModel.class);
+        mRecipeViewModel = ViewModelProviders.of(this, recipeFactory).get(RecipeViewModel.class);
     }
 
     private void setRecipes() {
@@ -202,8 +194,9 @@ public class MealMenuDayFragment extends Fragment implements
         mRecipeViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
-                if(recipes == null || recipes.isEmpty()) { return; }
-                else {
+                if (recipes == null || recipes.isEmpty()) {
+                    return;
+                } else {
                     populateMealMenuDayMealtimeAdapter(recipes);
                 }
             }
@@ -213,29 +206,56 @@ public class MealMenuDayFragment extends Fragment implements
     /**
      * Populate ArrayAdapters's list of recipes
      *
-     * @param   recipes       Retrieved list of recipes from Realtime Database
+     * @param recipes Retrieved list of recipes from Realtime Database
      */
     private void populateMealMenuDayMealtimeAdapter(List<Recipe> recipes) {
         Recipe[] mealDayRecipes = new Recipe[4];
 
-        for(Recipe recipe : recipes) {
-            if(mMealDay.getRecipeBreakfastId().equals(recipe.getId())) {
+        for (Recipe recipe : recipes) {
+            if (mMealDay.getRecipeBreakfastId().equals(recipe.getId())) {
                 mealDayRecipes[0] = recipe;
-            } else if(mMealDay.getRecipeBrunchId().equals(recipe.getId())) {
+            } else if (mMealDay.getRecipeBrunchId().equals(recipe.getId())) {
                 mealDayRecipes[1] = recipe;
-            } else if(mMealDay.getRecipeLunchId().equals(recipe.getId())) {
+            } else if (mMealDay.getRecipeLunchId().equals(recipe.getId())) {
                 mealDayRecipes[2] = recipe;
-            } else if(mMealDay.getRecipeDinnerId().equals(recipe.getId())) {
+            } else if (mMealDay.getRecipeDinnerId().equals(recipe.getId())) {
                 mealDayRecipes[3] = recipe;
-            } else {}
+            } else {
+            }
         }
 
         // Set Adapter and notifyDataSetChanged
-        mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(
-                new ArrayList<>(Arrays.asList(mealDayRecipes)), this);
+        mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(new ArrayList<>(Arrays.asList(mealDayRecipes)), this);
         rvMealMenuDayData.setAdapter(mMealPlannerMealtimeAdapter);
         mMealPlannerMealtimeAdapter.notifyDataSetChanged();
 
+    }
+
+    @OnClick({R.id.fab_meal_menu_day_schedule, R.id.fab_meal_menu_all_schedule})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fab_meal_menu_day_schedule:
+                showAddMealDayToCalendarDialog();
+                break;
+            case R.id.fab_meal_menu_all_schedule:
+                break;
+        }
+    }
+
+    private void showAddMealDayToCalendarDialog() {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = AddMealDayToCalendarDialogFragment.newInstance();
+        newFragment.show(ft, "dialog");
     }
 
 }

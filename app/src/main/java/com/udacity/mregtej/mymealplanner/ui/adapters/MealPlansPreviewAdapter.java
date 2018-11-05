@@ -48,7 +48,7 @@ public class MealPlansPreviewAdapter
                                                                  int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.card_meal_plan_preview, parent, false);
+        View view = inflater.inflate(R.layout.view_meal_plan_preview_item, parent, false);
         return new MealPlansPreviewAdapter.ViewHolder(view);
     }
 
