@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="360dp"
+    android:layout_height="wrap_content"
+    tools:context=".ui.MealDayCalendarDialogFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_mealday_mealtime"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/table_row_shape_rectangle"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/tv_mealday_mealtime_date"
+            style="@style/MyMealPlannerTextStyle.SubTitles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/meal_planner_default_date"
+            app:layout_constraintBottom_toTopOf="@+id/v_separator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/v_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/onColorSurface"
+            app:layout_constraintBottom_toTopOf="@+id/rv_mealday_mealtime_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_mealday_mealtime_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rv_mealday_mealtime_data"
+            app:layout_constraintStart_toStartOf="@+id/rv_mealday_mealtime_data"
+            app:layout_constraintTop_toBottomOf="@+id/rv_mealday_mealtime_data">
+
+            <Button
+                android:id="@+id/bt_mealday_mealtime_back"
+                style="@style/MyMealPlannerTextButtons"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_text_selector"
+                android:elevation="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="@string/add_mealday_to_calendar_back_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_mealday_mealtime_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:paddingHorizontal="1dp"
+            android:stretchMode="columnWidth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_separator" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

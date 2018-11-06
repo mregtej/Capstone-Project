@@ -134,7 +134,6 @@ public class MealPlannerFragment extends Fragment
         unbinder.unbind();
     }
 
-
     // TODO Implement Calendar
     private void setCalendar(View view) {
 

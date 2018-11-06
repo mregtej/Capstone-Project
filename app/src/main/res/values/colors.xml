@@ -28,4 +28,14 @@
     <color name="cardBackground">@android:color/white</color>
     <color name="recipeCardBackground">#AAAAAA</color>
 
+    <!-- App Text Button Colors -->
+    <color name="colorTextButtonDisabledAndNotPressed">#AAAAAA</color>
+    <color name="onColorTextButtonDisabledAndNotPressed">#666666</color>
+    <color name="colorTextButtonDisabledAndPressed">#AAAAAA</color>
+    <color name="onColorTextButtonDisabledAndPressed">#666666</color>
+    <color name="colorTextButtonEnabledAndNotPressed">@color/colorPrimary</color>
+    <color name="onColorTextButtonEnabledAndNotPressed">@color/onColorPrimary</color>
+    <color name="colorTextButtonEnabledAndPressed">@color/colorPrimaryDark</color>
+    <color name="onColorTextButtonEnabledAndPressed">@color/onColorPrimary</color>
+
 </resources>

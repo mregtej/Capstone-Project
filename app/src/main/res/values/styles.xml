@@ -74,7 +74,6 @@
 
     <style name="MyMealPlannerTextButtons" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:textSize">12sp</item>
-        <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>

@@ -171,7 +171,7 @@ public class RecipeActivity extends AppCompatActivity {
         }
 
         // Set Cooking Time
-        tvRecipeDataTimerTime.setText(DateUtils.formatTime(mRecipe.getCookingTime()));
+        tvRecipeDataTimerTime.setText(DateUtils.formatTime(mRecipe.getCookingTime(), mContext));
 
         // Set Recipe Image
         String imageUrl = mRecipe.getImageUrl();

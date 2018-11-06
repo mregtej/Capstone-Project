@@ -62,6 +62,10 @@
 
     <!-- Meal Menu Day Dialog Strings -->
     <string name="add_mealday_to_calendar_choose_day_instructions">Please choose preferred day</string>
+    <string name="add_mealday_to_calendar_cancel_button">Cancel</string>
+    <string name="add_mealday_to_calendar_view_button">View Day</string>
+    <string name="add_mealday_to_calendar_plan_button">Plan</string>
+    <string name="add_mealday_to_calendar_back_button">Back</string>
 
     <!-- Meal Planner Screen Strings -->
     <string name="meal_planner_screen_title">Meal Planner</string>
@@ -145,6 +149,26 @@
 
     <!-- Other App Strings -->
     <string name="not_yet_implemented">Not yet implemented</string>
+    <string name="hr">hr</string>
+    <string name="min">hr</string>
+    <string name="s">s</string>
+    <string name="invalid_time">Invalid Time</string>
     <string name="unknown">Unknown</string>
+    <string name="st_days">st of</string>
+    <string name="nd_days">nd of</string>
+    <string name="rd_days">rd of</string>
+    <string name="th_days">th of</string>
+    <string name="january">January</string>
+    <string name="feburary">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
 
 </resources>
