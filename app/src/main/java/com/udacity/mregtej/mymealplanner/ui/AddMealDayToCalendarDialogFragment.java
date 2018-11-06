@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.ui.utils.CalendarViewScrollable;
 
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -84,6 +86,17 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
     }
 
     private void setUpCalendarView() {
+
+        // Get current date
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(calendar.getTime());
+        mYear = calendar.get(Calendar.YEAR);
+        mMonth = calendar.get(Calendar.MONTH);
+        mDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        // Enable View Day Button
+        if(!btMealdayView.isEnabled()) { btMealdayView.setEnabled(true); }
+
+        // Set OnDateChangeListener (user chooses a different date)
         cvMealDayCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month,
