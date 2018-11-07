@@ -2,15 +2,21 @@ package com.udacity.mregtej.mymealplanner.ui.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
+import com.udacity.mregtej.mymealplanner.datamodel.RecipeIngredient;
+import com.udacity.mregtej.mymealplanner.datamodel.RecipeNutritionalFact;
+import com.udacity.mregtej.mymealplanner.datamodel.RecipeStep;
 import com.udacity.mregtej.mymealplanner.ui.RecipeIngredientsFragment;
 import com.udacity.mregtej.mymealplanner.ui.RecipeNutritionalFactsFragment;
 import com.udacity.mregtej.mymealplanner.ui.RecipeStepsFragment;
+
+import java.util.ArrayList;
 
 public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -53,17 +59,20 @@ public class RecipeDataFragmentPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 recipeDataFragment = new RecipeIngredientsFragment();
-                args.putParcelableArrayList(RECIPE_INGREDIENTS_LIST_KEY, mRecipe.getIngredients());
+                args.putParcelableArrayList(RECIPE_INGREDIENTS_LIST_KEY,
+                        new ArrayList<RecipeIngredient>(mRecipe.getIngredients()));
                 args.putInt(RECIPE_SERVINGS_KEY, mRecipe.getServings());
                 break;
             case 1:
                 recipeDataFragment = new RecipeNutritionalFactsFragment();
-                args.putParcelableArrayList(RECIPE_NUTRITIONAL_FACTS_LIST_KEY, mRecipe.getNutritionalFacts());
+                args.putParcelableArrayList(RECIPE_NUTRITIONAL_FACTS_LIST_KEY,
+                        new ArrayList<RecipeNutritionalFact>(mRecipe.getNutritionalFacts()));
                 break;
             case 2:
             default:
                 recipeDataFragment = new RecipeStepsFragment();
-                args.putParcelableArrayList(RECIPE_STEP_LIST_KEY, mRecipe.getSteps());
+                args.putParcelableArrayList(RECIPE_STEP_LIST_KEY,
+                        new ArrayList<RecipeStep>(mRecipe.getRecipeSteps()));
                 break;
         }
         args.putInt(POSITION_KEY, position + 1);

@@ -1,18 +1,17 @@
 package com.udacity.mregtej.mymealplanner.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.udacity.mregtej.mymealplanner.application.MyMealPlannerExecutors;
+import com.udacity.mregtej.mymealplanner.database.MyMealPlannerDatabase;
 import com.udacity.mregtej.mymealplanner.datamodel.MealDay;
 import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.datamodel.MenuCategory;
@@ -20,7 +19,7 @@ import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeIngredient;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeNutritionalFact;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeStep;
-import com.udacity.mregtej.mymealplanner.remotedatabase.MyMealPlannerRTDBContract;
+import com.udacity.mregtej.mymealplanner.provider.MyMealPlannerRTDBContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,23 +42,30 @@ public class MyMealPlannerRepository {
     private FirebaseDatabase mMyMealPlannerFirebaseDatabase;
 
     private final MyMealPlannerExecutors mExecutors;
+    private final MyMealPlannerDatabase mMyMealPlannerDatabase;
+    private MediatorLiveData<List<Recipe>> mObservableRecipes;
 
     //--------------------------------------------------------------------------------|
     //                  Constructor (Singleton Pattern)                               |
     //--------------------------------------------------------------------------------|
 
-    private MyMealPlannerRepository(final MyMealPlannerExecutors executors) {
+    private MyMealPlannerRepository(final MyMealPlannerDatabase database,
+                                    final MyMealPlannerExecutors executors) {
+        // Set-Up Local Database
+        mMyMealPlannerDatabase = database;
+        mObservableRecipes = new MediatorLiveData<>();
         mExecutors = executors;
+        // Set-Up Realtime Database (Firebase)
         mMyMealPlannerFirebaseDatabase = FirebaseDatabase.getInstance();
         mMyMealPlannerFirebaseDatabase.setPersistenceEnabled(true);
     }
 
-    public static MyMealPlannerRepository getInstance(
+    public static MyMealPlannerRepository getInstance(final MyMealPlannerDatabase database,
                                                final MyMealPlannerExecutors executors) {
         if (INSTANCE == null) {
             synchronized (MyMealPlannerRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new MyMealPlannerRepository(executors);
+                    INSTANCE = new MyMealPlannerRepository(database, executors);
                 }
             }
         }
@@ -71,6 +77,9 @@ public class MyMealPlannerRepository {
     //                               Local DB Ops                                     |
     //--------------------------------------------------------------------------------|
 
+    public LiveData<List<Recipe>> getPlannedRecipes() {
+        return mMyMealPlannerDatabase.recipeDao().getRecipes();
+    }
 
     //--------------------------------------------------------------------------------|
     //                               Network Requests                                 |

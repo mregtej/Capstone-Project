@@ -1,4 +1,4 @@
-package com.udacity.mregtej.mymealplanner.remotedatabase;
+package com.udacity.mregtej.mymealplanner.provider;
 
 public class MyMealPlannerRTDBContract {
 

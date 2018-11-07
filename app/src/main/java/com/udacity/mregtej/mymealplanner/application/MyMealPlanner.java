@@ -3,6 +3,7 @@ package com.udacity.mregtej.mymealplanner.application;
 import android.app.Application;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.udacity.mregtej.mymealplanner.database.MyMealPlannerDatabase;
 import com.udacity.mregtej.mymealplanner.repository.MyMealPlannerRepository;
 
 public class MyMealPlanner extends Application {
@@ -32,7 +33,11 @@ public class MyMealPlanner extends Application {
     }
 
     public MyMealPlannerRepository getRepository() {
-        return MyMealPlannerRepository.getInstance(mMyMealPlannerExecutors);
+        return MyMealPlannerRepository.getInstance(getDatabase(), mMyMealPlannerExecutors);
+    }
+
+    public MyMealPlannerDatabase getDatabase() {
+        return MyMealPlannerDatabase.getInstance(this, mMyMealPlannerExecutors);
     }
 
 }

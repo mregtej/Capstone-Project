@@ -22,7 +22,7 @@ import android.widget.Button;
 import com.udacity.mregtej.mymealplanner.R;
 import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.datamodel.MenuCategory;
-import com.udacity.mregtej.mymealplanner.remotedatabase.MyMealPlannerRTDBContract;
+import com.udacity.mregtej.mymealplanner.provider.MyMealPlannerRTDBContract;
 import com.udacity.mregtej.mymealplanner.ui.adapters.MealPlansPreviewAdapter;
 import com.udacity.mregtej.mymealplanner.viewmodel.MenuCategoryViewModel;
 import com.udacity.mregtej.mymealplanner.viewmodel.MenuViewModel;

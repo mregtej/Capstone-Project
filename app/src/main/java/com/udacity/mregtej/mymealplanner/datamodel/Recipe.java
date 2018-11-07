@@ -1,28 +1,60 @@
 package com.udacity.mregtej.mymealplanner.datamodel;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
+import com.udacity.mregtej.mymealplanner.database.MyMealPlannerConverters;
+import com.udacity.mregtej.mymealplanner.provider.MyMealPlannerDBContract;
 
+import java.util.List;
+
+@Entity(tableName = MyMealPlannerDBContract.RecipeEntry.TABLE_NAME)
 public class Recipe implements Parcelable {
 
+    @PrimaryKey(autoGenerate = false)
+    @NonNull
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_ID)
     private String id;
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_CATEGORY)
     private String category;
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_IMAGE_URL)
     private String imageUrl;
+    @NonNull
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_TITLE)
     private String title;
+    @NonNull
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_SERVINGS)
     private int servings;
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_AUTHOR)
     private String author;
+    @NonNull
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_COOKING_TIME)
     private String cookingTime;
-    private ArrayList<RecipeIngredient> ingredients;
-    private ArrayList<RecipeNutritionalFact> nutritionalFacts;
-    private ArrayList<RecipeStep> steps;
+    @TypeConverters(MyMealPlannerConverters.class)
+    @NonNull
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_INGREDIENTS)
+    private List<RecipeIngredient> ingredients;
+    @TypeConverters(MyMealPlannerConverters.class)
+    @NonNull
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_NUTRITIONAL_FACTS)
+    private List<RecipeNutritionalFact> nutritionalFacts;
+    @TypeConverters(MyMealPlannerConverters.class)
+    @NonNull
+    @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_RECIPE_STEPS)
+    private List<RecipeStep> recipeSteps;
 
     public Recipe() { }
 
+    @Ignore
     public Recipe(String id, String category, String imageUrl, String title, int servings,
-                  String author, String cookingTime, ArrayList<RecipeIngredient> ingredients,
-                  ArrayList<RecipeNutritionalFact> nutritionalFacts, ArrayList<RecipeStep> steps) {
+                  String author, String cookingTime, List<RecipeIngredient> ingredients,
+                  List<RecipeNutritionalFact> nutritionalFacts, List<RecipeStep> recipeSteps) {
         this.id = id;
         this.category = category;
         this.imageUrl = imageUrl;
@@ -32,7 +64,7 @@ public class Recipe implements Parcelable {
         this.cookingTime = cookingTime;
         this.ingredients = ingredients;
         this.nutritionalFacts = nutritionalFacts;
-        this.steps = steps;
+        this.recipeSteps = recipeSteps;
     }
 
     @Override
@@ -49,9 +81,9 @@ public class Recipe implements Parcelable {
         dest.writeInt(this.servings);
         dest.writeString(this.author);
         dest.writeString(this.cookingTime);
-        dest.writeTypedList(this.ingredients);
-        dest.writeTypedList(this.nutritionalFacts);
-        dest.writeTypedList(this.steps);
+        dest.writeList(this.ingredients);
+        dest.writeList(this.nutritionalFacts);
+        dest.writeList(this.recipeSteps);
     }
 
     protected Recipe(Parcel in) {
@@ -62,9 +94,9 @@ public class Recipe implements Parcelable {
         this.servings = in.readInt();
         this.author = in.readString();
         this.cookingTime = in.readString();
-        this.ingredients = in.createTypedArrayList(RecipeIngredient.CREATOR);
-        this.nutritionalFacts = in.createTypedArrayList(RecipeNutritionalFact.CREATOR);
-        this.steps = in.createTypedArrayList(RecipeStep.CREATOR);
+        this.ingredients = in.readArrayList(RecipeIngredient.class.getClassLoader());
+        this.nutritionalFacts = in.readArrayList(RecipeNutritionalFact.class.getClassLoader());
+        this.recipeSteps = in.readArrayList(RecipeStep.class.getClassLoader());
     }
 
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
@@ -135,28 +167,30 @@ public class Recipe implements Parcelable {
         this.cookingTime = cookingTime;
     }
 
-    public ArrayList<RecipeIngredient> getIngredients() {
+    public List<RecipeIngredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<RecipeIngredient> ingredients) {
+    public void setIngredients(List<RecipeIngredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public ArrayList<RecipeNutritionalFact> getNutritionalFacts() {
+    public List<RecipeNutritionalFact> getNutritionalFacts() {
         return nutritionalFacts;
     }
 
-    public void setNutritionalFacts(ArrayList<RecipeNutritionalFact> nutritionalFacts) {
+    public void setNutritionalFacts(List<RecipeNutritionalFact> nutritionalFacts) {
         this.nutritionalFacts = nutritionalFacts;
     }
 
-    public ArrayList<RecipeStep> getSteps() {
-        return steps;
+    @NonNull
+    public List<RecipeStep> getRecipeSteps() {
+        return recipeSteps;
     }
 
-    public void setSteps(ArrayList<RecipeStep> steps) {
-        this.steps = steps;
+    public void setRecipeSteps(@NonNull List<RecipeStep> recipeSteps) {
+        this.recipeSteps = recipeSteps;
     }
+
 }
 
