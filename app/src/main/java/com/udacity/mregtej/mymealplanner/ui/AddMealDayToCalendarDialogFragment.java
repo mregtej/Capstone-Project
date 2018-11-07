@@ -24,6 +24,10 @@ import butterknife.Unbinder;
 
 public class AddMealDayToCalendarDialogFragment extends DialogFragment {
 
+    private static final String YEAR_KEY = "year";
+    private static final String MONTH_KEY = "month";
+    private static final String DAY_KEY = "day";
+
     @BindView(R.id.cv_mealday_calendar)
     CalendarViewScrollable cvMealDayCalendar;
     @BindView(R.id.bt_mealday_cancel)
@@ -57,15 +61,30 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
                 false);
         getDialog().requestWindowFeature(STYLE_NO_TITLE);
         setCancelable(false);
-
         unbinder = ButterKnife.bind(this, rootView);
         mContext = getContext();
 
-        // Set-Up Calendar (listeners, UI style...)
-        setUpCalendarView();
+        if (savedInstanceState != null) {
 
-        // Show Initial instructions
-        showInitialInstructions();
+            mYear = savedInstanceState.getInt(YEAR_KEY);
+            mMonth = savedInstanceState.getInt(MONTH_KEY);
+            mDayOfMonth = savedInstanceState.getInt(DAY_KEY);
+
+            // Update Date on Calendar View
+            updateCalendarView();
+
+        } else {
+
+            // Set Current Date on Calendar View
+            setCurrentDateOnCalendarView();
+
+            // Show Initial instructions
+            showInitialInstructions();
+
+        }
+
+        // Set-Up Calendar listeners
+        setCalendarViewListeners();
 
         return rootView;
 
@@ -77,6 +96,14 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(YEAR_KEY, mYear);
+        outState.putInt(MONTH_KEY, mMonth);
+        outState.putInt(DAY_KEY, mDayOfMonth);
+    }
+
     private void showInitialInstructions() {
         if (mToast != null) {
             mToast.cancel();
@@ -85,17 +112,16 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
         mToast.show();
     }
 
-    private void setUpCalendarView() {
-
+    private void setCurrentDateOnCalendarView() {
         // Get current date
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(calendar.getTime());
         mYear = calendar.get(Calendar.YEAR);
         mMonth = calendar.get(Calendar.MONTH);
         mDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        // Enable View Day Button
-        if(!btMealdayView.isEnabled()) { btMealdayView.setEnabled(true); }
+    }
 
+    private void setCalendarViewListeners() {
         // Set OnDateChangeListener (user chooses a different date)
         cvMealDayCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -105,11 +131,16 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
                 mYear = year;
                 mMonth = month;
                 mDayOfMonth = dayOfMonth;
-                // Enable View Day and Plan buttons
-                if(!btMealdayView.isEnabled()) { btMealdayView.setEnabled(true); }
-                if(!btMealdayPlan.isEnabled()) { btMealdayPlan.setEnabled(true); }
             }
         });
+    }
+
+
+
+    private void updateCalendarView() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(mYear, mMonth, mDayOfMonth, 0, 0);
+        cvMealDayCalendar.setDate(calendar.getTimeInMillis());
     }
 
     @OnClick({R.id.bt_mealday_cancel, R.id.bt_mealday_view, R.id.bt_mealday_plan})

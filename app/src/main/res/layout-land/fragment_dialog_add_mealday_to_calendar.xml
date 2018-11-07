@@ -14,7 +14,7 @@
         <com.udacity.mregtej.mymealplanner.ui.utils.CalendarViewScrollable
             android:id="@+id/cv_mealday_calendar"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="250dp"
             android:elevation="2dp"
             android:background="@drawable/table_row_shape_rectangle"
             app:layout_constraintEnd_toEndOf="parent"
