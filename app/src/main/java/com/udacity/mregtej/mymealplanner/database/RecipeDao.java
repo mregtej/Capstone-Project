@@ -9,13 +9,14 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import android.database.Cursor;
 
+import com.udacity.mregtej.mymealplanner.datamodel.PlannedMeal;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.provider.MyMealPlannerDBContract;
 
 import java.util.List;
 
 @Dao
-public interface MyMealPlannerDao {
+public interface RecipeDao {
 
     @Query("SELECT * FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME)
     LiveData<List<Recipe>> getRecipes();
@@ -25,7 +26,7 @@ public interface MyMealPlannerDao {
 
     @Query("SELECT * FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME +
             " WHERE " + MyMealPlannerDBContract.RecipeEntry.COLUMN_ID + " = :id")
-    Cursor findRecipeById(long id);
+    Cursor findRecipeByIdViaCP(long id);
 
     @Query("SELECT COUNT(*) FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME)
     int countRecipes();

@@ -165,6 +165,7 @@ public class MealMenuDayMealtimeAdapter extends
 
         holder.mealTimeTitle.setText(mMealTimeTitles[(int)holder.mealMenuDayMealtimeViewLayout.getTag()]);
         // TODO Implement recipe update button
+        // TODO Handle retrieved empty/null recipes
         String imageUrl = recipe.getImageUrl();
         if(imageUrl != null && !imageUrl.isEmpty() && UrlUtils.isValid(imageUrl)) {
             Picasso.get()

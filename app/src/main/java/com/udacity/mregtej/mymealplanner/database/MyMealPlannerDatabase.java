@@ -10,16 +10,18 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.udacity.mregtej.mymealplanner.application.MyMealPlannerExecutors;
+import com.udacity.mregtej.mymealplanner.datamodel.PlannedMeal;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 
 import java.util.List;
 
-@Database(entities = {Recipe.class}, version = 1, exportSchema = false)
+@Database(entities = {Recipe.class, PlannedMeal.class}, version = 1, exportSchema = false)
 public abstract class MyMealPlannerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "recipe-database";
 
-    public abstract MyMealPlannerDao recipeDao();
+    public abstract RecipeDao recipeDao();
+    public abstract PlannedMealDao plannedMealDao();
     private static MyMealPlannerExecutors mExecutors;
     private static MyMealPlannerDatabase INSTANCE;
 

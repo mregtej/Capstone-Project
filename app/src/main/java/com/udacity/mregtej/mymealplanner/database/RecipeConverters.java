@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-public class MyMealPlannerConverters {
+public class RecipeConverters {
 
     static Gson gson = new Gson();
 
