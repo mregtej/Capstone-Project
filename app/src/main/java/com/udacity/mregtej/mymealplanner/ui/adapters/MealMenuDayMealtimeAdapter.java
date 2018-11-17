@@ -19,7 +19,10 @@ import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
 import com.udacity.mregtej.mymealplanner.ui.utils.UrlUtils;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +36,7 @@ public class MealMenuDayMealtimeAdapter extends
     /**ScreenWidth (in px) - Runtime resize of GridView elements */
     private final int mScreenWidth;
 
-    List<Recipe> mMealDayRecipeList;
+    LinkedHashMap<String,Recipe> mMealList;
     private Context mContext;
     private MealMenuDayMealtimeClickListener mMealMenuDayMealtimeClickListener;
     private static String[] mMealTimeTitles;
@@ -43,8 +46,9 @@ public class MealMenuDayMealtimeAdapter extends
     //                                 Constructors                                   |
     //--------------------------------------------------------------------------------|
 
-    public MealMenuDayMealtimeAdapter(List<Recipe> recipes, MealMenuDayMealtimeClickListener listener) {
-        this.mMealDayRecipeList = recipes;
+    public MealMenuDayMealtimeAdapter(LinkedHashMap<String,Recipe> mealRecipes,
+                                      MealMenuDayMealtimeClickListener listener) {
+        this.mMealList = mealRecipes;
         this.mMealMenuDayMealtimeClickListener = listener;
         mScreenWidth = getScreenWidth();
     }
@@ -69,14 +73,17 @@ public class MealMenuDayMealtimeAdapter extends
     public void onBindViewHolder(@NonNull MealMenuDayMealtimeAdapter.ViewHolder holder,
                                  int position) {
 
-        // Retrieve i-ingredient from shopping ingredient list
-        Recipe recipe = mMealDayRecipeList.get(position);
+        // Retrieve
+        Set<Map.Entry<String, Recipe>> mealTimeSet = mMealList.entrySet();
+        Map.Entry<String, Recipe> mealTimeElement = (new ArrayList<Map.Entry<String, Recipe>>(mealTimeSet)).get(position);
+        String mealtime = mealTimeElement.getKey();
+        Recipe recipe = mealTimeElement.getValue();
 
         // Set position-tag
         holder.mealMenuDayMealtimeViewLayout.setTag(position);
 
         // Populate UI elements
-        populateUIView(holder, recipe);
+        populateUIView(holder, mealtime, recipe);
 
         // Set OnViewClickListeners
         setOnViewClickListener(holder);
@@ -85,7 +92,7 @@ public class MealMenuDayMealtimeAdapter extends
 
     @Override
     public int getItemCount() {
-        return mMealDayRecipeList.size();
+        return mMealList.size();
     }
 
 
@@ -93,8 +100,8 @@ public class MealMenuDayMealtimeAdapter extends
     //                             Getters / Setters                                  |
     //--------------------------------------------------------------------------------|
 
-    public List<Recipe> getmMealDayRecipeList() {
-        return mMealDayRecipeList;
+    public HashMap<String, Recipe> getmMealList() {
+        return mMealList;
     }
 
 
@@ -147,7 +154,7 @@ public class MealMenuDayMealtimeAdapter extends
     //--------------------------------------------------------------------------------|
 
     public interface MealMenuDayMealtimeClickListener {
-        public void onMealMenuDayMealtimeClick(Recipe recipe);
+        public void onMealRecipeClick(Recipe recipe);
     }
 
 
@@ -161,9 +168,9 @@ public class MealMenuDayMealtimeAdapter extends
      * @param holder        ViewHolder (View container)
      * @param recipe        Recipe object
      */
-    private void populateUIView(MealMenuDayMealtimeAdapter.ViewHolder holder, Recipe recipe) {
-
-        holder.mealTimeTitle.setText(mMealTimeTitles[(int)holder.mealMenuDayMealtimeViewLayout.getTag()]);
+    private void populateUIView(MealMenuDayMealtimeAdapter.ViewHolder holder, String mealtime,
+                                Recipe recipe) {
+        holder.mealTimeTitle.setText(mealtime);
         // TODO Implement recipe update button
         // TODO Handle retrieved empty/null recipes
         String imageUrl = recipe.getImageUrl();
@@ -191,8 +198,8 @@ public class MealMenuDayMealtimeAdapter extends
             @Override
             public void onClick(View v) {
                 if(mMealMenuDayMealtimeClickListener != null) {
-                    mMealMenuDayMealtimeClickListener.onMealMenuDayMealtimeClick(mMealDayRecipeList
-                            .get((int)holder.mealMenuDayMealtimeViewLayout.getTag()));
+                    mMealMenuDayMealtimeClickListener.onMealRecipeClick(
+                            mMealList.get(holder.mealTimeTitle.getText().toString()));
                 }
             }
         });

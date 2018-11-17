@@ -215,6 +215,7 @@ public class MyMealPlannerRepository {
      */
     public void setMenus() {
         ArrayList<MealDay> meals = new ArrayList<MealDay>();
+        /*
         meals.add(new MealDay(0, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(1, "aaa", "bbb", "ccc", "ddd"));
         meals.add(new MealDay(2, "aaa", "bbb", "ccc", "ddd"));
@@ -280,6 +281,7 @@ public class MyMealPlannerRepository {
                 " ",
                 "Veggies Menu 6",
                 meals));
+                */
     }
 
 }

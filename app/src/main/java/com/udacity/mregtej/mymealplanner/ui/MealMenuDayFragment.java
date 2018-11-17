@@ -22,14 +22,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.udacity.mregtej.mymealplanner.R;
+import com.udacity.mregtej.mymealplanner.datamodel.Meal;
 import com.udacity.mregtej.mymealplanner.datamodel.MealDay;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.global.MyMealPlannerGlobals;
 import com.udacity.mregtej.mymealplanner.ui.adapters.MealMenuDayMealtimeAdapter;
 import com.udacity.mregtej.mymealplanner.viewmodel.RecipeViewModel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,13 +48,11 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
 
     public static final String RECIPE_KEY = "recipe";
 
-    /* Key for storing the list state in savedInstanceState */
-    private static final String MEAL_MENU_DAY_RECIPE_LIST_STATE_KEY = "meal-day-recipe-list-state";
+    /** Key for storing the list state in savedInstanceState */
+    private static final String MEAL_DAY_LIST_STATE_KEY = "meal-day-list-state";
 
-    /**
-     * Key for storing the meal-day recipes to buy in savedInstanceState
-     */
-    private static final String MEAL_MENU_DAY_RECIPE_LIST_KEY = "meal-day-recipe-list";
+    /** Key for storing the meal-days to buy in savedInstanceState */
+    private static final String MEAL_DAY_LIST_KEY = "meal-day-list";
 
 
     @BindView(R.id.cl_meal_menu_day)
@@ -109,9 +107,9 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
 
         if (savedInstanceState != null) {
 
-            List<Recipe> mealDayRecipes = savedInstanceState.
-                    getParcelableArrayList(MEAL_MENU_DAY_RECIPE_LIST_KEY);
-            mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(mealDayRecipes, this);
+            LinkedHashMap<String,Recipe> mealDayList =
+                    (LinkedHashMap<String,Recipe>) savedInstanceState.getSerializable(MEAL_DAY_LIST_KEY);
+            mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(mealDayList, this);
             rvMealMenuDayData.setAdapter(mMealPlannerMealtimeAdapter);
             mMealPlannerMealtimeAdapter.notifyDataSetChanged();
 
@@ -154,8 +152,8 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
         super.onSaveInstanceState(outState);
 
         mListStateMealPlannerMealtime = mMealPlannerMealtimeLayoutManager.onSaveInstanceState();
-        outState.putParcelable(MEAL_MENU_DAY_RECIPE_LIST_KEY, mListStateMealPlannerMealtime);
-        outState.putParcelableArrayList(MEAL_MENU_DAY_RECIPE_LIST_KEY, (ArrayList<Recipe>) mMealPlannerMealtimeAdapter.getmMealDayRecipeList());
+        outState.putParcelable(MEAL_DAY_LIST_KEY, mListStateMealPlannerMealtime);
+        outState.putSerializable(MEAL_DAY_LIST_KEY, mMealPlannerMealtimeAdapter.getmMealList());
 
     }
 
@@ -163,12 +161,12 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
-            mListStateMealPlannerMealtime = savedInstanceState.getParcelable(MEAL_MENU_DAY_RECIPE_LIST_STATE_KEY);
+            mListStateMealPlannerMealtime = savedInstanceState.getParcelable(MEAL_DAY_LIST_STATE_KEY);
         }
     }
 
     @Override
-    public void onMealMenuDayMealtimeClick(Recipe recipe) {
+    public void onMealRecipeClick(Recipe recipe) {
         Intent intent = new Intent(mContext, RecipeActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(RECIPE_KEY, recipe);
@@ -209,23 +207,19 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
      * @param recipes Retrieved list of recipes from Realtime Database
      */
     private void populateMealMenuDayMealtimeAdapter(List<Recipe> recipes) {
-        Recipe[] mealDayRecipes = new Recipe[4];
 
+        // TODO Min API: 19 - Look for alternatives
+        LinkedHashMap<String,Recipe> mealRecipeList = new LinkedHashMap<>();
         for (Recipe recipe : recipes) {
-            if (mMealDay.getRecipeBreakfastId().equals(recipe.getId())) {
-                mealDayRecipes[0] = recipe;
-            } else if (mMealDay.getRecipeBrunchId().equals(recipe.getId())) {
-                mealDayRecipes[1] = recipe;
-            } else if (mMealDay.getRecipeLunchId().equals(recipe.getId())) {
-                mealDayRecipes[2] = recipe;
-            } else if (mMealDay.getRecipeDinnerId().equals(recipe.getId())) {
-                mealDayRecipes[3] = recipe;
-            } else {
+            for(Meal meal : mMealDay.getMeals()) {
+                if(meal.getRecipeId().equals(recipe.getId())) {
+                    mealRecipeList.put(meal.getMealTime(), recipe);
+                }
             }
         }
 
         // Set Adapter and notifyDataSetChanged
-        mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(new ArrayList<>(Arrays.asList(mealDayRecipes)), this);
+        mMealPlannerMealtimeAdapter = new MealMenuDayMealtimeAdapter(mealRecipeList, this);
         rvMealMenuDayData.setAdapter(mMealPlannerMealtimeAdapter);
         mMealPlannerMealtimeAdapter.notifyDataSetChanged();
 

@@ -3,23 +3,18 @@ package com.udacity.mregtej.mymealplanner.datamodel;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class MealDay implements Parcelable {
 
     private long id;
-    private String recipeBreakfastId;
-    private String recipeBrunchId;
-    private String recipeLunchId;
-    private String recipeDinnerId;
+    private ArrayList<Meal> meals;
 
     public MealDay() { }
 
-    public MealDay(long id, String recipeBreakfastId, String recipeBrunchId, String recipeLunchId,
-                   String recipeDinnerId) {
+    public MealDay(long id, ArrayList<Meal> meals) {
         this.id = id;
-        this.recipeBreakfastId = recipeBreakfastId;
-        this.recipeBrunchId = recipeBrunchId;
-        this.recipeLunchId = recipeLunchId;
-        this.recipeDinnerId = recipeDinnerId;
+        this.meals = meals;
     }
 
     public long getId() {
@@ -30,36 +25,12 @@ public class MealDay implements Parcelable {
         this.id = id;
     }
 
-    public String getRecipeBreakfastId() {
-        return recipeBreakfastId;
+    public ArrayList<Meal> getMeals() {
+        return meals;
     }
 
-    public void setRecipeBreakfastId(String recipeBreakfastId) {
-        this.recipeBreakfastId = recipeBreakfastId;
-    }
-
-    public String getRecipeBrunchId() {
-        return recipeBrunchId;
-    }
-
-    public void setRecipeBrunchId(String recipeBrunchId) {
-        this.recipeBrunchId = recipeBrunchId;
-    }
-
-    public String getRecipeLunchId() {
-        return recipeLunchId;
-    }
-
-    public void setRecipeLunchId(String recipeLunchId) {
-        this.recipeLunchId = recipeLunchId;
-    }
-
-    public String getRecipeDinnerId() {
-        return recipeDinnerId;
-    }
-
-    public void setRecipeDinnerId(String recipeDinnerId) {
-        this.recipeDinnerId = recipeDinnerId;
+    public void setMeals(ArrayList<Meal> meals) {
+        this.meals = meals;
     }
 
     @Override
@@ -70,18 +41,12 @@ public class MealDay implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
-        dest.writeString(this.recipeBreakfastId);
-        dest.writeString(this.recipeBrunchId);
-        dest.writeString(this.recipeLunchId);
-        dest.writeString(this.recipeDinnerId);
+        dest.writeTypedList(this.meals);
     }
 
     protected MealDay(Parcel in) {
         this.id = in.readLong();
-        this.recipeBreakfastId = in.readString();
-        this.recipeBrunchId = in.readString();
-        this.recipeLunchId = in.readString();
-        this.recipeDinnerId = in.readString();
+        this.meals = in.createTypedArrayList(Meal.CREATOR);
     }
 
     public static final Creator<MealDay> CREATOR = new Creator<MealDay>() {
@@ -95,4 +60,5 @@ public class MealDay implements Parcelable {
             return new MealDay[size];
         }
     };
+
 }
