@@ -16,35 +16,35 @@ import com.udacity.mregtej.mymealplanner.provider.MyMealPlannerDBContract;
 import java.util.List;
 
 @Dao
-public interface RecipeDao {
+public interface PlannedRecipeDao {
 
     @Query("SELECT * FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME)
-    LiveData<List<Recipe>> getRecipes();
+    List<Recipe> getPlannedRecipes();
 
     @Query("SELECT * FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME)
-    Cursor getRecipesViaCP();
+    Cursor getPlannedRecipesViaCP();
 
     @Query("SELECT * FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME +
             " WHERE " + MyMealPlannerDBContract.RecipeEntry.COLUMN_ID + " = :id")
-    Cursor findRecipeByIdViaCP(long id);
+    Cursor findPlannedRecipeByIdViaCP(long id);
 
     @Query("SELECT COUNT(*) FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME)
-    int countRecipes();
+    int countPlannedRecipes();
 
     @Update
-    int updateRecipe(Recipe recipe);
+    int updatePlannedRecipe(Recipe recipe);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertRecipe(Recipe recipe);
+    long insertPlannedRecipe(Recipe recipe);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertRecipes(List<Recipe> recipes);
+    long[] insertPlannedRecipes(List<Recipe> recipes);
 
     @Delete
-    void deleteRecipe(Recipe recipe);
+    void deletePlannedRecipe(Recipe recipe);
 
     @Query("DELETE FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME +
             " WHERE " + MyMealPlannerDBContract.RecipeEntry.COLUMN_ID + " = :id")
-    int deleteRecipeById(long id);
+    int deletePlannedRecipeById(long id);
 
 }

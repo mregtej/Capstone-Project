@@ -15,6 +15,7 @@ import com.udacity.mregtej.mymealplanner.database.MyMealPlannerDatabase;
 import com.udacity.mregtej.mymealplanner.datamodel.MealDay;
 import com.udacity.mregtej.mymealplanner.datamodel.Menu;
 import com.udacity.mregtej.mymealplanner.datamodel.MenuCategory;
+import com.udacity.mregtej.mymealplanner.datamodel.PlannedMeal;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeIngredient;
 import com.udacity.mregtej.mymealplanner.datamodel.RecipeNutritionalFact;
@@ -77,9 +78,46 @@ public class MyMealPlannerRepository {
     //                               Local DB Ops                                     |
     //--------------------------------------------------------------------------------|
 
-    public LiveData<List<Recipe>> getPlannedRecipes() {
-        return mMyMealPlannerDatabase.recipeDao().getRecipes();
+    public LiveData<List<PlannedMeal>> getPlannedMeals() {
+        final MutableLiveData<List<PlannedMeal>> plannedMeals = new MutableLiveData<>();
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                plannedMeals.postValue(mMyMealPlannerDatabase.plannedMealDao().getPlannedMeals());
+            }
+        });
+        return plannedMeals;
     }
+
+    public void insertPlannedMeals(final List<PlannedMeal> plannedMeals) {
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mMyMealPlannerDatabase.plannedMealDao().insertPlannedMeals(plannedMeals);
+            }
+        });
+    }
+
+    public LiveData<List<Recipe>> getPlannedRecipes() {
+        final MutableLiveData<List<Recipe>> plannedRecipes = new MutableLiveData<>();
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                plannedRecipes.postValue(mMyMealPlannerDatabase.plannedRecipeDao().getPlannedRecipes());
+            }
+        });
+        return plannedRecipes;
+    }
+
+    public void insertPlannedRecipes(final List<Recipe> plannedRecipes) {
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mMyMealPlannerDatabase.plannedRecipeDao().insertPlannedRecipes(plannedRecipes);
+            }
+        });
+    }
+
 
     //--------------------------------------------------------------------------------|
     //                               Network Requests                                 |

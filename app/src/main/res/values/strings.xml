@@ -66,6 +66,8 @@
     <string name="add_mealday_to_calendar_view_button">View Day</string>
     <string name="add_mealday_to_calendar_plan_button">Plan</string>
     <string name="add_mealday_to_calendar_back_button">Back</string>
+    <string name="add_mealday_to_calendar_data_successful_inserted">The recipes
+        were successful stored on DB</string>
 
     <!-- Meal Planner Screen Strings -->
     <string name="meal_planner_screen_title">Meal Planner</string>

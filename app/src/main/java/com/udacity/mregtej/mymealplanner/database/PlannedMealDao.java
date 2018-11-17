@@ -17,7 +17,7 @@ import java.util.List;
 @Dao
 public interface PlannedMealDao {
     @Query("SELECT * FROM " + MyMealPlannerDBContract.PlannedMealsEntry.TABLE_NAME)
-    LiveData<List<PlannedMeal>> getPlannedMeals();
+    List<PlannedMeal> getPlannedMeals();
 
     @Query("SELECT * FROM " + MyMealPlannerDBContract.PlannedMealsEntry.TABLE_NAME)
     Cursor getPlannedMealsViaCP();

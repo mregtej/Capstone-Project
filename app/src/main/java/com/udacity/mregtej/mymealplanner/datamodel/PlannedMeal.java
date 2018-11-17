@@ -41,9 +41,8 @@ public class PlannedMeal implements Parcelable {
     public PlannedMeal() { }
 
     @Ignore
-    public PlannedMeal(@NonNull long id, @NonNull int dayOfMonth, @NonNull int month,
+    public PlannedMeal(@NonNull int dayOfMonth, @NonNull int month,
                        @NonNull int year, @NonNull String mealTime, @NonNull String recipeID) {
-        this.id = id;
         this.dayOfMonth = dayOfMonth;
         this.month = month;
         this.year = year;

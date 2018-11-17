@@ -15,12 +15,12 @@ import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 
 import java.util.List;
 
-@Database(entities = {Recipe.class, PlannedMeal.class}, version = 1, exportSchema = false)
+@Database(entities = {Recipe.class, PlannedMeal.class}, version = 3, exportSchema = false)
 public abstract class MyMealPlannerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "recipe-database";
 
-    public abstract RecipeDao recipeDao();
+    public abstract PlannedRecipeDao plannedRecipeDao();
     public abstract PlannedMealDao plannedMealDao();
     private static MyMealPlannerExecutors mExecutors;
     private static MyMealPlannerDatabase INSTANCE;
@@ -94,7 +94,7 @@ public abstract class MyMealPlannerDatabase extends RoomDatabase {
         database.runInTransaction(new Runnable() {
             @Override
             public void run() {
-                database.recipeDao().insertRecipes(recipeList);
+                database.plannedRecipeDao().insertPlannedRecipes(recipeList);
             }
         });
     }

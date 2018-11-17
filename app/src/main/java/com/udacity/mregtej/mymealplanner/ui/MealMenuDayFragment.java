@@ -150,9 +150,8 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
         mListStateMealPlannerMealtime = mMealPlannerMealtimeLayoutManager.onSaveInstanceState();
-        outState.putParcelable(MEAL_DAY_LIST_KEY, mListStateMealPlannerMealtime);
+        outState.putParcelable(MEAL_DAY_LIST_STATE_KEY, mListStateMealPlannerMealtime);
         outState.putSerializable(MEAL_DAY_LIST_KEY, mMealPlannerMealtimeAdapter.getmMealList());
 
     }
@@ -249,6 +248,9 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
 
         // Create and show the dialog.
         DialogFragment newFragment = AddMealDayToCalendarDialogFragment.newInstance();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(MEAL_DAY_LIST_KEY, mMealPlannerMealtimeAdapter.getmMealList());
+        newFragment.setArguments(bundle);
         newFragment.show(ft, "dialog");
     }
 

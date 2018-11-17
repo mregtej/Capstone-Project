@@ -9,7 +9,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import com.udacity.mregtej.mymealplanner.database.RecipeConverters;
+import com.udacity.mregtej.mymealplanner.database.PlannedRecipeConverters;
 import com.udacity.mregtej.mymealplanner.provider.MyMealPlannerDBContract;
 
 import java.util.List;
@@ -36,15 +36,15 @@ public class Recipe implements Parcelable {
     @NonNull
     @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_COOKING_TIME)
     private String cookingTime;
-    @TypeConverters(RecipeConverters.class)
+    @TypeConverters(PlannedRecipeConverters.class)
     @NonNull
     @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_INGREDIENTS)
     private List<RecipeIngredient> ingredients;
-    @TypeConverters(RecipeConverters.class)
+    @TypeConverters(PlannedRecipeConverters.class)
     @NonNull
     @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_NUTRITIONAL_FACTS)
     private List<RecipeNutritionalFact> nutritionalFacts;
-    @TypeConverters(RecipeConverters.class)
+    @TypeConverters(PlannedRecipeConverters.class)
     @NonNull
     @ColumnInfo(name = MyMealPlannerDBContract.RecipeEntry.COLUMN_RECIPE_STEPS)
     private List<RecipeStep> recipeSteps;
