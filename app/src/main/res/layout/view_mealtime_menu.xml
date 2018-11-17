@@ -70,7 +70,7 @@
                 android:id="@+id/v_mealtime_menu_meal_recipe_photo_scrim"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/image_scrim_gradient" />
+                android:background="@drawable/image_scrim_gradient_top" />
 
             <LinearLayout
                 android:id="@+id/ll_mealtime_menu_meal_recipe_data"
