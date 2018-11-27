@@ -44,7 +44,9 @@ public class MyMealPlannerRepository {
 
     private final MyMealPlannerExecutors mExecutors;
     private final MyMealPlannerDatabase mMyMealPlannerDatabase;
-    private MediatorLiveData<List<Recipe>> mObservableRecipes;
+
+    private MediatorLiveData<List<PlannedMeal>> mObservablePlannedMeals;
+    private MediatorLiveData<List<Recipe>> mObservablePlannedRecipes;
 
     //--------------------------------------------------------------------------------|
     //                  Constructor (Singleton Pattern)                               |
@@ -54,11 +56,29 @@ public class MyMealPlannerRepository {
                                     final MyMealPlannerExecutors executors) {
         // Set-Up Local Database
         mMyMealPlannerDatabase = database;
-        mObservableRecipes = new MediatorLiveData<>();
         mExecutors = executors;
+
+        mObservablePlannedRecipes = new MediatorLiveData<>();
+        mObservablePlannedMeals = new MediatorLiveData<>();
+
         // Set-Up Realtime Database (Firebase)
         mMyMealPlannerFirebaseDatabase = FirebaseDatabase.getInstance();
         mMyMealPlannerFirebaseDatabase.setPersistenceEnabled(true);
+
+        mObservablePlannedMeals.addSource(mMyMealPlannerDatabase.plannedMealDao().getPlannedMeals(),
+                productEntities -> {
+                    if (mMyMealPlannerDatabase.getDatabaseCreated().getValue() != null) {
+                        mObservablePlannedMeals.postValue(productEntities);
+                    }
+                });
+
+        mObservablePlannedRecipes.addSource(mMyMealPlannerDatabase.plannedRecipeDao().getPlannedRecipes(),
+                productEntities -> {
+                    if (mMyMealPlannerDatabase.getDatabaseCreated().getValue() != null) {
+                        mObservablePlannedRecipes.postValue(productEntities);
+                    }
+                });
+
     }
 
     public static MyMealPlannerRepository getInstance(final MyMealPlannerDatabase database,
@@ -79,14 +99,7 @@ public class MyMealPlannerRepository {
     //--------------------------------------------------------------------------------|
 
     public LiveData<List<PlannedMeal>> getPlannedMeals() {
-        final MutableLiveData<List<PlannedMeal>> plannedMeals = new MutableLiveData<>();
-        mExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                plannedMeals.postValue(mMyMealPlannerDatabase.plannedMealDao().getPlannedMeals());
-            }
-        });
-        return plannedMeals;
+        return mObservablePlannedMeals;
     }
 
     public void insertPlannedMeals(final List<PlannedMeal> plannedMeals) {
@@ -99,14 +112,7 @@ public class MyMealPlannerRepository {
     }
 
     public LiveData<List<Recipe>> getPlannedRecipes() {
-        final MutableLiveData<List<Recipe>> plannedRecipes = new MutableLiveData<>();
-        mExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                plannedRecipes.postValue(mMyMealPlannerDatabase.plannedRecipeDao().getPlannedRecipes());
-            }
-        });
-        return plannedRecipes;
+        return mObservablePlannedRecipes;
     }
 
     public void insertPlannedRecipes(final List<Recipe> plannedRecipes) {

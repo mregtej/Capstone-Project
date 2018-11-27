@@ -1,9 +1,11 @@
 package com.udacity.mregtej.mymealplanner.ui;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -35,8 +37,22 @@ import butterknife.Unbinder;
 
 public class AddMealDayToCalendarDialogFragment extends DialogFragment {
 
-    /** Key for storing the meal-days to buy in savedInstanceState */
+    /** Key for storing the meal-days in savedInstanceState */
     private static final String MEAL_DAY_LIST_KEY = "meal-day-list";
+
+    /** Key for storing the meal-days in savedInstanceState */
+    private static final String PLANNED_MEALS_LIST_KEY = "planned-meals-list";
+
+    /** Key for storing the meal-days in savedInstanceState */
+    private static final String PLANNED_RECIPES_LIST_KEY = "planned-recipes-list";
+
+    /** Key for storing the planned meals for a specific day in savedInstanceState */
+    private static final String PLANNED_MEALS_FOR_A_DAY_KEY = "planned-meals-for-a-day";
+
+    /** Key for storing the planned recipes for a specific day in savedInstanceState */
+    private static final String PLANNED_RECIPES_FOR_A_DAY_KEY = "planned-recipes-for-a-day";
+
+    private static final String MEAL_DAY_CALENDAR_DIALOG_TITLE = "ViewMealDayInCalendarDialogFragment";
 
     private static final String YEAR_KEY = "year";
     private static final String MONTH_KEY = "month";
@@ -59,6 +75,9 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
     Unbinder unbinder;
 
     private HashMap<String,Recipe> mMealDayList;
+    private List<PlannedMeal> mPlannedMealList;
+    private List<Recipe> mPlannedRecipeList;
+
     private int mYear;
     private int mMonth;
     private int mDayOfMonth;
@@ -79,6 +98,7 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
                 false);
         getDialog().requestWindowFeature(STYLE_NO_TITLE);
         setCancelable(false);
+
         unbinder = ButterKnife.bind(this, rootView);
         mContext = getContext();
 
@@ -97,12 +117,6 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
             /** Retrieve the meal-day recipes + mealtimes */
             mMealDayList = (HashMap<String,Recipe>)getArguments().getSerializable(MEAL_DAY_LIST_KEY);
 
-            // Subscribe MealPlansFragment to receive notifications from PlannedMealViewModel
-            registerToPlannedMealViewModel();
-
-            // Subscribe MealPlansFragment to receive notifications from PlannedRecipesViewModel
-            registerToPlannedRecipeViewModel();
-
             // Set Current Date on Calendar View
             setCurrentDateOnCalendarView();
 
@@ -110,6 +124,18 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
             showInitialInstructions();
 
         }
+
+        // Subscribe MealPlansFragment to receive notifications from PlannedMealViewModel
+        registerToPlannedMealViewModel();
+
+        // Subscribe MealPlansFragment to receive notifications from PlannedRecipesViewModel
+        registerToPlannedRecipeViewModel();
+
+        // Enable notifications for receiving planned meals from PlannedMealViewModel
+        enableNotificationsFromPlannedMealViewModel();
+
+        // Enable notifications for receiving planned recipes from PlannedRecipesViewModel
+        enableNotificationsFromPlannedRecipeViewModel();
 
         // Set-Up Calendar listeners
         setCalendarViewListeners();
@@ -182,7 +208,6 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
                 showMealDayCalendarDialogFragment();
                 break;
             case R.id.bt_mealday_plan:
-                // TODO Store MealDay on local DB
                 storeMealDayOnDB();
 
         }
@@ -191,12 +216,13 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
     private void showMealDayCalendarDialogFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(null);
-        DialogFragment newFragment = MealDayCalendarDialogFragment.newInstance(mYear, mMonth,
-                mDayOfMonth);
-        newFragment.show(ft, "dialog");
+        DialogFragment mealDayCalendarDialogFragment = ViewMealDayInCalendarDialogFragment.newInstance();
+        addMealDayRecipesToMealDayCalendarDialogFragment(mealDayCalendarDialogFragment);
+        mealDayCalendarDialogFragment.show(ft, "dialog");
     }
 
     private void storeMealDayOnDB() {
+
         ArrayList<PlannedMeal> plannedMeals = new ArrayList<>();
         ArrayList<Recipe> plannedRecipes = new ArrayList<>();
 
@@ -217,6 +243,7 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
         insertPlannedRecipes(plannedRecipes);
         // Insert planned meals (foreign keys previously stored)
         insertPlannedMeals(plannedMeals);
+
         // Close dialog
         dismiss();
         // Notify user about the data insertion
@@ -225,6 +252,41 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
                 R.string.add_mealday_to_calendar_data_successful_inserted),
                 Toast.LENGTH_SHORT);
         mToast.show();
+
+    }
+
+    private void addMealDayRecipesToMealDayCalendarDialogFragment(DialogFragment fragment) {
+
+        Bundle bundle = new Bundle();
+        ArrayList<PlannedMeal> plannedMealsForADay = new ArrayList<>();
+        ArrayList<Recipe> plannedRecipesForADay = new ArrayList<>();
+
+        // Add planned meals for the choosen day
+        for(PlannedMeal plannedMeal : mPlannedMealList) {
+            if(plannedMeal.getDayOfMonth() == mDayOfMonth &&
+                    plannedMeal.getMonth() == mMonth &&
+                    plannedMeal.getYear() == mYear) {
+                plannedMealsForADay.add(plannedMeal);
+                // Look for planned recipe using recipeId
+                for(Recipe plannedRecipe : mPlannedRecipeList) {
+                    if(plannedMeal.getRecipeID().equals(plannedRecipe.getId())) {
+                        // Add planned reciüe for the choosen day
+                        plannedRecipesForADay.add(plannedRecipe);
+                        continue;
+                    }
+                }
+            }
+        }
+
+        // Pass planned date as argument.
+        bundle.putInt(YEAR_KEY, mYear);
+        bundle.putInt(MONTH_KEY, mMonth);
+        bundle.putInt(DAY_KEY, mDayOfMonth);
+
+        // Pass planned recipes and meals to DialogFragment as arguments.
+        bundle.putParcelableArrayList(PLANNED_MEALS_FOR_A_DAY_KEY, plannedMealsForADay);
+        bundle.putParcelableArrayList(PLANNED_RECIPES_FOR_A_DAY_KEY, plannedRecipesForADay);
+        fragment.setArguments(bundle);
 
     }
 
@@ -263,6 +325,32 @@ public class AddMealDayToCalendarDialogFragment extends DialogFragment {
 
     private void insertPlannedRecipes(List<Recipe> plannedRecipes) {
         mPlannedRecipeViewModel.insertPlannedRecipes(plannedRecipes);
+    }
+
+    private void enableNotificationsFromPlannedMealViewModel() {
+        mPlannedMealViewModel.getPlannedMeals().observe(this, new Observer<List<PlannedMeal>>() {
+            @Override
+            public void onChanged(@Nullable List<PlannedMeal> plannedMeals) {
+                if(plannedMeals == null || plannedMeals.isEmpty()) {
+                    return;
+                } else {
+                    mPlannedMealList = plannedMeals;
+                }
+            }
+        });
+    }
+
+    private void enableNotificationsFromPlannedRecipeViewModel() {
+        mPlannedRecipeViewModel.getPlannedRecipes().observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(@Nullable List<Recipe> plannedRecipes) {
+                if(plannedRecipes == null || plannedRecipes.isEmpty()) {
+                    return;
+                } else {
+                    mPlannedRecipeList = plannedRecipes;
+                }
+            }
+        });
     }
 
 }

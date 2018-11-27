@@ -209,10 +209,14 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
 
         // TODO Min API: 19 - Look for alternatives
         LinkedHashMap<String,Recipe> mealRecipeList = new LinkedHashMap<>();
-        for (Recipe recipe : recipes) {
-            for(Meal meal : mMealDay.getMeals()) {
-                if(meal.getRecipeId().equals(recipe.getId())) {
-                    mealRecipeList.put(meal.getMealTime(), recipe);
+        if(recipes != null) {
+            for (Recipe recipe : recipes) {
+                if(mMealDay != null) {
+                    for (Meal meal : mMealDay.getMeals()) {
+                        if (meal.getRecipeId().equals(recipe.getId())) {
+                            mealRecipeList.put(meal.getMealTime(), recipe);
+                        }
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@ package com.udacity.mregtej.mymealplanner.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
@@ -19,6 +20,8 @@ public class PlannedMealViewModel extends AndroidViewModel {
     //                                  Params                                        |
     //--------------------------------------------------------------------------------|
 
+    private final MediatorLiveData<List<PlannedMeal>> mObservablePlannedMeals;
+
     private final MyMealPlannerRepository myMealPlannerRepository;
 
 
@@ -27,8 +30,17 @@ public class PlannedMealViewModel extends AndroidViewModel {
     //--------------------------------------------------------------------------------|
 
     public PlannedMealViewModel(Application application, MyMealPlannerRepository repository) {
+
         super(application);
         this.myMealPlannerRepository = repository;
+
+        mObservablePlannedMeals = new MediatorLiveData<>();
+        mObservablePlannedMeals.setValue(null);
+
+        LiveData<List<PlannedMeal>> plannedMeals = myMealPlannerRepository.getPlannedMeals();
+
+        // observe the changes of the products from the database and forward them
+        mObservablePlannedMeals.addSource(plannedMeals, mObservablePlannedMeals::setValue);
     }
 
 
@@ -65,7 +77,7 @@ public class PlannedMealViewModel extends AndroidViewModel {
     //--------------------------------------------------------------------------------|
 
     public LiveData<List<PlannedMeal>> getPlannedMeals() {
-        return myMealPlannerRepository.getPlannedMeals();
+        return mObservablePlannedMeals;
     }
 
     public void insertPlannedMeals(List<PlannedMeal> plannedMeals) {

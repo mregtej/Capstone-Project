@@ -3,11 +3,14 @@ package com.udacity.mregtej.mymealplanner.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.udacity.mregtej.mymealplanner.application.MyMealPlanner;
+import com.udacity.mregtej.mymealplanner.datamodel.PlannedMeal;
 import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 import com.udacity.mregtej.mymealplanner.repository.MyMealPlannerRepository;
 
@@ -19,6 +22,8 @@ public class PlannedRecipeViewModel extends AndroidViewModel {
     //                                  Params                                        |
     //--------------------------------------------------------------------------------|
 
+    private final MediatorLiveData<List<Recipe>> mObservablePlannedRecipes;
+
     private final MyMealPlannerRepository myMealPlannerRepository;
 
 
@@ -27,8 +32,18 @@ public class PlannedRecipeViewModel extends AndroidViewModel {
     //--------------------------------------------------------------------------------|
 
     public PlannedRecipeViewModel(Application application, MyMealPlannerRepository repository) {
+
         super(application);
         this.myMealPlannerRepository = repository;
+
+        mObservablePlannedRecipes = new MediatorLiveData<>();
+        mObservablePlannedRecipes.setValue(null);
+
+        LiveData<List<Recipe>> plannedRecipes = myMealPlannerRepository.getPlannedRecipes();
+
+        // observe the changes of the products from the database and forward them
+        mObservablePlannedRecipes.addSource(plannedRecipes, mObservablePlannedRecipes::setValue);
+
     }
 
 

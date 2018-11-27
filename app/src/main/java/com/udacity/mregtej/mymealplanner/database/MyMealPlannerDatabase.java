@@ -15,7 +15,7 @@ import com.udacity.mregtej.mymealplanner.datamodel.Recipe;
 
 import java.util.List;
 
-@Database(entities = {Recipe.class, PlannedMeal.class}, version = 3, exportSchema = false)
+@Database(entities = {Recipe.class, PlannedMeal.class}, version = 1, exportSchema = false)
 public abstract class MyMealPlannerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "recipe-database";

@@ -11,11 +11,11 @@ import android.support.annotation.NonNull;
 
 import com.udacity.mregtej.mymealplanner.provider.MyMealPlannerDBContract;
 
-@Entity(tableName = MyMealPlannerDBContract.PlannedMealsEntry.TABLE_NAME,
+@Entity(tableName = MyMealPlannerDBContract.PlannedMealsEntry.TABLE_NAME /*,
         foreignKeys = @ForeignKey(entity = Recipe.class,
                 parentColumns = MyMealPlannerDBContract.RecipeEntry.COLUMN_ID,
                 childColumns = MyMealPlannerDBContract.PlannedMealsEntry.COLUMN_RECIPE_ID,
-                onDelete = ForeignKey.CASCADE))
+                onDelete = ForeignKey.CASCADE) */)
 public class PlannedMeal implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)

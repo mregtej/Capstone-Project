@@ -19,7 +19,7 @@ import java.util.List;
 public interface PlannedRecipeDao {
 
     @Query("SELECT * FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME)
-    List<Recipe> getPlannedRecipes();
+    LiveData<List<Recipe>> getPlannedRecipes();
 
     @Query("SELECT * FROM " + MyMealPlannerDBContract.RecipeEntry.TABLE_NAME)
     Cursor getPlannedRecipesViaCP();
