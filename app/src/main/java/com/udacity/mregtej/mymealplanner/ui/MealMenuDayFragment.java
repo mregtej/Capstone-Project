@@ -40,7 +40,8 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtimeAdapter.MealMenuDayMealtimeClickListener {
+public class MealMenuDayFragment extends Fragment
+        implements MealMenuDayMealtimeAdapter.MealMenuDayMealtimeClickListener {
 
     public static final String POSITION_KEY = "meal-day-fragment-position";
 
@@ -69,6 +70,9 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
     ActionBar actionBar;
     private MealDay mMealDay;
 
+    private static MealMenuDayFragmentListener mMealMenuDayFragmentListener;
+
+
     /**
      * ViewModel instance
      */
@@ -87,11 +91,13 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
      */
     private Parcelable mListStateMealPlannerMealtime;
 
-
-    public MealMenuDayFragment() {
-        // Required empty public constructor
+    public static Fragment newInstance(Context context, MealMenuDayFragmentListener listener) {
+        mMealMenuDayFragmentListener = listener;
+        return Fragment.instantiate(context, MealMenuDayFragment.class.getName());
     }
 
+    public MealMenuDayFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -235,6 +241,9 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
                 showAddMealDayToCalendarDialog();
                 break;
             case R.id.fab_meal_menu_all_schedule:
+                if(mMealMenuDayFragmentListener != null) {
+                    mMealMenuDayFragmentListener.onAddMealPlanToCalendarClick();
+                }
                 break;
         }
     }
@@ -256,6 +265,14 @@ public class MealMenuDayFragment extends Fragment implements MealMenuDayMealtime
         bundle.putSerializable(MEAL_DAY_LIST_KEY, mMealPlannerMealtimeAdapter.getmMealList());
         newFragment.setArguments(bundle);
         newFragment.show(ft, "dialog");
+    }
+
+    //--------------------------------------------------------------------------------|
+    //                        Fragment--> Fragment Pager Comm                         |
+    //--------------------------------------------------------------------------------|
+
+    public interface MealMenuDayFragmentListener {
+        public void onAddMealPlanToCalendarClick();
     }
 
 }

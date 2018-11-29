@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    tools:context=".ui.AddMealPlanToCalendarDialogFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.udacity.mregtej.mymealplanner.ui.utils.CalendarViewScrollable
+            android:id="@+id/cv_mealplan_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:elevation="2dp"
+            android:background="@drawable/table_row_shape_rectangle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_mealplan_buttons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cv_mealplan_calendar"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/cv_mealplan_calendar"
+            app:layout_constraintTop_toBottomOf="@+id/cv_mealplan_calendar"
+            app:layout_constraintVertical_bias="0.0">
+
+            <Button
+                android:id="@+id/bt_mealplan_cancel"
+                style="@style/MyMealPlannerTextButtons"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_text_selector"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:elevation="4dp"
+                android:text="@string/add_mealday_to_calendar_cancel_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/bt_mealplan_view"
+                style="@style/MyMealPlannerTextButtons"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/button_text_selector"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:elevation="4dp"
+                android:text="@string/add_mealday_to_calendar_view_button"
+                app:layout_constraintBottom_toBottomOf="@+id/bt_mealplan_cancel"
+                app:layout_constraintEnd_toStartOf="@+id/bt_mealplan_plan"
+                app:layout_constraintStart_toEndOf="@+id/bt_mealplan_cancel"
+                app:layout_constraintTop_toTopOf="@+id/bt_mealplan_cancel" />
+
+            <Button
+                android:id="@+id/bt_mealplan_plan"
+                style="@style/MyMealPlannerTextButtons"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/button_text_selector"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:elevation="4dp"
+                android:text="@string/add_mealday_to_calendar_plan_button"
+                app:layout_constraintBottom_toBottomOf="@+id/bt_mealplan_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/bt_mealplan_cancel" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
